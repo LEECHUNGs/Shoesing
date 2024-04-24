@@ -8,6 +8,7 @@ build/
 **/.metadata/*
 .metadata
 /.metadata
+/.metadata/**
 
 ### Eclipse ###
 .metadata
