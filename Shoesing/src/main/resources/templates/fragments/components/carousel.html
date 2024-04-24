@@ -1,30 +1,6 @@
 <!DOCTYPE html>
-<html
-  lang="en"
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{fragments/layouts/main}"
->
-  <head>
-    <link th:href="@{/css/pages/home.css}" rel="stylesheet" />
-  </head>
-  <th:block layout:fragment="main">
-    <!-- Spline 컴포넌트 (3D 모델) -->
-    <div class="spline-component">
-      <div class="spline-text">
-        <h2>Hello World</h2>
-      </div>
-      <script
-        type="module"
-        src="https://unpkg.com/@splinetool/viewer@1.1.2/build/spline-viewer.js"
-      ></script>
-      <spline-viewer
-        loading-anim-type="spinner-big-dark"
-        loading="eager"
-        url="https://prod.spline.design/KihhkE1w8A6oR2gq/scene.splinecode"
-      ></spline-viewer>
-    </div>
-
+<html xmlns:th="http://www.thymeleaf.org">
+  <th:block th:fragment="carousel-item">
     <!-- Carousel Component -->
     <div id="carousel-home" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">

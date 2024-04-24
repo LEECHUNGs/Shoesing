@@ -3,10 +3,12 @@
   lang="en"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="layouts/default"
+  layout:decorate="~{fragments/layouts/main}"
 >
-  <link th:href="@{/css/home.css}" rel="stylesheet" />
-  <th:block layout:fragment="~{main}">
+  <head>
+    <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
+  </head>
+  <th:block layout:fragment="main">
     <!-- 내용은 여기 작성 -->
   </th:block>
 </html>

@@ -1,15 +1,136 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+@font-face {
+  font-family: 'yustine';
+  src: url('../font/Yustine\ Signature.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'tekrot';
+  src: url('../font/Tekrot.ttf') format('truetype');
+  font-style: normal;
+}
+@font-face {
+  font-family: 'winter';
+  src: url('../font//Winter\ Memories.ttf') format('truetype');
+}
+
+:root {
+  --title-font-family: 'tekrot';
+
+  --devColor: rgba(38, 36, 48, 0.05);
+
+  --black: rgb(0, 0, 0);
+
+  --primaryColor: rgb(255, 255, 255);
+  --secondaryColor: rgb(232, 231, 228);
+  --tetriaryColor: rgb(90, 88, 88);
+  --quaternaryColor: rgb(39, 37, 37);
+
+  --backgroundColor: rgb(255, 255, 255);
+
+  --main-font-family: 'Pretendard';
+  --main-font-weight: 400;
+  --main-font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  color: var(--quaternaryColor);
+
+  background-color: var(--devColor);
+
+  font-family: var(--main-font-family);
+  font-weight: var(--main-font-weight);
+  font-style: var(--main-font-style);
+}
+
+a {
+  color: var(--quaternaryColor);
+  text-emphasis: none;
+  text-decoration: none;
+  transition: 0.14s;
+}
+
+a:hover {
+  color: var(--tetriaryColor);
+}
+
+button {
+  border: var(--quaternaryColor) 1px solid;
+  border-radius: 3px;
+}
+
+li {
+  list-style-type: none;
+}
+
+input {
+  border: var(--tetriaryColor) 1px solid;
+  border-radius: 3px;
+}
+
+header,
 footer {
-  padding: 8px;
-  background-color: black;
-}
-
-footer * {
-  color: white;
-}
-
-.footer-main {
+  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  flex-direction: column;
+  align-items: center;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: var(--backgroundColor);
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.content {
+  min-height: 100vh;
+  width: 100%;
+  padding: 8px;
+}
+
+.sideSpacer {
+  display: hidden;
+  border: var(--secondaryColor) solid 1px;
+  border-top: 0;
+  border-bottom: 0;
+  background-color: white;
+}
+
+/* sm --- Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/* md --- Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .main-container {
+    max-width: 1200px;
+  }
+
+  .main-container {
+    max-width: 1700px;
+  }
+}
+
+/* lg --- Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .sideSpacer {
+    display: flex;
+    width: 250px;
+  }
+}
+
+/* xl --- Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
 }
