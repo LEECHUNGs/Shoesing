@@ -20,7 +20,25 @@ public class MainController {
 	// 테스트용 ------------------------------------
 	@GetMapping("login")
 	public String login() {
-		return "pages/login-layout";
+		return "pages/user/login";
+	}
+	
+	@GetMapping("findId")
+	public String findId() {
+		return "pages/user/findId";
 	}
 
+	@GetMapping("findPw")
+	public String findPw() {
+		return "pages/user/findPw";
+	}
+	
+	@GetMapping("signUp")
+	public String signUp() {
+		return "pages/user/signUp";
+	}
+	@GetMapping("agreement")
+	public String agreeMent() {
+		return "pages/user/agreement";
+	}
 }

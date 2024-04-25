@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{fragments/layouts/main}"
+>
+  <head>
+    <link th:href="@{/css/login.css}" rel="stylesheet" />
+  </head>
+
+  <th:block layout:fragment="main">
+    <h1>비밀번호 찾기</h1>
+    <form>
+      <input type="text" placeholder="아이디를 입력해주세요">
+      <br>
+      <input type="text" placeholder="이름을 입력해주세요">
+      <br>
+      <input type="email" placeholder="이메일 주소를 입력해주세요">
+      <br>
+      <button>인증번호 요청</button>
+    </form>
+      <button>비밀번호 찾기</button>
+      <br>
+      <b>아이디를 잊으셨나요?</b>
+      <a href="/findId">아이디 찾기</a>
+      <br>
+      <b>아직 회원이 아니신가요?</b>
+      <a href="/signUp">회원가입</a>
+    
+  </th:block>
+
+  <script src="/js/user/user"></script>
+</html>

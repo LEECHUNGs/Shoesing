@@ -6,10 +6,11 @@
   layout:decorate="~{fragments/layouts/main}"
 >
   <head>
-    <link th:href="@{/css/login.css}" rel="stylesheet" />
+    <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
   </head>
-
   <th:block layout:fragment="main">
+    
+    <h1>로그인</h1>
     <div class="login-signup-form">
       <div class="tab-main">
         <nav class="tab-title">
@@ -24,7 +25,7 @@
               aria-controls="nav-home"
               aria-selected="true"
             >
-              로그인
+            회원 로그인
             </button>
             <button
               class="nav-link"
@@ -47,23 +48,48 @@
             role="tabpanel"
             aria-labelledby="nav-home-tab"
           >
+          <!-- 회원 로그인-->
             <form action="">
               <label>User ID: <input type="text" /></label><br />
-              <label>User Password: <input type="text" /></label><br />
-              <button>로그인</button>
+              <label>User Password: <input type="password" /></label><br />
+              <input type="checkbox" id="saveId">아이디 저장
+              <br>
+              <button id="loginBtn">로그인</button>
+            </form>
+            <form>
+              <a href="/findId">아이디 찾기</a>
+              <span>|</span>
+              <a href="/findPw">비밀번호 찾기</a>
+              <span>|</span>
+              <a href="/signUp">회원가입</a>
             </form>
           </div>
-
+          
+          
+          <!-- 비회원 주문 조회 -->
           <div
             class="tab-pane fade"
             id="nav-contact"
             role="tabpanel"
             aria-labelledby="nav-contact-tab"
           >
-            <form action="">비회원 조회</form>
+            <form action="checkNonUser">
+              <input type="text" placeholder="주문번호 숫자 13자리를 입력해주세요">
+              <br>
+              <input type="password" placeholder="비밀번호를 입력해주세요">
+              <br>
+              <button id="checkOrder">주문 조회</button>
+              <br>
+              <div>
+                <b>아직 회원이 아니신가요?</b>
+                <button id="signUpBtn">회원가입</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
   </th:block>
+
+  <script src="/js/user/user"></script>
 </html>
