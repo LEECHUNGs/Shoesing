@@ -20,7 +20,7 @@ public class MainController {
 	// 테스트용 ------------------------------------
 	@GetMapping("login")
 	public String login() {
-		return "pages/login";
+		return "pages/login-layout";
 	}
 
 }
