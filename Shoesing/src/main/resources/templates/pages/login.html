@@ -6,69 +6,9 @@
   layout:decorate="~{fragments/layouts/main}"
 >
   <head>
-    <link th:href="@{/css/login.css}" rel="stylesheet" />
+    <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
   </head>
-
   <th:block layout:fragment="main">
-    <div class="login-signup-form">
-      <div class="tab-main">
-        <nav class="tab-title">
-          <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button
-              class="nav-link active"
-              id="nav-home-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#nav-home"
-              type="button"
-              role="tab"
-              aria-controls="nav-home"
-              aria-selected="true"
-            >
-              로그인
-            </button>
-            <button
-              class="nav-link"
-              id="nav-contact-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#nav-contact"
-              type="button"
-              role="tab"
-              aria-controls="nav-contact"
-              aria-selected="false"
-            >
-              회원가입
-            </button>
-          </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-          <div
-            class="tab-pane fade show active"
-            id="nav-home"
-            role="tabpanel"
-            aria-labelledby="nav-home-tab"
-          >
-            <form action="">
-              <label>User ID: <input type="text" /></label><br />
-              <label>User Password: <input type="text" /></label><br />
-              <button>로그인</button>
-            </form>
-          </div>
-
-          <div
-            class="tab-pane fade"
-            id="nav-contact"
-            role="tabpanel"
-            aria-labelledby="nav-contact-tab"
-          >
-            <form action="">
-              <label for="">User Name: <input type="text" /></label><br />
-              <label for="">User ID: <input type="text" /></label><br />
-              <label for="">User Password: <input type="text" /></label><br />
-              <button>회원가입</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- 내용은 여기 작성 -->
   </th:block>
 </html>
