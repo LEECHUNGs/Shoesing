@@ -3,10 +3,10 @@
   <th:block th:fragment="header">
     <link th:href="@{/css/header.css}" rel="stylesheet" />
 
-    <!-- Header Component -->
+    <!-- 헤더 -->
     <header>
       <div class="header">
-        <!-- Header Info -->
+        <!-- 정보 헤더 -->
         <div class="header-info">
           <div>
             <a href="">고객센터</a>
@@ -17,10 +17,10 @@
           </div>
         </div>
 
-        <!-- Header Main-->
+        <!-- 메인 헤더 -->
         <div class="header-main">
           <div class="menu">
-            <!-- Off Canvas Component Trigger-->
+            <!-- 오프 캔버스 트리거-->
             <a
               class="mobileNav bi-list btn btn-primary"
               data-bs-toggle="offcanvas"
@@ -31,7 +31,7 @@
             </a>
           </div>
 
-          <!-- Title -->
+          <!-- 제목 -->
           <a
             href="/"
             class="title-main"
@@ -42,7 +42,7 @@
           </a>
 
           <div class="navigation">
-            <!-- Search Box -->
+            <!-- 검색창 -->
             <div class="search-box">
               <div class="search">
                 <button
@@ -54,7 +54,8 @@
                 </button>
               </div>
             </div>
-            <!-- User Profile-->
+
+            <!-- 팝오버 트리거-->
             <div
               id="userProfile"
               type="button"
@@ -67,13 +68,13 @@
               로그인?
             </div>
 
-            <!-- Cart -->
+            <!-- 장바구니 -->
             <div class="cart">
-              <!-- Cart Indicator Set Before Use -->
               <div class="cart-indicator"></div>
               <a href="#" class="bi-bag-check"> </a>
             </div>
 
+            <!-- 팝오버 내용-->
             <div class="d-none">
               <div id="userProfileContent">
                 <th:block th:if="${session.currentUser == null}">
@@ -96,11 +97,12 @@
           </div>
         </div>
       </div>
-      <!-- Bottom Spacer -->
+
+      <!-- 헤더 스페이서 -->
       <div class="spacer"></div>
     </header>
 
-    <!-- Off Canvas Component -->
+    <!-- 오프 캔버스 내용 -->
     <div
       class="offcanvas offcanvas-start"
       data-bs-scroll="true"
@@ -119,7 +121,7 @@
         ></button>
       </div>
       <div class="offcanvas-body">
-        <!-- Navigation Links -->
+        <!-- 네비게이션 내용 -->
         <div class="dropdown">
           <button
             class="btn btn-secondary dropdown-toggle"
@@ -153,7 +155,7 @@
       </div>
     </div>
 
-    <!-- Modal Component -->
+    <!-- 검색창 내용 -->
     <div
       class="modal fade"
       id="searchbar"
