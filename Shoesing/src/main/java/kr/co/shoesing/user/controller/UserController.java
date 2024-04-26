@@ -43,13 +43,40 @@ public class UserController {
 		status.setComplete();
 		return "redirect:/";
 	}
-
-	@PostMapping("signup")
-	public String signup(User inputUser) {
-
-		service.signup(inputUser);
-
-		return "";
-
+	
+	
+	/** 회원가입 페이지 이동
+	 * @return
+	 */
+	@GetMapping("signUp")
+	public String signUp() {
+		return "pages/signUp";
 	}
+
+	
+	/** 비밀번호 찾기 페이지 이동
+	 * @return
+	 */
+	@GetMapping("findPw")
+	public String findId() {
+		return "pages/findId";
+	}
+	
+	/** 아이디 찾기페이지 이동
+	 * @return
+	 */
+	@GetMapping("findId")
+	public String findPw() {
+		return "pages/findPw";
+	}
+	
+	/** 이용약관페이지 이동
+	 * @return
+	 */
+	@GetMapping("agreement")
+	public String agreement() {
+		return "pages/agreement";
+	}
+
+	
 }
