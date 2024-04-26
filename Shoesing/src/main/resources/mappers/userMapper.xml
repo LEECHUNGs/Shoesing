@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.shoesing.user.model.mapper.UserMapper">
+	
+	<select id="login" resultType="User">
+		SELECT USER_NO , USER_ID , USER_PW , USER_NICKNAME , USER_NAME , USER_ADDRESS , USER_TEL , USER_EMAIL , USER_ENROLL_DATE , USER_DEL_FL , USER_IDENTIFY 
+		FROM "USER"
+		WHERE USER_ID = 'user01'
+	</select>
+	
+	<insert id="signup">
+	
+	</insert>
+
+	
+</mapper>

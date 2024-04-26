@@ -3,7 +3,7 @@ document.documentElement.style.setProperty(
   window.innerWidth - document.documentElement.clientWidth + 'px'
 );
 
-// Hide Header when Scrolling Up
+// 스크롤 시 헤더 숨김
 document.addEventListener('DOMContentLoaded', () => {
   el_autohide = document.querySelector('.header-main');
 
