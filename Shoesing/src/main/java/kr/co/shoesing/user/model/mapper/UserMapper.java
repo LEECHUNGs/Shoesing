@@ -14,4 +14,11 @@ public interface UserMapper {
 	 */
 	User login();
 
+	/**
+	 * 회원 회원가입
+	 * 
+	 * @param inputUser
+	 */
+	void signup(User inputUser);
+
 }

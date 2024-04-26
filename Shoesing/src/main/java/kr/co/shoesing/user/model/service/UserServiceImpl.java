@@ -1,5 +1,6 @@
 package kr.co.shoesing.user.model.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {
-
+	// 암호화
+	private BCryptPasswordEncoder passwordEncoder;
+	// Mapper
 	private final UserMapper mapper;
 
 	/**
@@ -22,7 +25,16 @@ public class UserServiceImpl implements UserService {
 	public User login() {
 		User loginUser = mapper.login();
 
-		return null;
+		return loginUser;
+	}
+
+	/**
+	 * 회원 회원가입
+	 * 
+	 * @param inputUser
+	 */
+	public void signup(User inputUser) {
+		mapper.signup(inputUser);
 	}
 
 }
