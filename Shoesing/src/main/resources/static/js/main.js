@@ -22,3 +22,63 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+
+// 로그인폼, 로그인 id, 로그인 pw  얻어오기
+const loginForm = document.querySelector("#loginForm");
+
+const loginId= document.querySelector("#loginForm input[name='userId']");
+const loginPw = document.querySelector("#loginForm input[name='userPw']");
+
+
+// 쿠키
+
+//Id 저장
+if(loginId != null){
+  const saveId = getCookie("saveId");
+
+  if(saveId != undefined){
+    loginId.value =saveId;
+    document.querySelector("input[name='saveId']").checked =true;
+  }
+};
+
+//자동 로그인
+if(loginId != null && loginPw !=null){
+  const saveId = getCookie("saveId");
+  const autoLogin = getCookie("autoLogin") 
+
+  if(saveId != undefined &&  ){
+    loginId.value =saveId;
+    document.querySelector("input[name='saveId']").checked =true;
+  }
+};
+
+
+
+// 로그인 유효성 검사
+
+// 로그인이 되어 있지 않을 때
+if(loginForm != null){
+  loginForm.addEventListener("submit", e =>{
+
+    if(loginId.value.trim().length ===  0){
+        alert("아이디를 입력해주세요");
+        e.preventDefault();
+        loginId.focus();
+        return;
+    }
+
+    if(loginPw.value.trim().length ===  0){
+      alert("비밀번호를 입력해주세요");
+      e.preventDefault();
+      loginPw.focus();
+      return;
+    }
+  });
+
+}
+
+
+
+

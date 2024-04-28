@@ -49,9 +49,9 @@
             aria-labelledby="nav-home-tab"
           >
           <!-- 회원 로그인-->
-            <form action="">
-              <label>User ID: <input type="text" /></label><br />
-              <label>User Password: <input type="password" /></label><br />
+            <form action="" method="POST" id="loginForm">
+              <label>User ID: <input type="text" name ="userId"/></label><br />
+              <label>User Password: <input type="password" name="userPw"/></label><br />
               <input type="checkbox" id="saveId">아이디 저장
               <br>
               <button id="loginBtn">로그인</button>
