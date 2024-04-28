@@ -31,7 +31,20 @@ const loginId= document.querySelector("#loginForm input[name='userId']");
 const loginPw = document.querySelector("#loginForm input[name='userPw']");
 
 
-// 쿠키
+// 쿠키 내용
+const getCookie =(key) => {
+  const cookies = document.cookie;
+  const cookieList = cookies.split(";").map(el => el.split("="));
+  
+  const obj ={};
+
+  for(let t=0; i<cookieList.length; i++){
+    const k = cookieList[i][0];
+    const v = cookieList[i][1];
+    obj[k] = v; 
+  }
+  return obj[key];
+};
 
 //Id 저장
 if(loginId != null){
@@ -43,22 +56,7 @@ if(loginId != null){
   }
 };
 
-//자동 로그인
-if(loginId != null && loginPw !=null){
-  const saveId = getCookie("saveId");
-  const autoLogin = getCookie("autoLogin") 
-
-  if(saveId != undefined &&  ){
-    loginId.value =saveId;
-    document.querySelector("input[name='saveId']").checked =true;
-  }
-};
-
-
-
 // 로그인 유효성 검사
-
-// 로그인이 되어 있지 않을 때
 if(loginForm != null){
   loginForm.addEventListener("submit", e =>{
 
@@ -76,7 +74,6 @@ if(loginForm != null){
       return;
     }
   });
-
 }
 
 
