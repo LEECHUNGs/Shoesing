@@ -10,5 +10,12 @@
         <div>이용약관 주소 전화번호</div>
       </div>
     </footer>
+
+    <!-- 전달 확인용 alert 메세지-->
+    <script th:inline="javascript">
+      const message = /*[[${message}]]*/ '전달 받은 message';
+
+      if (message != null) alert(message);
+    </script>
   </th:block>
 </html>

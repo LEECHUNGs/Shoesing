@@ -13,7 +13,8 @@
           </div>
           <div>
             <a href="">주문조회</a>
-            <a href="/login">로그인 / 회원가입</a>
+            <a href="/user/signup">회원가입</a>
+            <a href="/user/login">로그인</a>
           </div>
         </div>
 
@@ -65,13 +66,17 @@
               data-bs-placement="bottom"
               data-bs-title="Log In / Sign Up"
             >
-              <th:block th:text="${session.loginUser?.userId}"></th:block>
+              <th:block
+                th:if="${session.loginUser != null}"
+                th:text="${session.loginUser?.userId}"
+              ></th:block>
+              <th:block th:if="${session.loginUser == null}"> 로그인 </th:block>
             </div>
 
             <!-- 장바구니 -->
             <div class="cart">
               <div class="cart-indicator"></div>
-              <a href="#" class="bi-bag-check"> </a>
+              <a href="#" class="bi-bag-check"></a>
             </div>
 
             <!-- 팝오버 내용-->
@@ -80,8 +85,10 @@
                 <!-- if not 로그인 -->
                 <th:block th:if="${session.loginUser == null}">
                   <form action="/user/login" method="post">
-                    User ID: <input type="text" name="userId" /><br /> User PW:
-                    <input type="password" name="userPw" /><br />
+                    User ID: <input type="text" name="userId" />
+                    <br />
+                    User PW: <input type="password" name="userPw" />
+                    <br />
                     <label class="remember-me"
                       >아이디 저장<input type="checkbox" /></label
                     ><br />
@@ -92,7 +99,6 @@
 
                 <!-- if 로그인 -->
                 <th:block th:if="${session.loginUser != null}">
-                  User Profile
                   <a href="/user/logout">로그아웃</a>
                 </th:block>
               </div>
