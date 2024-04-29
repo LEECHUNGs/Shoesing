@@ -15,81 +15,124 @@ const checkObj = {
 const userId = document.querySelector("#userId");
 const idMessage = document.querySelector("#idMessage");
 
-userId.addEventListener("keyup", e => {
-    const inputId = e.target.value;
-    if(inputId.trim().length === 0){
-        idMessage.innerText = "Id를 입력해주세요";
-        idMessage.classList.remove('confirm','error');
-         checkObj.userId=false;
-         userId.value ="";
-         return;
+userId.addEventListener("input", (e) => {
+    if(userId.value.length === 0){
+        idMessage.innerText = "아이디를 입력해주세요";
+        idMessage.classList.add('error');
+        idMessage.classList.remove('confirm');
+        checkObj.userId=false;
+        return;
     }
-    const regExp= /^[a-zA-Z0-9_]$/;
-    if(!regExp.test(inputId)){
-        idMessage.innerText = "알맞은 아이디 형식으로 작성해주세요";
+
+    const regExp= /^(?=.*[a-z0-9])[a-z0-9]{3,16}$/;
+
+    if(!regExp.test(userId.value)){
+        idMessage.innerText = "유효하지 않는 아이디입니다.";
         idMessage.classList.add('error');
         idMessage.classList.remove('confirm');
         checkObj.userId = false;
-        return;
+        return ;
     }
-    fetch("user/checkId?userId" + inputId)
+
+    idMessage.innerText ="사용 가능한 아이디 입니다"
+    idMessage.classList.add('confirm');
+    idMessage.classList.remove('error');
+    checkObj.userId = true;
+
+    const inputId = e.target.value;
+
+    fetch("/user/checkId")
     .then(resp => resp.text())
-    .then(count => {
-        if(count ==1){
+    .then(result => {
+        if(result == 1){
             idMessage.innerText="이미 사용중인 아이디 입니다";
             idMessage.classList.add('error');
             idMessage.classList.remove('confirm');
             checkObj.userId = false;
             return;
         }
-        idMessage.innerText ="사용 가능한 Id입니다"
+        idMessage.innerText ="사용 가능한 아이디 입니다"
         idMessage.classList.add('confirm');
         idMessage.classList.remove('error');
         checkObj.userId = true;
-    })
-    .catch(error =>{
-        console.log(error);
-    });
+    })    
 });
 
-// 2)  닉네임 유효성 검사
-const userNickname = document.querySelector("#userId");
-const NicknameMessage = document.querySelector("#idMessage");
+// 2) 닉네임 유효성 검사
+const userNickname = document.querySelector("#userNickname");
+const nicknameMessage = document.querySelector("#nicknameMessage");
 
-userId.addEventListener("keyup", e => {
-    const inputId = e.target.value;
-    if(inputId.trim().length === 0){
-        idMessage.innerText = "Id를 입력해주세요";
-        idMessage.classList.remove('confirm','error');
-         checkObj.userId=false;
-         userId.value ="";
-         return;
-    }
-    const regExp= /^[a-zA-Z0-9_]$/;
-    if(!regExp.test(inputId)){
-        idMessage.innerText = "알맞은 아이디 형식으로 작성해주세요";
-        idMessage.classList.add('error');
-        idMessage.classList.remove('confirm');
-        checkObj.userId = false;
+userNickname.addEventListener("input", (e) => {
+    if(userNickname.value.length === 0){
+        nicknameMessage.innerText = "닉네임을 입력해주세요";
+        nicknameMessage.classList.add('error');
+        nicknameMessage.classList.remove('confirm');
+        checkObj.userNickname=false;
         return;
     }
-    fetch("user/checkId?userId" + inputId)
+
+    const regExp= /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
+
+    if(!regExp.test(userNickname.value)){
+        nicknameMessage.innerText = "유효하지 않는 닉네임입니다.";
+        nicknameMessage.classList.add('error');
+        nicknameMessage.classList.remove('confirm');
+        checkObj.userNickname = false;
+        return ;
+    }
+
+    nicknameMessage.innerText ="사용 가능한 닉네임 입니다"
+    nicknameMessage.classList.add('confirm');
+    nicknameMessage.classList.remove('error');
+    checkObj.userNickname = true;
+
+    const inputId = e.target.value;
+
+    fetch("/user/checkNickname")
     .then(resp => resp.text())
-    .then(count => {
-        if(count ==1){
-            idMessage.innerText="이미 사용중인 아이디 입니다";
-            idMessage.classList.add('error');
-            idMessage.classList.remove('confirm');
-            checkObj.userId = false;
+    .then(result => {
+        if(result == 1){
+            nicknameMessage.innerText="이미 사용중인 닉네임 입니다";
+            nicknameMessage.classList.add('error');
+            nicknameMessage.classList.remove('confirm');
+            checkObj.userNickname = false;
             return;
         }
-        idMessage.innerText ="사용 가능한 Id입니다"
-        idMessage.classList.add('confirm');
-        idMessage.classList.remove('error');
-        checkObj.userId = true;
-    })
-    .catch(error =>{
-        console.log(error);
-    });
+        nicknameMessage.innerText ="사용 가능한 닉네임 입니다"
+        nicknameMessage.classList.add('confirm');
+        nicknameMessage.classList.remove('error');
+        checkObj.userNickname = true;
+    })    
 });
+
+// 3) 비밀번호 유효성 검사
+const userPw = document.querySelector("userPw");
+const userPwconfirm = document.querySelector("userPwconfirm");
+const pwMessage = document.querySelector("pwMessage");
+
+const checkPw = () =>{
+    if(userPw.value === userPwconfirm.value){
+        pwMessage.innerText = "비밀번호가 일치합니다";
+        pwMessage.classList.add("confirm");
+        pwMessage.classList.remove("error");
+        checkObj.userPwConfirm = true;
+    }
+
+    pwMessage.innerText ="비밀번호가 일치하지 않습니다";
+    pwMessage.classList.add("error");
+    pwMessage.classList.remove("confirm");
+    checkObj.userPwConfirm = false;
+}
+
+userPw.addEventListener("input", e => {
+    const inputPw = e.target.value;
+
+    if(inputPw.trim().length === 0){
+        pwMessage.innerText ="비밀번호가 유효하지 않습니다."
+        checkObj.memberPw = false;
+        memberPw.value="";
+        return;
+    }
+})
+
 

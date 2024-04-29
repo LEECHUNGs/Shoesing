@@ -11,4 +11,10 @@ public interface UserService {
 	 */
 	User login();
 
+	// 테스트용 아이디 중복검사
+	int checkId(String userId);
+
+	// 테스트용 닉네임 중복검사
+	int checkNickname(String userNickname);
+
 }

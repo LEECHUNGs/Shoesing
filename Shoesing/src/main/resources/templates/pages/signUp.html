@@ -23,7 +23,8 @@
         <input type="text" name="userId" id="userId" autocomplete="off">
       </div>
 
-      <span class="signUp-message" id="idMessage">영어,숫자로만 2~10글자</span>
+      <span class="signUp-message" id="idMessage">영어,숫자,_로만 5~10글자</span>
+      <br>
 
       <!-- 이름 입력 -->
       <label for="userName">
@@ -32,7 +33,7 @@
       <div class="signUp-input-area">
           <input type="text" name="userName" id="userName" autocomplete="off">
       </div>
-
+	
       <!-- 닉네임 입력 -->
       <label for="userNickname">
         <span class="required">닉네임</span>
@@ -41,7 +42,7 @@
           <input type="text" name="userNickname" id="userNickname" autocomplete="off">
       </div>
      
-      <span class="signUp-message" id="nicknameMessage">한글,영어,숫자로만 2~10글자</span>
+      <span class="signUp-message" id="nicknameMessage">한글,영어,숫자로만 2~8글자</span>
       <br>
 
       <!-- 비밀번호 입력 -->
@@ -81,11 +82,13 @@
 
       <div class="signUp-input-area">
         <input type="text" name="userEmail" id="userEmail"> @
+          <input type="text" name="domain" id="domain">
           <select name="emailDomain" id="emailDomain">
             <option value="naver">naver.com</option>
             <option value="google">gmail.com</option>
             <option value="daum">daum.net</option>
             <option value="kh">kh.co.kr</option>
+            <option value="costom">직접입력</option>
           </select>
           <button  id="sendAuthKeyBtn" type="button">인증번호 요청</button>
       </div>
@@ -128,8 +131,8 @@
     </form>
   
     
-
+  <script type="text/javascript" src="js/signup.js"></script>
   </th:block>
 
-  <script src="/js/user/signUp"></script>
+  
 </html>

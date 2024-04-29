@@ -7,10 +7,20 @@
 		FROM "USER"
 		WHERE USER_ID = 'user01'
 	</select>
+		
+	<select id="checkId" resultType="_int">
+		SELECT COUNT(*)
+		FROM "USER"
+		WHERE USER_DEL_FL ='N'
+		AND USER_ID = #{userId}
+	</select>
 	
-	<insert id="signup">
-	
-	</insert>
+	<select id="checkNickname" resultType="_int">
+		SELECT COUNT(*)
+		FROM "USER"
+		WHERE USER_DEL_FL ='N'
+		AND USER_NICKNAME = #{userNickname}
+	</select>
 
 	
 </mapper>

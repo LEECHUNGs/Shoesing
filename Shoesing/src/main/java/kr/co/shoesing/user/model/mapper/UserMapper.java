@@ -21,4 +21,10 @@ public interface UserMapper {
 	 */
 	void signup(User inputUser);
 
+	//테스트용 ID중복검사
+	int checkId(String userId);
+
+	//테스트용 닉네임 중복검사
+	int checkNickname(String userNickname);
+
 }

@@ -37,4 +37,18 @@ public class UserServiceImpl implements UserService {
 		mapper.signup(inputUser);
 	}
 
+	//테스트용 Id 중복검사
+	@Override
+	public int checkId(String userId) {
+		
+		return mapper.checkId(userId);
+	}
+
+	//테스트용 닉네임 중복검사
+	@Override
+	public int checkNickname(String userNickname) {
+		
+		return mapper.checkNickname(userNickname);
+	}
+
 }
