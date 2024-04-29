@@ -42,5 +42,14 @@ public class MainController2 {
 			
 			
 		}
+		
+		//비밀번호유효성 검사 테스트용
+				@PostMapping("checkNickname")
+				public int checkNickname(@RequestParam("userNickname") String userNickname) {
+					
+					return service.checkNickname(userNickname);
+					
+					
+				}
 
 }

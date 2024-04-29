@@ -11,7 +11,7 @@ const checkObj = {
     "userTel" : false,
     "authKey" : false
 };
-// 1) Id 유효성 검사
+//  Id 유효성 검사
 const userId = document.querySelector("#userId");
 const idMessage = document.querySelector("#idMessage");
 
@@ -24,7 +24,7 @@ userId.addEventListener("input", (e) => {
         return;
     }
 
-    const regExp= /^(?=.*[a-z0-9])[a-z0-9]{3,16}$/;
+    const regExp= /^[a-z0-9]{4,12}$/;
 
     if(!regExp.test(userId.value)){
         idMessage.innerText = "유효하지 않는 아이디입니다.";
@@ -58,7 +58,20 @@ userId.addEventListener("input", (e) => {
     })    
 });
 
-// 2) 닉네임 유효성 검사
+//  이름 유효성 검사 -- 수정이 필요함!!!!!***********************
+// const userName = document.querySelector("#username");
+
+// userName.addEventListener("input", (e) => {
+//     if(userName.value.length === 0){
+//         alert = "이름을 입력해주세요";
+//         checkObj.userName=false;
+//         return;
+//     }
+//     const regExp= /^[가-힣]{2,6}$/;
+//     checkObj.userName = true;   
+// });
+
+//  닉네임 유효성 검사
 const userNickname = document.querySelector("#userNickname");
 const nicknameMessage = document.querySelector("#nicknameMessage");
 
@@ -105,13 +118,13 @@ userNickname.addEventListener("input", (e) => {
     })    
 });
 
-// 3) 비밀번호 유효성 검사
+//  비밀번호 유효성 검사
 const userPw = document.querySelector("userPw");
-const userPwconfirm = document.querySelector("userPwconfirm");
+const userPwConfirm = document.querySelector("userPwConfirm");
 const pwMessage = document.querySelector("pwMessage");
 
 const checkPw = () =>{
-    if(userPw.value === userPwconfirm.value){
+    if(userPw.value === userPwConfirm.value){
         pwMessage.innerText = "비밀번호가 일치합니다";
         pwMessage.classList.add("confirm");
         pwMessage.classList.remove("error");
@@ -124,15 +137,51 @@ const checkPw = () =>{
     checkObj.userPwConfirm = false;
 }
 
-userPw.addEventListener("input", e => {
+userPw.addEventListener("input", (e) => {
     const inputPw = e.target.value;
 
     if(inputPw.trim().length === 0){
-        pwMessage.innerText ="비밀번호가 유효하지 않습니다."
+        pwMessage.innerText ="영어, 숫자, 특수문자 6~16글자 사이로 입력해주세요"
+        pwMessage.classList.remove("confirm","error");
         checkObj.memberPw = false;
         memberPw.value="";
         return;
     }
-})
+
+    const regExp = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/
+
+    if(!regExp.test(inputPw)){
+        pwMessage.innerText ="비밀번호가 유효하지 않습니다."
+        pwMessage.classList.add("error");
+        pwMessage.classList.remove("confirm");
+        checkObj.memberPw = false;
+        return;
+    }
+
+    pwMessage.innerText ="유효한 비밀번호 형식입니다"
+    pwMessage.classList.add("confirm");
+    pwMessage.classList.remove("error");
+    checkObj.memberPw =true;
+
+    if(userPwConfirm.value.length >0){
+        checkPw();
+    }
+
+});
+
+userPwConfirm.addEventListener("input", () => {
+    if(checkObj.userPw){
+        checkPw();
+        return;
+    }
+    checkObj.userPwConfirm =false
+});
+
+// 이메일 유효성 검사
+
+// 인증번호 유효성 검사
+
+//전화번호 유효성 검사
 
 
+//
