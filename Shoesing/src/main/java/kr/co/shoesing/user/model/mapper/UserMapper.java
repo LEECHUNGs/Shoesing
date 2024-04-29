@@ -10,15 +10,37 @@ public interface UserMapper {
 	/**
 	 * 회원 로그인
 	 * 
+	 * @param string
 	 * @return User
 	 */
-	User login();
+	User login(String userId);
 
 	/**
 	 * 회원 회원가입
 	 * 
 	 * @param inputUser
+	 * @return result
 	 */
-	void signup(User inputUser);
+	int signup(User inputUser);
+
+	/**
+	 * 회원 닉네임 중복체크
+	 * 
+	 * @param userNickname
+	 * @return result
+	 */
+	int checkNickname(String userNickname);
+
+	/**
+	 * @param userId
+	 * @return
+	 */
+	int checkId(String userId);
+
+	/**
+	 * @param userEmail
+	 * @return
+	 */
+	int checkEmail(String userEmail);
 
 }
