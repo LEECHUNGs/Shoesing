@@ -17,7 +17,7 @@
 :root {
   --title-font-family: 'tekrot';
 
-  --devColor: rgba(38, 36, 48, 0.05);
+  /* --devColor: rgba(38, 36, 48, 0.05); */
 
   --black: rgb(0, 0, 0);
 
@@ -117,6 +117,28 @@ body {
   padding: 0;
   overflow-y: scroll;
   overflow-x: scroll;
+}
+
+/* 부트스트랩 초기화 */
+textarea:focus,
+input[type='text']:focus,
+input[type='password']:focus,
+input[type='datetime']:focus,
+input[type='datetime-local']:focus,
+input[type='date']:focus,
+input[type='month']:focus,
+input[type='time']:focus,
+input[type='week']:focus,
+input[type='number']:focus,
+input[type='email']:focus,
+input[type='url']:focus,
+input[type='search']:focus,
+input[type='tel']:focus,
+input[type='color']:focus,
+.uneditable-input:focus {
+  border-color: rgba(0, 0, 0, 0.8);
+  box-shadow: none;
+  outline: 0 none;
 }
 
 /* sm --- Small devices (landscape phones, 576px and up) */

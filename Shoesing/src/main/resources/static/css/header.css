@@ -185,6 +185,15 @@ header {
   display: flex;
 }
 
+/* Wish List */
+.wishList {
+  font-size: 30px;
+}
+
+.wishList:hover {
+  
+}
+
 /* Cart */
 .cart {
   font-size: 30px;
