@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.shoesing.user.model.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("user")
+@Slf4j
 public class MainController2 {
 
 	@Autowired
@@ -38,18 +40,13 @@ public class MainController2 {
 		@PostMapping("checkNickname")
 		public int checkNickname(@RequestParam("userNickname") String userNickname) {
 			
+			log.debug(userNickname);
 			return service.checkNickname(userNickname);
 			
 			
 		}
 		
-		//비밀번호유효성 검사 테스트용
-				@PostMapping("checkNickname")
-				public int checkNickname(@RequestParam("userNickname") String userNickname) {
-					
-					return service.checkNickname(userNickname);
-					
-					
-				}
+			
+			
 
 }

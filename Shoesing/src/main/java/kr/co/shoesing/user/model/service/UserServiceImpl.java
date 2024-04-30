@@ -51,4 +51,11 @@ public class UserServiceImpl implements UserService {
 		return mapper.checkNickname(userNickname);
 	}
 
+	//테스트용 PW 중복검사
+	@Override
+	public int checkPw(String userPw) {
+		
+		return mapper.checkPw(userPw);
+	}
+
 }

@@ -20,15 +20,14 @@
         <span class="required">*</span> 아이디
       </label>
       <div class="signup-input-area">
-        <input type="text" name="userId" id="userId" autocomplete="off">
+        <input type="text" name="userId" id="userId" autocomplete="off" placeholder="영어,숫자,특수문자('_') 5~10글자">
       </div>
-
       <span class="signup-message" id="idMessage">영어,숫자,_로만 5~10글자</span>
       <br>
 
       <!-- 이름 입력 -->
       <label for="userName">
-        <span class="required">*</span>이름
+        <span class="required"></span>이름
       </label>
       <div class="signup-input-area">
           <input type="text" name="userName" id="userName" autocomplete="off">
@@ -36,7 +35,7 @@
 	
       <!-- 닉네임 입력 -->
       <label for="userNickname">
-        <span class="required">닉네임</span>
+        <span class="required">*</span>닉네임
       </label>
       <div class="signup-input-area">
           <input type="text" name="userNickname" id="userNickname" autocomplete="off">
@@ -50,7 +49,7 @@
         <span class="required">*</span>비밀번호
       </label>
       <div class="signup-input-area">
-          <input type="password" name="userPw" id="userPw" autocomplete="off">
+          <input type="password" name="userPw" id="userPw" placeholder="비밀번호" autocomplete="off"/>
       </div> 
 
       <!-- 비밀번호 확인 입력 -->
@@ -58,10 +57,10 @@
         <span class="required">*</span>비밀번호 확인
       </label>
       <div class="signup-input-area">
-          <input type="password" name="userPwConfirm" id="userPwConfirm" autocomplete="off">
+          <input type="password" name="userPwConfirm" id="userPwConfirm" placeholder="비밀번호확인" autocomplete="off"/>
       </div>
     
-      <span class="signup-message" id="pwMessage">영어,숫자,특수문자(!,@,#,-,_) 6~20글자 사이로 입력해주세요.</span>
+      <span class="signup-message" id="pwMessage">영어,숫자,특수문자 6~16글자 사이로 입력해주세요.</span>
 
       <br>
       <!-- 전화번호 입력 -->
@@ -69,7 +68,7 @@
         <span class="required">전화번호</span>
       </label>
       <div class="signup-input-area">
-          <input type="text" name="userTel" id="userTel" autocomplete="off">
+          <input type="number" name="userTel" id="userTel" placeholder="(-없이 숫자만 입력)" autocomplete="off"/>
       </div>
 
       <span class="signup-message" id="telMessage">전화번호를 입력해주세요.(- 제외)</span>
@@ -80,15 +79,20 @@
         <span class="required">*</span>이메일 
       </label>
 
+
       <div class="signup-input-area">
-        <input type="text" name="userEmail" id="userEmail"> @
-          <input type="text" name="domain" id="domain">
-          <select name="emailDomain" id="emailDomain">
-            <option value="naver">naver.com</option>
-            <option value="google">gmail.com</option>
-            <option value="daum">daum.net</option>
-            <option value="kh">kh.co.kr</option>
-            <option value="costom">직접입력</option>
+        <input type="text" class="domain" id="userEmail"/> @
+          <input type="text" name="inputDomain" id="inputDomain"/>
+          <select title="이메일 도메인 선택" id="domainList" onchange="this.form.inputDomain.value=this[this.selectedIndex].value;">
+            <option value="" selected="selected">선택</option>
+            <option value="naver.com">네이버</option>
+            <option value="gmail.com">구글</option>
+            <option value="daum.net">다음</option>
+            <option value="kh.co.kr">KH</option>
+            <option value="apple.com">애플</option>
+            <option value="kakao.com">카카오</option>
+            <option value="">직접입력</option>
+
           </select>
           <button  id="sendAuthKeyBtn" type="button">인증번호 요청</button>
       </div>
@@ -101,14 +105,14 @@
       </label>
 
       <div class="signup-input-area">
-        <input type="text" name="authKey" id="authKey" placeholder="인증번호 입력" maxlength="6" autocomplete="off" >
+        <input type="text" name="authKey" id="authKey" placeholder="인증번호 입력" maxlength="6" autocomplete="off" />
         
         <button id="checkAuthKeyBtn" type="button">인증하기</button>
       </div>
 
       <span class="signup-message" id="authKeyMessage"></span>
                    
-
+      <br>
       <!-- 주소 입력 -->
       <label for="userAddress">
         <span class="required">주소</span>

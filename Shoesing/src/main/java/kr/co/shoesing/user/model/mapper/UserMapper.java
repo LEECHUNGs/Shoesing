@@ -27,4 +27,7 @@ public interface UserMapper {
 	//테스트용 닉네임 중복검사
 	int checkNickname(String userNickname);
 
+	//테스트용 비밀번호 중복검사
+	int checkPw(String userPw);
+
 }

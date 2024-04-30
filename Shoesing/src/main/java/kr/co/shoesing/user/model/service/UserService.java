@@ -17,4 +17,6 @@ public interface UserService {
 	// 테스트용 닉네임 중복검사
 	int checkNickname(String userNickname);
 
+	int checkPw(String userPw);
+
 }
