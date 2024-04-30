@@ -24,6 +24,16 @@ public class UserController {
 	private final UserService service;
 
 	/**
+	 * 로그인 페이지
+	 * 
+	 * @return
+	 */
+	@GetMapping("login")
+	public String login() {
+		return "pages/login";
+	}
+
+	/**
 	 * 로그인
 	 * 
 	 * @param inputUser
@@ -59,6 +69,7 @@ public class UserController {
 		return "redirect:/";
 	}
 
+	// 유저 주소 정보 처리 기능 필요!
 	/**
 	 * 회원가입 페이지
 	 * 
@@ -88,6 +99,16 @@ public class UserController {
 
 		return "redirect:/";
 
+	}
+
+	/**
+	 * 마이페이지 페이지
+	 * 
+	 * @return
+	 */
+	@GetMapping("myPage")
+	public String myPage() {
+		return "pages/myPage";
 	}
 
 }

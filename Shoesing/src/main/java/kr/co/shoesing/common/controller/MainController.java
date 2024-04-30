@@ -3,6 +3,7 @@ package kr.co.shoesing.common.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MainController {
@@ -17,10 +18,18 @@ public class MainController {
 		return "pages/home";
 	}
 
-	// 테스트용 ------------------------------------
-	@GetMapping("login")
-	public String login() {
-		return "pages/login";
+	/**
+	 * 이미 로그인된 회원 에러
+	 * 
+	 * @param ra
+	 * @return
+	 */
+	@GetMapping("loggedInError")
+	public String loggedInError(RedirectAttributes ra) {
+
+		ra.addFlashAttribute("message", "이미 로그인된 회원입니다");
+
+		return "redirect:/";
 	}
 
 }

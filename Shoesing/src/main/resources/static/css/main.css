@@ -1,23 +1,20 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
 @font-face {
-  font-family: 'yustine';
-  src: url('../font/Yustine\ Signature.ttf') format('truetype');
-}
-@font-face {
   font-family: 'tekrot';
   src: url('../font/Tekrot.ttf') format('truetype');
   font-style: normal;
 }
+
 @font-face {
-  font-family: 'winter';
-  src: url('../font//Winter\ Memories.ttf') format('truetype');
+  font-family: 'rokaf';
+  src: url('../font/ROKAF Slab Serif Bold.ttf') format('truetype');
 }
 
 :root {
   --title-font-family: 'tekrot';
 
-  --devColor: rgba(38, 36, 48, 0.05);
+  /* --devColor: rgba(38, 36, 48, 0.03); */
 
   --black: rgb(0, 0, 0);
 
@@ -48,7 +45,7 @@ a {
   color: var(--quaternaryColor);
   text-emphasis: none;
   text-decoration: none;
-  transition: 0.14s;
+  transition: 0.15s;
 }
 
 a:hover {
@@ -90,6 +87,14 @@ body {
 .main {
   display: flex;
   justify-content: center;
+  background-color: var(--secondaryColor);
+}
+
+.content {
+  background-color: white;
+  min-height: 100vh;
+  width: 100%;
+  padding: 8px;
 }
 
 .main-container {
@@ -98,10 +103,8 @@ body {
   width: 100%;
 }
 
-.content {
-  min-height: 100vh;
-  width: 100%;
-  padding: 8px;
+.content * {
+  font-weight: 700;
 }
 
 .sideSpacer {
@@ -119,6 +122,65 @@ body {
   overflow-x: scroll;
 }
 
+.userIcon {
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  margin: 4px;
+}
+
+/* ------------------------- 공통 디자인 ------------------------- */
+
+/* 페이지별 타이틀 */
+.pageTitle,
+.pageTitle * {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  font-family: 'rokaf';
+}
+
+.pageTitle {
+  margin: 8px;
+  justify-content: center;
+}
+
+/* 기본 상자 */
+.simpleBox {
+  background-color: white;
+  height: 100px;
+  width: 100px;
+  box-shadow: 0 6px 20px -2px rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  padding: 12px;
+  height: 100%;
+  width: 100%;
+}
+
+/* 부트스트랩 초기화 */
+textarea:focus,
+input[type='text']:focus,
+input[type='password']:focus,
+input[type='datetime']:focus,
+input[type='datetime-local']:focus,
+input[type='date']:focus,
+input[type='month']:focus,
+input[type='time']:focus,
+input[type='week']:focus,
+input[type='number']:focus,
+input[type='email']:focus,
+input[type='url']:focus,
+input[type='search']:focus,
+input[type='tel']:focus,
+input[type='color']:focus,
+.uneditable-input:focus {
+  border-color: rgba(0, 0, 0, 0.8);
+  box-shadow: none;
+  outline: 0 none;
+}
+
 /* sm --- Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
 }
@@ -131,6 +193,10 @@ body {
 
   .main-container {
     max-width: 1700px;
+  }
+
+  .pageTitle {
+    justify-content: left;
   }
 }
 
