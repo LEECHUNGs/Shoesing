@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <th:block th:fragment="header">
+    <link th:href="@{/css/header.css}" rel="stylesheet" />
+
+    <!-- 헤더 -->
+    <header>
+      <div class="header">
+        <!-- 정보 헤더 -->
+        <div class="header-info">
+          <div>
+            <a href="">고객센터</a>
+          </div>
+          <div>
+            <a href="">주문조회</a>
+            <a href="/user/signup">회원가입</a>
+            <th:block th:if="${session.loginUser == null}">
+              <a href="/user/login">로그인</a>
+            </th:block>
+            <th:block th:if="${session.loginUser != null}">
+              <a href="/user/myPage">마이페이지</a>
+            </th:block>
+          </div>
+        </div>
+
+        <!-- 메인 헤더 -->
+        <div class="header-main">
+          <div class="menu">
+            <!-- 오프 캔버스 트리거-->
+            <a
+              class="mobileNav bi-list btn btn-primary"
+              data-bs-toggle="offcanvas"
+              href="#navigation"
+              role="button"
+              aria-controls="offcanvasExample"
+            >
+            </a>
+          </div>
+
+          <!-- 제목 -->
+          <a
+            href="/"
+            class="title-main"
+            style="display: flex; align-items: center"
+          >
+            <img src="/img/logo/logo.svg" class="title-logo" />
+            <div class="title-text">HOESING</div>
+          </a>
+
+          <div class="navigation">
+            <!-- 검색창 -->
+            <div class="search">
+              <a
+                data-bs-toggle="modal"
+                data-bs-target="#searchbar"
+                class="bi-search"
+              >
+              </a>
+            </div>
+
+            <!-- 즐겨찾기 -->
+            <div class="wishList">
+              <a href="#" id="heart" class="bi-suit-heart"></a>
+            </div>
+
+            <!-- 장바구니 -->
+            <div class="cart">
+              <div class="cart-indicator"></div>
+              <a href="#" class="bi-bag-check"></a>
+            </div>
+
+            <!-- 팝오버 트리거-->
+            <div
+              id="userProfile"
+              type="button"
+              data-bs-html="true"
+              href="#"
+              data-toggle="popover"
+              data-bs-placement="bottom"
+              data-bs-title="Log In / Sign Up"
+            >
+              <!-- if 로그인 -->
+              <th:block th:if="${session.loginUser != null}">
+                <img
+                  th:src="@{/img/userIcon/} + ${session.loginUser.userIcon} + |.png|"
+                  class="userIcon"
+                  alt="userIcon"
+              /></th:block>
+              <!-- if not 로그인 -->
+              <th:block th:if="${session.loginUser == null}"> 로그인 </th:block>
+            </div>
+
+            <!-- 팝오버 내용-->
+            <div class="d-none">
+              <div id="userProfileContent">
+                <!-- if not 로그인 -->
+                <th:block th:if="${session.loginUser == null}">
+                  <form action="/user/login" method="post">
+                    User ID: <input type="text" name="userId" />
+                    <br />
+                    User PW: <input type="password" name="userPw" />
+                    <br />
+                    <label class="remember-me"
+                      >아이디 저장<input type="checkbox" /></label
+                    ><br />
+                    <button>로그인</button>
+                  </form>
+                  <a href="/user/signup">회원가입</a>
+                </th:block>
+
+                <!-- if 로그인 -->
+                <th:block th:if="${session.loginUser != null}">
+                  <a href="/user/myPage">마이페이지</a>
+                  <a href="/user/logout">로그아웃</a>
+                </th:block>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 헤더 스페이서 -->
+      <div class="spacer"></div>
+    </header>
+
+    <!-- 오프 캔버스 내용 -->
+    <div
+      class="offcanvas offcanvas-start"
+      data-bs-scroll="true"
+      data-bs-backdrop="true"
+      tabindex="-1"
+      id="navigation"
+      aria-labelledby="mobile-navigation"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="navigation">Navigation</h5>
+        <button
+          type="button"
+          class="btn-close text-reset"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <!-- 네비게이션 내용 -->
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+          >
+            BRAND
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+          >
+            WOMAN
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 검색창 내용 -->
+    <div
+      class="modal fade"
+      id="searchbar"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <input class="searchbar-input" type="text" />
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</html>
