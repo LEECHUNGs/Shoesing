@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.shoesing.item.model.mapper.ItemMapper">
+	
+	<select id="selectAll">
+		SELECT ITEM_NO, ITEM_NAME, ITEM_COUNT, ITEM_PRICE
+		FROM "ITEM"
+		WHERE ITEM_COUNT > 0
+		ORDER BY 
+		
+		<!-- 기본 정렬 -->
+		<if test="sortNo == 0">
+			ITEM_NO
+		</if>
+		
+		<!-- 기본 역순 정렬 -->
+		<if test="sortNo == 1">
+			ITEM_NO DESC
+		</if>
+		
+		<!-- 가격순 정렬 -->
+		<if test="sortNo == 2">
+			ITEM_PRICE, ITEM_NO
+		</if>
+		
+		<!-- 가격 역순 정렬 -->
+		<if test="sortNo == 3">
+			ITEM_PRICE DESC, ITEM_NO
+		</if>
+		
+		<!-- 이름순 정렬 -->
+		<if test="sortNo == 4">
+			ITEM_NAME, ITEM_NO
+		</if>
+		
+		<!-- 이름 역순 정렬 -->
+		<if test="sortNo == 5">
+			ITEM_NAME DESC, ITEM_NO
+		</if>
+		
+		<!-- 리뷰순 정렬 (아직 비활성화)
+		<if test="${sortNo == 0}">
+			
+		</if> -->
+	</select>
+	
+	<select id="getListCount">
+		SELECT COUNT(*) 
+		FROM "ITEM"
+	</select>
+	
+</mapper>
