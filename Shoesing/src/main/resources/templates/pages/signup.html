@@ -5,35 +5,45 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{fragments/layouts/main}"
 >
-  <head> </head>
+  <head>
+    <link th:href="@{/css/login.css}" rel="stylesheet" />
+    <title>회원 가입</title>
+  </head>
+
   <th:block layout:fragment="main">
     <form
-      action="/pages/signUp"
+      action="/pages/signup"
       method="POST"
-      name="signUpForm"
-      id="signUpForm"
+      name="signupForm"
+      id="signupForm"
     >
       <h3>회원 정보</h3>
 
       <!-- 아이디 입력 -->
       <label for="userId"> <span class="required">*</span> 아이디 </label>
-      <div class="signUp-input-area">
-        <input type="text" name="userId" id="userId" autocomplete="off" />
+      <div class="signup-input-area">
+        <input
+          type="text"
+          name="userId"
+          id="userId"
+          autocomplete="off"
+          placeholder="영어,숫자,특수문자('_') 5~10글자"
+        />
       </div>
-
-      <span class="signUp-message" id="idMessage">영어,숫자로만 2~10글자</span>
+      <span class="signup-message" id="idMessage"
+        >영어,숫자,_로만 5~10글자</span
+      >
+      <br />
 
       <!-- 이름 입력 -->
-      <label for="userName"> <span class="required">*</span>이름 </label>
-      <div class="signUp-input-area">
+      <label for="userName"> <span class="required"></span>이름 </label>
+      <div class="signup-input-area">
         <input type="text" name="userName" id="userName" autocomplete="off" />
       </div>
 
       <!-- 닉네임 입력 -->
-      <label for="userNickname">
-        <span class="required">닉네임</span>
-      </label>
-      <div class="signUp-input-area">
+      <label for="userNickname"> <span class="required">*</span>닉네임 </label>
+      <div class="signup-input-area">
         <input
           type="text"
           name="userNickname"
@@ -42,32 +52,39 @@
         />
       </div>
 
-      <span class="signUp-message" id="nicknameMessage"
-        >한글,영어,숫자로만 2~10글자</span
+      <span class="signup-message" id="nicknameMessage"
+        >한글,영어,숫자로만 2~8글자</span
       >
       <br />
 
       <!-- 비밀번호 입력 -->
       <label for="userPw"> <span class="required">*</span>비밀번호 </label>
-      <div class="signUp-input-area">
-        <input type="password" name="userPw" id="userPw" autocomplete="off" />
-      </div>
-
-      <!-- 비밀번호 확인 입력 -->
-      <label for="userPwconfirm">
-        <span class="required">*</span>비밀번호 확인
-      </label>
-      <div class="signUp-input-area">
+      <div class="signup-input-area">
         <input
           type="password"
-          name="userPwconfirm"
-          id="userPwconfirm"
+          name="userPw"
+          id="userPw"
+          placeholder="비밀번호"
           autocomplete="off"
         />
       </div>
 
-      <span class="signUp-message" id="pwMessage"
-        >영어,숫자,특수문자(!,@,#,-,_) 6~20글자 사이로 입력해주세요.</span
+      <!-- 비밀번호 확인 입력 -->
+      <label for="userPwConfirm">
+        <span class="required">*</span>비밀번호 확인
+      </label>
+      <div class="signup-input-area">
+        <input
+          type="password"
+          name="userPwConfirm"
+          id="userPwConfirm"
+          placeholder="비밀번호확인"
+          autocomplete="off"
+        />
+      </div>
+
+      <span class="signup-message" id="pwMessage"
+        >영어,숫자,특수문자 6~16글자 사이로 입력해주세요.</span
       >
 
       <br />
@@ -75,11 +92,17 @@
       <label for="userTel">
         <span class="required">전화번호</span>
       </label>
-      <div class="signUp-input-area">
-        <input type="text" name="userTel" id="userTel" autocomplete="off" />
+      <div class="signup-input-area">
+        <input
+          type="number"
+          name="userTel"
+          id="userTel"
+          placeholder="(-없이 숫자만 입력)"
+          autocomplete="off"
+        />
       </div>
 
-      <span class="signUp-message" id="telMessage"
+      <span class="signup-message" id="telMessage"
         >전화번호를 입력해주세요.(- 제외)</span
       >
 
@@ -87,25 +110,34 @@
       <!-- 이메일 입력 -->
       <label for="userEmail"> <span class="required">*</span>이메일 </label>
 
-      <div class="signUp-input-area">
-        <input type="text" name="userEmail" id="userEmail" /> @
-        <select name="emailDomain" id="emailDomain">
-          <option value="naver">naver.com</option>
-          <option value="google">gmail.com</option>
-          <option value="daum">daum.net</option>
-          <option value="kh">kh.co.kr</option>
+      <div class="signup-input-area">
+        <input type="text" class="domain" id="userEmail" /> @
+        <input type="text" name="inputDomain" id="inputDomain" />
+        <select
+          title="이메일 도메인 선택"
+          id="domainList"
+          onchange="this.form.inputDomain.value=this[this.selectedIndex].value;"
+        >
+          <option value="" selected="selected">선택</option>
+          <option value="naver.com">네이버</option>
+          <option value="gmail.com">구글</option>
+          <option value="daum.net">다음</option>
+          <option value="kh.co.kr">KH</option>
+          <option value="apple.com">애플</option>
+          <option value="kakao.com">카카오</option>
+          <option value="">직접입력</option>
         </select>
         <button id="sendAuthKeyBtn" type="button">인증번호 요청</button>
       </div>
 
-      <span class="signUp-message" id="emailMessage"
+      <span class="signup-message" id="emailMessage"
         >메일을 받을 수 있는 이메일을 입력해주세요.</span
       >
       <br />
       <!-- 인증번호 입력 -->
       <label for="emailCheck"> <span class="required">*</span> 인증번호 </label>
 
-      <div class="signUp-input-area">
+      <div class="signup-input-area">
         <input
           type="text"
           name="authKey"
@@ -118,16 +150,45 @@
         <button id="checkAuthKeyBtn" type="button">인증하기</button>
       </div>
 
-      <span class="signUp-message" id="authKeyMessage"></span>
+      <span class="signup-message" id="authKeyMessage"></span>
 
+      <br />
       <!-- 주소 입력 -->
-      <th:block th:replace="~{fragments/components/daumPostCode::postCode}"
-        >헤더</th:block
-      >
+      <label for="userAddress">
+        <span class="required">주소</span>
+      </label>
+      <div class="signUp-input-area">
+        <input
+          type="text"
+          name="userAddress"
+          id="userAddress"
+          autocomplete="off"
+        />
+        <button type="button" id="searchAddress">검색</button>
+      </div>
+
+      <div class="signup-input-area">
+        <input
+          type="text"
+          name="userAddress"
+          placeholder="도로명/지번 주소"
+          id="address"
+        />
+      </div>
+
+      <div class="signup-input-area">
+        <input
+          type="text"
+          name="userAddress"
+          placeholder="상세 주소"
+          id="detailAddress"
+        />
+      </div>
 
       <button>취소</button>
       <button>가입하기</button>
     </form>
-    <script type="text/javascript" src="/js/signup.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/signup.js}"></script>
   </th:block>
 </html>
