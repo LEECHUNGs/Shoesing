@@ -75,8 +75,7 @@ body {
 }
 
 .tab-content {
-  border: var(--secondaryColor) solid 1px;
-  box-shadow: 0 8px 22px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.12);
 }
 
 .tab-content {

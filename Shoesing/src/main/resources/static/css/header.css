@@ -4,6 +4,7 @@
 
 header {
   height: var(--headerHeight);
+  background-color: var(--secondaryColor);
 }
 
 .title-main .title-text:hover {
@@ -12,8 +13,8 @@ header {
 
 .title-text {
   font-family: var(--title-font-family);
-  font-size: 28px;
-  margin-top: 2px;
+  font-size: 29px;
+  margin-top: 4px;
   line-height: 0;
   padding: 0 3px;
   transition: 0.2s;
@@ -78,6 +79,12 @@ header {
 
 .navigationLink a {
   font-weight: 700;
+}
+
+.navigation div:nth-child(1),
+.navigation div:nth-child(2),
+.navigation div:nth-child(3) {
+  margin: 0 6px;
 }
 
 /* Popover */
@@ -181,17 +188,10 @@ header {
   padding: 0px 5px;
 }
 
-.search-box {
-  display: flex;
-}
-
 /* Wish List */
 .wishList {
+  line-height: 2px;
   font-size: 30px;
-}
-
-.wishList:hover {
-  
 }
 
 /* Cart */
@@ -212,23 +212,23 @@ header {
   background-color: red;
 }
 
+/* User Icon */
+.userIcon {
+  transition: 0.2s;
+}
+
+header .userIcon:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.28);
+}
+
 /* Search */
-.search button {
-  border: none;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  color: var(--quaternaryColor);
-  transition: 0.14s;
-}
-
-.search button:hover {
-  color: var(--tetriaryColor);
-  background-color: var(--secondaryColor);
-}
-
 .search .bi-search {
-  font-size: 20px;
+  font-size: 26px;
+  line-height: 2px;
+}
+
+.search:hover {
+  cursor: pointer;
 }
 
 /* Searchbar */

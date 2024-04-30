@@ -11,7 +11,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-public class LoginFilter implements Filter {
+public class LoggedInFilter implements Filter {
+
+	/**
+	 * 로그인한 회원 존재시 접근 불가 필터
+	 * 
+	 * @return
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -27,12 +33,12 @@ public class LoginFilter implements Filter {
 		if (session.getAttribute("loginUser") == null) { // 로그인 회원 존재하지 않으면
 
 			// 로그인 에러
-//			resp.sendRedirect("/loginError"); Exception 관리 추가 요망
+			chain.doFilter(request, response);
 
 		} else { // 로그인 회원 존재하면
 
 			// 다음 필터로 요청, 응답 객체 전달
-			chain.doFilter(request, response);
+			resp.sendRedirect("/loggedInError");
 
 		}
 	}

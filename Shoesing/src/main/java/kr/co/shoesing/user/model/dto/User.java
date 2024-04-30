@@ -23,4 +23,5 @@ public class User {
 	private String userEnrollDate;
 	private String userDelFl;
 	private String userIdentify;
+	private String userIcon;
 }

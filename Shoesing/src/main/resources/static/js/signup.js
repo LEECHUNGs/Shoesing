@@ -120,9 +120,6 @@ checkAuthKeyBtn.addEventListener('click', () => {
 
       clearInterval(authTimer);
 
-      authKeyMessage.innerText = '인증되었습니다';
-      authKeyMessage.classList.remove('error');
-      authKeyMessage.classList.add('confirm');
 
       checkObj.authKey = true;
     });

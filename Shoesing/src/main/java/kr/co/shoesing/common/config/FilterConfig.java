@@ -6,21 +6,25 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import kr.co.shoesing.common.filter.LoginFilter;
+import kr.co.shoesing.common.filter.LoggedInFilter;
 
 @Configuration
 public class FilterConfig {
+
+	/**
+	 * 로그인한 회원 존재시 접근 불가 필터
+	 * 
+	 * @return
+	 */
 	@Bean
-	public FilterRegistrationBean<LoginFilter> loginFilter() {
+	public FilterRegistrationBean<LoggedInFilter> loggedInFilter() {
 
 		// Filter
-		FilterRegistrationBean<LoginFilter> filter = new FilterRegistrationBean<>();
+		FilterRegistrationBean<LoggedInFilter> filter = new FilterRegistrationBean<>();
 
-		filter.setFilter(new LoginFilter());
+		filter.setFilter(new LoggedInFilter());
 
-		// 까먹지 말고 수정하세요!
-
-		String[] filteringURL = { "/user/myPage/*", "/user/login" };
+		String[] filteringURL = { "/user/signup", "/user/login" };
 
 		// Array.asList(filteringURL) == filteringURL을 List로
 		filter.setUrlPatterns(Arrays.asList(filteringURL));
