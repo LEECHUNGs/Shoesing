@@ -13,7 +13,13 @@
           </div>
           <div>
             <a href="">주문조회</a>
-            <a href="/login">로그인 / 회원가입</a>
+            <a href="/user/signup">회원가입</a>
+            <th:block th:if="${session.loginUser == null}">
+              <a href="/user/login">로그인</a>
+            </th:block>
+            <th:block th:if="${session.loginUser != null}">
+              <a href="/user/myPage">마이페이지</a>
+            </th:block>
           </div>
         </div>
 
@@ -38,21 +44,29 @@
             style="display: flex; align-items: center"
           >
             <img src="/img/logo/logo.svg" class="title-logo" />
-            <div class="title-text">SHOESING</div>
+            <div class="title-text">HOESING</div>
           </a>
 
           <div class="navigation">
             <!-- 검색창 -->
-            <div class="search-box">
-              <div class="search">
-                <button
-                  type="button"
-                  data-bs-toggle="modal"
-                  data-bs-target="#searchbar"
-                >
-                  <i class="bi-search"></i>
-                </button>
-              </div>
+            <div class="search">
+              <a
+                data-bs-toggle="modal"
+                data-bs-target="#searchbar"
+                class="bi-search"
+              >
+              </a>
+            </div>
+
+            <!-- 즐겨찾기 -->
+            <div class="wishList">
+              <a href="#" id="heart" class="bi-suit-heart"></a>
+            </div>
+
+            <!-- 장바구니 -->
+            <div class="cart">
+              <div class="cart-indicator"></div>
+              <a href="#" class="bi-bag-check"></a>
             </div>
 
             <!-- 팝오버 트리거-->
@@ -65,13 +79,15 @@
               data-bs-placement="bottom"
               data-bs-title="Log In / Sign Up"
             >
-              <th:block th:text="${session.loginUser?.userId}"></th:block>
-            </div>
-
-            <!-- 장바구니 -->
-            <div class="cart">
-              <div class="cart-indicator"></div>
-              <a href="#" class="bi-bag-check"> </a>
+              <!-- if 로그인 -->
+              <th:block th:if="${session.loginUser != null}">
+                <img
+                  th:src="@{/img/userIcon/} + ${session.loginUser.userIcon} + |.png|"
+                  class="userIcon"
+                  alt="userIcon"
+              /></th:block>
+              <!-- if not 로그인 -->
+              <th:block th:if="${session.loginUser == null}"> 로그인 </th:block>
             </div>
 
             <!-- 팝오버 내용-->
@@ -80,8 +96,10 @@
                 <!-- if not 로그인 -->
                 <th:block th:if="${session.loginUser == null}">
                   <form action="/user/login" method="post">
-                    User ID: <input type="text" name="userId" /><br /> User PW:
-                    <input type="password" name="userPw" /><br />
+                    User ID: <input type="text" name="userId" />
+                    <br />
+                    User PW: <input type="password" name="userPw" />
+                    <br />
                     <label class="remember-me"
                       >아이디 저장<input type="checkbox" /></label
                     ><br />
@@ -92,7 +110,7 @@
 
                 <!-- if 로그인 -->
                 <th:block th:if="${session.loginUser != null}">
-                  User Profile
+                  <a href="/user/myPage">마이페이지</a>
                   <a href="/user/logout">로그아웃</a>
                 </th:block>
               </div>

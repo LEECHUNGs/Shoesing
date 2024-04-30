@@ -5,11 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 import kr.co.shoesing.user.model.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+=======
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+>>>>>>> development
 
 @Controller
 @Slf4j
@@ -29,10 +33,18 @@ public class MainController {
 		return "pages/home";
 	}
 
-	// 테스트용 ------------------------------------
-	@GetMapping("login")
-	public String login() {
-		return "pages/login";
+	/**
+	 * 이미 로그인된 회원 에러
+	 * 
+	 * @param ra
+	 * @return
+	 */
+	@GetMapping("loggedInError")
+	public String loggedInError(RedirectAttributes ra) {
+
+		ra.addFlashAttribute("message", "이미 로그인된 회원입니다");
+
+		return "redirect:/";
 	}
 	
 	@GetMapping("findId")

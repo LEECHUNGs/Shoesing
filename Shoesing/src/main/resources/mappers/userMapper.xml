@@ -3,9 +3,21 @@
 <mapper namespace="kr.co.shoesing.user.model.mapper.UserMapper">
 	
 	<select id="login" resultType="User">
-		SELECT USER_NO , USER_ID , USER_PW , USER_NICKNAME , USER_NAME , USER_ADDRESS , USER_TEL , USER_EMAIL , USER_ENROLL_DATE , USER_DEL_FL , USER_IDENTIFY 
+		SELECT 
+			USER_NO , 
+			USER_ID , 
+			USER_PW , 
+			USER_NICKNAME , 
+			USER_NAME , 
+			USER_ADDRESS , 
+			USER_TEL , 
+			USER_EMAIL , 
+			USER_ENROLL_DATE , 
+			USER_DEL_FL , 
+			USER_IDENTIFY ,
+			USER_ICON
 		FROM "USER"
-		WHERE USER_ID = 'user01'
+		WHERE USER_ID = #{userId}
 	</select>
 		
 	<select id="checkId" resultType="_int">
@@ -15,6 +27,7 @@
 		AND USER_ID = #{userId}
 	</select>
 	
+<<<<<<< HEAD
 	<select id="checkNickname" resultType="_int">
 		SELECT COUNT(*)
 		FROM "USER"
@@ -23,6 +36,45 @@
 	</select>
 	
 
+=======
+	<insert id="signup">
+		INSERT INTO "USER" 
+		VALUES(
+			SEQ_USER_NO.NEXTVAL, 
+			#{userId},
+			#{userPw}, 
+			#{userNickname}, 
+			#{userName}, 
+			#{userAddress}, 
+			#{userTel}, 
+			#{userEmail}, 
+			DEFAULT,
+			DEFAULT, 
+			DEFAULT
+		)
+	</insert>
+	
+	<select id="checkId" resultType="_int">
+		SELECT 
+			USER_NO
+		FROM "USER"
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="checkEmail" resultType="_int">
+		SELECT 
+			USER_NO
+		FROM "USER"
+		WHERE USER_EMAIL = #{userEmail}
+	</select>
+	
+	<select id="checkNickname" resultType="_int">
+		SELECT 
+			USER_NO
+		FROM "USER"
+		WHERE USER_NICKNAME = #{userNickname}
+	</select>
+>>>>>>> development
 
 	
 </mapper>

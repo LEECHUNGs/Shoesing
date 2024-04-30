@@ -7,13 +7,15 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.shoesing.user.model.dto.User;
 import kr.co.shoesing.user.model.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {
 	// 암호화
-	private BCryptPasswordEncoder passwordEncoder;
+	private final BCryptPasswordEncoder passwordEncoder;
 	// Mapper
 	private final UserMapper mapper;
 
@@ -22,10 +24,25 @@ public class UserServiceImpl implements UserService {
 	 * 
 	 * @return User
 	 */
-	public User login() {
-		User loginUser = mapper.login();
+	public User login(User inputUser) {
+		System.out.println(inputUser);
 
-		return loginUser;
+		String userId = inputUser.getUserId();
+
+		User loginUser = mapper.login(userId);
+
+		if (loginUser == null) { // Mapper 확인 안되는 경우
+			return null; // 실패
+
+		}
+
+		// 비밀번호 검사
+		if (passwordEncoder.matches(inputUser.getUserPw(), loginUser.getUserPw())) {
+			return loginUser; // 성공
+
+		}
+
+		return null; // 실패
 	}
 
 	/**
@@ -33,8 +50,38 @@ public class UserServiceImpl implements UserService {
 	 * 
 	 * @param inputUser
 	 */
-	public void signup(User inputUser) {
-		mapper.signup(inputUser);
+	public int signup(User inputUser) {
+		// 비밀번호 암호화
+		inputUser.setUserPw(passwordEncoder.encode(inputUser.getUserPw()));
+
+		return mapper.signup(inputUser);
+	}
+
+	/**
+	 * 회원 아이디 중복 체크
+	 * 
+	 * @return
+	 */
+	public int checkId(String userId) {
+		return mapper.checkId(userId);
+	}
+
+	/**
+	 * 회원 이메일 중복 체크
+	 * 
+	 * @return
+	 */
+	public int checkEmail(String userEmail) {
+		return mapper.checkEmail(userEmail);
+	}
+
+	/**
+	 * 회원 닉네임 중복 체크
+	 * 
+	 * @return
+	 */
+	public int checkNickname(String userId) {
+		return mapper.checkNickname(userId);
 	}
 
 	//테스트용 Id 중복검사
