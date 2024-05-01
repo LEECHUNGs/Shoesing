@@ -22,4 +22,10 @@ public interface ItemMapper {
 	 */
 	int getListCount();
 
+	/** 상품 상세내용 조회
+	 * @param itemNo
+	 * @return item
+	 */
+	Item selectOne(int itemNo);
+
 }

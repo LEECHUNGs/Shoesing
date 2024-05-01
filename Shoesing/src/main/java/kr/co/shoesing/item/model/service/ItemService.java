@@ -13,4 +13,10 @@ public interface ItemService {
 	 */
 	Map<String, Object> selectAll(int sortNo, int cp);
 
+	/** 상품 상세내용 조회
+	 * @param itemNo
+	 * @return item
+	 */
+	Item selectOne(int itemNo);
+
 }

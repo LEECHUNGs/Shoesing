@@ -2,8 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.shoesing.item.model.mapper.ItemMapper">
 	
+	<resultMap type="Item" id="item_rm">
+		
+		<id property="itemNo" column="ITEM_NO"/>
+		
+		<collection property="sizeList"
+					select="selectSizeList"
+					column="ITEM_NO"
+					javaType="java.util.ArrayList"
+					ofType="Size"
+		/>
+		
+		
+	</resultMap>
+	
 	<select id="selectAll">
-		SELECT ITEM_NO, ITEM_NAME, ITEM_COUNT, ITEM_PRICE
+		SELECT ITEM_NO, ITEM_NAME, ITEM_PRICE
 		FROM "ITEM"
 		WHERE ITEM_COUNT > 0
 		ORDER BY 
@@ -44,9 +58,37 @@
 		</if> -->
 	</select>
 	
+	<!-- 상품 총 개수  -->
 	<select id="getListCount">
 		SELECT COUNT(*) 
 		FROM "ITEM"
 	</select>
 	
+	<select id="selectOne" resultMap="item_rm">
+		SELECT ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_UPLOAD_DATE, 
+				ITEM_BRAND, ITEM_INFO, CATEGORY_NO
+		FROM "ITEM"
+		WHERE ITEM_NO = ${itemNo}
+	</select>
+	
+	<!-- 해당 상품 사이즈별 재고 검색 -->
+	<select id="selectSizeList" resultType="Size">
+		SELECT SIZE_NO, ITEM_NO, SIZE_VAL, SIZE_STOCK
+		FROM "STOCK"
+		JOIN "SIZE" USING(SIZE_NO)
+		WHERE SIZE_STOCK > 0
+		AND ITEM_NO = ${itemNo}
+	</select>
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+

@@ -7,7 +7,9 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import kr.co.shoesing.item.model.dto.Item;
@@ -43,6 +45,21 @@ public class ItemController {
 		
 		return service.selectAll(sortNo, cp);
 	}
+	
+	/** 상품 상세 페이지 뷰
+	 * @param itemNo
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("detail")
+	public String detail(@RequestParam("itemNo") int itemNo, 
+						 Model model) {
+		
+		Item item = service.selectOne(itemNo);
+		model.addAttribute("item", item);
+		return "pages/itemDetail";
+	}
+	
 }
 
 
