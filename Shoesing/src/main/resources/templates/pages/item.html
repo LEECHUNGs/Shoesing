@@ -6,51 +6,33 @@
   layout:decorate="~{fragments/layouts/main}"
 >
   <head>
-    <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
-    <style>
-        #itemListUl {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .itemBox {
-            width: 300px;
-            height: 300px;
-        }
-
-        .pageUl{
-            display: flex;
-        }
-
-        .pageNo {
-            width: 20px;
-            height: 20px;
-        }
-
-        .currentPage {
-          border: 1px solid black;
-        }
-        
-    </style>
+    <link th:href="@{/css/pages/item.css}" rel="stylesheet" />
   </head>
   <th:block layout:fragment="main">
-    <!-- 내용은 여기 작성 -->
+    <div class="item-main">
+      <div class="pageTitle">상품 목록 페이지</div>
 
-    <h1>상품 목록 페이지</h1>
+      <!-- 상품 정렬 버튼 -->
+      <div class="item-content">
+        <div class="itemSort">
+          <a href="#" onclick="selectItems(0, 1)">기본 정렬</a>||
+          <a href="#" onclick="selectItems(1, 1)">기본 역순 정렬</a>||
+          <a href="#" onclick="selectItems(2, 1)">가격순 정렬</a>||
+          <a href="#" onclick="selectItems(3, 1)">가격 역순 정렬</a>||
+          <a href="#" onclick="selectItems(4, 1)">이름순 정렬</a>||
+          <a href="#" onclick="selectItems(5, 1)">이름 역순 정렬</a>
+        </div>
 
-    <!-- 상품 정렬 버튼 -->
-    <a href="#" onclick="selectItems(0, 1)">기본 정렬</a>||
-    <a href="#" onclick="selectItems(1, 1)">기본 역순 정렬</a>||
-    <a href="#" onclick="selectItems(2, 1)">가격순 정렬</a>||
-    <a href="#" onclick="selectItems(3, 1)">가격 역순 정렬</a>||
-    <a href="#" onclick="selectItems(4, 1)">이름순 정렬</a>||
-    <a href="#" onclick="selectItems(5, 1)">이름 역순 정렬</a>
-    
-    <!-- 상품 목록 영역 -->
-    <ul id="itemListUl" class="itemListUl"></ul>
+        <!-- 상품 목록 영역 -->
+        <div class="itemList">
+          <ul id="itemListUl" class="itemListUl"></ul>
+        </div>
 
-    <ul id="pageUl" class="pageUl"></ul>
-
+        <div class="page">
+          <ul id="pageUl" class="pageUl"></ul>
+        </div>
+      </div>
+    </div>
     <script src="/js/item/item.js"></script>
   </th:block>
 </html>

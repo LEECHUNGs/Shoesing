@@ -9,6 +9,14 @@
     <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
   </head>
   <th:block layout:fragment="main">
-    <div class="pageTitle">제목</div>
+    회원 복구
+    <form action="/user/restoration" method="post">
+      <label
+        >복구할 회원의 아이디<input type="text" id="inputId" name="inputId"
+      /></label>
+      <button type="button" id="checkBtn">회원 확인</button>
+    </form>
+
+    <script type="text/javascript" th:src="@{/js/restoration.js}"></script>
   </th:block>
 </html>

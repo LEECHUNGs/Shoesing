@@ -22,27 +22,25 @@ public interface UserService {
 	int signup(User inputUser);
 
 	/**
-	 * 회원 아이디 중복체크
-	 * 
-	 * @param userId
-	 * @return result
+	 * 회원 탈퇴
 	 */
-	int checkId(String userId);
+	int delete(String userId);
 
 	/**
-	 * 회원 이메일 중복체크
+	 * 유저 정보 중복 체크
 	 * 
-	 * @param userId
-	 * @return result
+	 * @param input  : 체크하고자 하는 유저 정보
+	 * @param method : 체크하고자 하는 정보 (userId, userEmail, userName)
+	 * @return result : COUNT(*)
 	 */
-	int checkEmail(String userId);
+	int check(String input, String method);
 
 	/**
-	 * 회원 닉네임 중복체크
+	 * 탈퇴한 회원 복구
 	 * 
 	 * @param userId
-	 * @return result
+	 * @return
 	 */
-	int checkNickname(String userId);
+	int restoration(String userId);
 
 }

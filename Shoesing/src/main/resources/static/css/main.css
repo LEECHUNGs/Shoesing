@@ -14,7 +14,7 @@
 :root {
   --title-font-family: 'tekrot';
 
-  /* --devColor: rgba(38, 36, 48, 0.03); */
+  --devColor: rgba(38, 36, 48, 0.03);
 
   --black: rgb(0, 0, 0);
 
@@ -28,6 +28,11 @@
   --main-font-family: 'Pretendard';
   --main-font-weight: 400;
   --main-font-style: normal;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }
 
 * {
@@ -126,7 +131,6 @@ body {
   border-radius: 50%;
   width: 42px;
   height: 42px;
-  margin: 4px;
 }
 
 /* ------------------------- 공통 디자인 ------------------------- */
