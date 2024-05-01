@@ -57,7 +57,7 @@ userId.addEventListener('input', (e) => {
     });
 });
 
-//  이름 유효성 검사
+// 이름 유효성 검사
 // const userName =document.querySelector("#userName");
 
 // userName.addEventListener("input", e => {
@@ -184,46 +184,95 @@ userPwConfirm.addEventListener('input', () => {
   checkObj.userPwConfirm = false;
 });
 
-// 이메일 유효성 검사
 
+//============================================================
+// 이메일 유효성 검사
+const emailDiv= document.querySelector('#emailDiv')
 const userEmail = document.querySelector('#userEmail');
 const emailMessage = document.querySelector('#emailMessage');
-const domainList = document.querySelector('#domainList');
 
+// 이메일아이디 입력 시 검사
 userEmail.addEventListener('input', (e) => {
-  checkObj.authKey = false;
-  document.querySelector('#authKeyMessage').innerText = '';
-  const inputEmail = e.target.value;
-
-  if (inputEmail.trim().length === 0) {
-    emailMessage.innerText = '이메일을 다시 입력해주세요';
-    emailMessage.classList.remove('confirm', 'error');
-    checkObj.memberEmail = false;
-    userEmail.value = '';
-    return;
-  }
-
-  const regExp = /^[a-zA-Z0-9._%+-]{1,20}$/;
-
-  if (!regExp.test(inputEmail)) {
-    emailMessage.innerText = '알맞은 이메일 형식으로 작성해주세요';
+  checkObj.userEmail = false;
+document.querySelector('#authKeyMessage').innerText = '';
+  // 만약 input창에 값을 입력하지 않았을 경우
+  if (userEmail.value.trim().length === 0) {
+    emailMessage.innerText = '이메일을 입력해주세요';
     emailMessage.classList.add('error');
     emailMessage.classList.remove('confirm');
     checkObj.userEmail = false;
+    userEmail.value = '';
+    return;
+  } 
+   //입력은 했으나 만약 inputEmail이 정규식에 안맞는 경우
+  const regExp = /^[a-zA-Z0-9._%+-]{2,}$/;
+  if (!regExp.test(userEmail.value)) {
+    emailMessage.innerText = '유효하지 않은 형식의 이메일입니다.';
+    emailMessage.classList.add('error');
+    emailMessage.classList.remove('confirm');
+    checkObj.userEmail = false;
+   userEmail.value = '';
     return;
   }
+
 });
 
-domainList.addEventListener('change', (e) => {
-  if (e.target.value == null) {
-    alert = '알맞은 도메인을 입력해주세요';
+ // 도메인 부분 확인
+
+const domainOption = document.querySelector('#domainOption');
+const inputDomain = document.querySelector('#inputDomain');
+const selectedDomain = document.querySelector('#selectedDomain');
+
+selectedDomain. addEventListener('input', (e) => {
+  checkObj.userEmail = false;
+document.querySelector('#authKeyMessage').innerText = '';
+
+const changeDomain= e.target.value;
+
+if(selectedDomain.value.trim().length === 0){
+    emailMessage.innerText = '이메일의 도메인을 입력해주세요';
+   emailMessage.classList.add('error');
+  emailMessage.classList.remove('confirm');
+    checkObj.userEmail = false;
+    selectedDomain.value = '';
+    return;
   }
-  emailMessage.innerText = '유효한 이메일 입니다.';
-  emailMessage.classList.add('confirm');
-  emailMessage.classList.remove('error');
-  checkObj.userEmail = true;
-});
 
+if(domainOption.id === 'inputDomain'){
+selectedDomain.removeAttribute('readonly');
+}else{
+  selectedDomain.setAttribute('readonly', true);
+}
+
+ });
+
+
+
+// input값들을 다 합쳐서 userEmail값으로 넣어주기 
+
+  const Email = `${userEmail.value}@${selectedDomain.value}`;
+  
+
+// function validateEmail(userEmail) {
+//   const regex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+//   return regex.test(userEmail);
+// console.log(userEmail);
+
+//   if (userEmail) {
+//     console.log('유효한 이메일 형식입니다:', userEmail);
+//   } else {
+//     console.log('유효하지 않은 이메일 형식입니다:', userEmail);
+//     emailMessage.innerText = '이메일이 유효하지 않습니다 :( ';
+//   }
+//     emailMessage.innerText = '사용가능한 이메일 입니다';
+//     emailMessage.classList.add('confirm');
+//     emailMessage.classList.remove('error');
+//     checkObj.userEmail = true;
+//}
+
+
+
+//====================================================
 // 이메일 인증번호
 const sendAuthKeyBtn = document.querySelector('#sendAuthKeyBtn');
 const authKey = document.querySelector('#authKey');
@@ -243,7 +292,8 @@ sendAuthKeyBtn.addEventListener('click', () => {
   authKeyMessage.innerText = '';
 
   if (!checkObj.userEmail) {
-    alert('유효한 이메일 작성 후 클릭해 주세요');
+    alert('이메일을 먼저 작성해주시기 바랍니다.');
+    checkObj.userEmail.value ='';
     return;
   }
 
@@ -252,25 +302,27 @@ sendAuthKeyBtn.addEventListener('click', () => {
 
   clearInterval(authTimer);
   // **------ fetch 부분 수정 필요--------------------------------------
+  // 인증번호 한번만 누르고 이후에는 더이상 알림창 안뜨고 재입력하게끔 하도록 설정
+  // 다시보내기 
+
   fetch('/email/signup', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: userEmail.value,
+    body: userEmail
   })
-    .then((resp) => resp.text())
-    .then((result) => {
-      if (result == 1) {
-        console.log('인증 번호 발송 성공');
-      } else {
+  .then((resp) => resp.text())
+  .then((result) => {
+      if (result == 0) {
         console.log('인증 번호 발송 실패');
-      }
-    });
+        alert('인증번호 발송에 실패했습니다.'); 
+      } else {
+        console.log('인증 번호 발송 성공');
+        authKeyMessage.innerText = initTime;
+        authKeyMessage.classList.remove('confirm', 'error');
 
-  authKeyMessage.innerText = initTime;
-  authKeyMessage.classList.remove('confirm', 'error');
-
-  alert('인증번호가 발송되었습니다');
-
+        alert('인증번호가 성공적으로 발송되었습니다');
+      }  
+});
   authTimer = setInterval(() => {
     authKeyMessage.innerText = `${addZero(min)}:${addZero(sec)}`;
     if (min == 0 && sec == 0) {
@@ -302,8 +354,8 @@ checkAuthKeyBtn.addEventListener('click', () => {
     return;
   }
   const obj = {
-    email: userEmail.value + inputDomain.value,
-    authKey: authKey.value,
+    email: userEmail,
+    authKey: authKey.value
   };
   // **------ fetch 부분 수정 필요--------------------------------------
   fetch('/email/checkAuthKey', {
@@ -314,22 +366,24 @@ checkAuthKeyBtn.addEventListener('click', () => {
     .then((resp) => resp.text())
     .then((result) => {
       if (result == 0) {
-        alert('인증번호가 일치하지 않습니다!');
+        alert("인증번호가 일치하지 않습니다!");
         checkObj.authKey = false;
         return;
       }
       clearInterval(authTimer);
-      authKeyMessage.innerText = '인증 되었습니다.';
+      authKeyMessage.innerText = '인증번호가 일치합니다.';
       authKeyMessage.classList.remove('error');
       authKeyMessage.classList.add('confirm');
       checkObj.authKey = true;
     });
 });
+//=============================================================
+
+
+
 
 //전화번호 유효성 검사
-// 하나라도 입력하면 입력한 값으로 넘어가게 설정
-// 10~11 자리인경우 true로 변경
-// null일경우 null값으로 제출
+
 const userTel = document.querySelector('#userTel');
 const telMessage = document.querySelector('#telMessage');
 

@@ -107,37 +107,39 @@
       >
 
       <br />
-      <!-- 이메일 입력 -->
-      <label for="userEmail"> <span class="required">*</span>이메일 </label>
 
-      <div class="signup-input-area">
-        <input type="text" class="domain" id="userEmail" /> @
-        <input type="text" name="inputDomain" id="inputDomain" />
-        <select
-          title="이메일 도메인 선택"
-          id="domainList"
-          onchange="this.form.inputDomain.value=this[this.selectedIndex].value;"
-        >
-          <option value="" selected="selected">선택</option>
-          <option value="naver.com">네이버</option>
-          <option value="gmail.com">구글</option>
-          <option value="daum.net">다음</option>
-          <option value="kh.co.kr">KH</option>
-          <option value="apple.com">애플</option>
-          <option value="kakao.com">카카오</option>
-          <option value="">직접입력</option>
-        </select>
-        <button id="sendAuthKeyBtn" type="button">인증번호 요청</button>
-      </div>
+     <!-- 이메일 입력 일단 이내용 x-->
+     <label for="userEmail"> <span class="required">*</span>이메일 </label>
+
+     <div class="signup-input-area" id="emailDiv">
+       <input type="text" class="userEmail" id="userEmailId" /> @
+       <input type="text" name="selectedDomain" id="selectedDomain" readonly/>
+       <select
+         title="이메일 도메인 선택"
+         id="domainOption"
+         onchange="this.form.selectedDomain.value=this[this.selectedIndex].value;"
+       >
+         <option selected disabled>===선택===</option>
+         <option value="naver.com">네이버</option>
+         <option value="gmail.com">구글</option>
+         <option value="daum.net">다음</option>
+         <option value="kh.co.kr">KH</option>
+         <option value="apple.com">애플</option>
+         <option value="kakao.com">카카오</option>
+         <option value="" id="inputDomain">직접입력</option>
+       </select>
+     
+       <button id="sendAuthKeyBtn" type="button">인증번호 요청</button>
+     </div>
 
       <span class="signup-message" id="emailMessage"
         >메일을 받을 수 있는 이메일을 입력해주세요.</span
       >
       <br />
       <!-- 인증번호 입력 -->
-      <label for="emailCheck"> <span class="required">*</span> 인증번호 </label>
+      <label for="emailCheck" id="sendAuthKeyBtn"> <span class="required">*</span> 인증번호 </label>
 
-      <div class="signup-input-area">
+      <div class="signup-input-area" id="userEmail">
         <input
           type="text"
           name="authKey"
