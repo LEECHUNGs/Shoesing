@@ -1,5 +1,6 @@
 :root {
   --headerHeight: 80px;
+  --spacerWidth: 42%;
 }
 
 header {
@@ -81,12 +82,6 @@ header {
   font-weight: 700;
 }
 
-.navigation div:nth-child(1),
-.navigation div:nth-child(2),
-.navigation div:nth-child(3) {
-  margin: 0 6px;
-}
-
 /* Popover */
 .popover-header {
   background-color: black;
@@ -123,7 +118,7 @@ header {
 /* Offcanvas Component */
 /* Menu */
 .menu {
-  width: 30%;
+  width: var(--spacerWidth);
 }
 
 .header .bi-list {
@@ -181,24 +176,45 @@ header {
   display: flex;
   align-items: center;
   padding: 5px;
-  width: 30%;
+  width: var(--spacerWidth);
 }
 
 .navigation div {
-  padding: 0px 5px;
+  cursor: pointer;
+}
+
+.navBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  margin-left: 6px;
+}
+
+.navBtn i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Search */
+.search {
+  font-size: 26px;
+  padding-bottom: 4px;
 }
 
 /* Wish List */
 .wishList {
-  line-height: 2px;
-  font-size: 30px;
+  font-size: 28px;
+  padding-top: 2px;
 }
 
 /* Cart */
 .cart {
-  font-size: 30px;
-  line-height: 0;
-  margin-bottom: 2px;
+  font-size: 28px;
+  padding-bottom: 2px;
   position: relative;
 }
 
@@ -208,27 +224,25 @@ header {
   border-radius: 50%;
   position: absolute;
   top: 4px;
-  right: 3px;
+  left: 19px;
   background-color: red;
 }
 
 /* User Icon */
 .userIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 38px;
   transition: 0.2s;
+}
+
+#userProfile {
+  margin-left: 4px;
 }
 
 header .userIcon:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.28);
-}
-
-/* Search */
-.search .bi-search {
-  font-size: 26px;
-  line-height: 2px;
-}
-
-.search:hover {
-  cursor: pointer;
 }
 
 /* Searchbar */

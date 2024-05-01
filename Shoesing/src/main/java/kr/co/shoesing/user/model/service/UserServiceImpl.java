@@ -1,5 +1,8 @@
 package kr.co.shoesing.user.model.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,30 +61,33 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 회원 아이디 중복 체크
-	 * 
-	 * @return
+	 * 회원 탈퇴
 	 */
-	public int checkId(String userId) {
-		return mapper.checkId(userId);
+	@Override
+	public int delete(String userId) {
+		return mapper.delete(userId);
 	}
 
 	/**
-	 * 회원 이메일 중복 체크
-	 * 
-	 * @return
+	 * 유저 정보 중복 확인
 	 */
-	public int checkEmail(String userEmail) {
-		return mapper.checkEmail(userEmail);
+	@Override
+	public int check(String input, String method) {
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("input", input);
+		map.put("method", method);
+
+		return mapper.check(map);
 	}
 
 	/**
-	 * 회원 닉네임 중복 체크
-	 * 
-	 * @return
+	 * 탈퇴한 회원 복구
 	 */
-	public int checkNickname(String userId) {
-		return mapper.checkNickname(userId);
+	@Override
+	public int restoration(String userId) {
+		return mapper.restoration(userId);
 	}
 
 }

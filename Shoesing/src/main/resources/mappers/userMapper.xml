@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.shoesing.user.model.mapper.UserMapper">
 	
+	<!-- 회원 로그인 -->
 	<select id="login" resultType="User">
 		SELECT 
 			USER_NO , 
@@ -20,6 +21,7 @@
 		WHERE USER_ID = #{userId}
 	</select>
 	
+	<!-- 회원가입 -->
 	<insert id="signup">
 		INSERT INTO "USER" 
 		VALUES(
@@ -37,26 +39,40 @@
 		)
 	</insert>
 	
-	<select id="checkId" resultType="_int">
-		SELECT 
-			USER_NO
+	<!-- 중복 체크 -->
+	<select id="check" resultType="_int">
+		SELECT COUNT(*)
 		FROM "USER"
+		WHERE 
+			<choose>
+				<!-- 유저 아이디 -->
+				<when test='method == "userId"'>
+					USER_ID = #{input}
+				</when>
+				<!-- 유저 이메일 -->
+				<when test='method == "userEmail"'>
+					USER_EMAIL = #{input}
+				</when>
+				<!-- 유저 실명 -->
+				<when test='method == "userName"'>
+					USER_NAME = #{input}
+				</when>
+			</choose>
+	</select>
+	
+	<!-- 회원 탈퇴 -->
+	<update id="delete">
+		UPDATE "USER" SET
+		USER_DEL_FL = 'Y'
 		WHERE USER_ID = #{userId}
-	</select>
-	
-	<select id="checkEmail" resultType="_int">
-		SELECT 
-			USER_NO
-		FROM "USER"
-		WHERE USER_EMAIL = #{userEmail}
-	</select>
-	
-	<select id="checkNickname" resultType="_int">
-		SELECT 
-			USER_NO
-		FROM "USER"
-		WHERE USER_NICKNAME = #{userNickname}
-	</select>
+	</update>
+
+	<!-- 회원 복구 -->
+	<update id="restoration">
+		UPDATE "USER" SET
+		USER_DEL_FL = 'N'
+		WHERE USER_ID = #{userId}
+	</update>
 
 	
 </mapper>

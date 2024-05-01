@@ -11,8 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-public class LoggedInFilter implements Filter {
-
+public class LoggedOutFilter implements Filter {
 	/**
 	 * 로그인한 회원 존재시 접근 불가 필터
 	 * 
@@ -30,15 +29,15 @@ public class LoggedInFilter implements Filter {
 		HttpSession session = req.getSession();
 
 		// 로그인한 회원 정보를 얻어옴
-		if (session.getAttribute("loginUser") == null) { // 로그인 회원 존재하지 않으면
+		if (session.getAttribute("loginUser") != null) { // 로그인 회원 존재하면
 
 			// 다음 필터로 요청, 응답 객체 전달
 			chain.doFilter(request, response);
 
-		} else { // 로그인 회원 존재하면
+		} else { // 로그인 회원 존재하지 않으면
 
 			// 로그인 에러
-			resp.sendRedirect("/loggedInError");
+			resp.sendRedirect("/loggedOutError");
 
 		}
 	}

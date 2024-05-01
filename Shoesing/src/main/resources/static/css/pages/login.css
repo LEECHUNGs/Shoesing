@@ -3,7 +3,7 @@ body {
 }
 
 .login-form {
-  padding-top: 20px;
+  margin: 35px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -99,8 +99,38 @@ input:focus + label {
   width: 100%;
   display: flex;
   justify-content: center;
+  font-size: 14px;
 }
 
 .loginLink span {
   margin: 0 6px;
+}
+
+.saveId {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.checkIdCheck {
+  margin-right: 4px;
+}
+
+.loginBtn {
+  border-radius: 0.5rem;
+  border: transparent;
+  height: 58px;
+  width: 100%;
+  background-color: black;
+  color: white;
+  transition: 0.2s;
+}
+
+.loginBtn:hover {
+  background-color: var(--quaternaryColor);
+}
+
+.signupLink {
+  margin-left: 4px;
+  font-weight: 800;
 }

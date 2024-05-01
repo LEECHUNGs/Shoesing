@@ -32,4 +32,18 @@ public class MainController {
 		return "redirect:/";
 	}
 
+	/**
+	 * 로그인 안함 에러
+	 * 
+	 * @param ra
+	 * @return
+	 */
+	@GetMapping("loggedOutError")
+	public String loggedOutError(RedirectAttributes ra) {
+
+		ra.addFlashAttribute("message", "로그인을 먼저 해주시기 바랍니다");
+
+		return "redirect:/";
+	}
+
 }
