@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{fragments/layouts/main}"
+>
+  <head>
+    <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
+  </head>
+  <th:block layout:fragment="main">
+    <!-- 내용은 여기 작성 -->
+
+    <!-- 상품 이미지 (추가 예정) -->
+    <img src="/img/cat1.jpg" width="300px">
+
+    <!-- 상품 util -->
+    <div>
+        <p th:text="|상품 브랜드 : ${item.itemBrand}|">상품 브랜드</p>
+        <p th:text="|상품명 : ${item.itemName}|">상품명</p>
+        <p th:text="|남은 가격 : ${item.itemPrice}|">상품 가격</p>
+        <textarea th:text="|남은 수량 : ${item.itemInfo}|">상품 설명</textarea>
+
+        <!-- 상품 사이즈 input 박스 -->
+        <div>
+          <form action="#" method="post">
+            <div th:each="size : ${item.sizeList}">
+              <label>
+                <input type="radio" name="inputSize" th:value="*{size.sizeNo}">[[*{size.sizeVal}]]
+              </label>
+            </div>
+
+            <!-- 상품 구매 submit -->
+            <button id="">상품 바로 구매</button>
+
+            <!-- 비동기로 위시리스트 추가 요청 -->
+            <button type="button" id="wishListBtn">위시리스트</button>
+          </form>
+        </div>
+    </div>
+    
+    <script th:inline="javascript">
+      const item = /*[[${item}]]*/"상품 정보";
+    </script>
+
+    <script src="/js/item/itemDetail.js"></script>
+
+  </th:block>
+</html>
