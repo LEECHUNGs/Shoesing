@@ -52,5 +52,11 @@ public class ItemServiceImpl implements ItemService{
 		
 		return map;
 	}
+
+	// 상품 상세내용 조회
+	@Override
+	public Item selectOne(int itemNo) {
+		return mapper.selectOne(itemNo);
+	}
 	
 }

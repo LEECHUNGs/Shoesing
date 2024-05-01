@@ -10,7 +10,6 @@ const selectItems = (sortNo, cp) => {
         // 4 : 이름정렬
         // 5 : 역 이름정렬
 
-        console.log(cp);
 
     fetch("itemList?sortNo=" + sortNo + "&cp=" + cp) // GET 방식 요청
     .then(resp => resp.json())
@@ -28,14 +27,18 @@ const selectItems = (sortNo, cp) => {
         // 상품 목록 생성
         for (const i in itemList) {
             const itemLi = document.createElement("li");
+            const itemA = document.createElement("a");
 
-            itemLi.innerHTML = `상품 번호 : ${itemList[i].itemNo}<br>
-                                상품 이름 : ${itemList[i].itemName}<br>
-                                상품 수량 : ${itemList[i].itemCount}<br><br>
+            itemA.innerHTML = `상품 번호 : ${itemList[i].itemNo}<br>
+                                상품 이름 : ${itemList[i].itemName}<br><br>
                                 상품 가격 : ${itemList[i].itemPrice}원`;
 
-            itemLi.classList.add("itemBox");
+            itemA.href = `detail?itemNo=${itemList[i].itemNo}`;
 
+            itemLi.appendChild(itemA);
+
+            itemLi.classList.add("itemBox");
+                                
             itemListUl.appendChild(itemLi);
         }
 
@@ -52,16 +55,15 @@ const selectItems = (sortNo, cp) => {
             pageLi.classList.add("pageNo");
             pageLi.append(pageA);
             
-            // if(i == cp) {
-                //     pageLi.classList.add("currentPage");
-                // }
+            if(i == cp) {
+                pageLi.classList.add("currentPage");
+            }
             
             pageUl.appendChild(pageLi);
             
             pageA.addEventListener("click", () => {
                 pageUl.innerText = "";
 
-                console.log("sortNo : " + sortNo);
                 selectItems(sortNo, i);
             });
         }
