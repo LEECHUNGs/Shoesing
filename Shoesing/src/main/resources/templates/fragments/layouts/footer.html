@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <th:block th:fragment="footer"
+    ><link th:href="@{/css/footer.css}" rel="stylesheet" />
+
+    <!-- 푸터 -->
+    <footer>
+      <div class="footer-main">
+        <div>Provided By SHOESING™</div>
+        <div>이용약관 주소 전화번호</div>
+      </div>
+    </footer>
+
+    <!-- 전달 확인용 alert 메세지-->
+    <script th:inline="javascript">
+      const message = /*[[${message}]]*/ '전달 받은 message';
+
+      if (message != null) alert(message);
+    </script>
+  </th:block>
+</html>

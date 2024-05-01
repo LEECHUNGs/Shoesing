@@ -9,5 +9,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WishListServiceImpl implements WishListService{
 	
-	private final WishListMapper mapper;
+	//private final WishListMapper mapper;
 }
