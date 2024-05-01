@@ -49,25 +49,30 @@
 
           <div class="navigation">
             <!-- 검색창 -->
-            <div class="search">
-              <a
-                data-bs-toggle="modal"
-                data-bs-target="#searchbar"
-                class="bi-search"
-              >
-              </a>
+            <div class="navBtn">
+              <div class="search">
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#searchbar"
+                  class="bi-search"
+                >
+                </a>
+              </div>
             </div>
-
             <!-- 즐겨찾기 -->
-            <div class="wishList">
-              <a href="#" id="heart" class="bi-suit-heart"></a>
-            </div>
+            <a class="navBtn" href="">
+              <div class="wishList">
+                <i id="heart" class="bi-suit-heart"></i>
+              </div>
+            </a>
 
             <!-- 장바구니 -->
-            <div class="cart">
-              <div class="cart-indicator"></div>
-              <a href="#" class="bi-bag-check"></a>
-            </div>
+            <a class="navBtn" href="">
+              <div class="cart">
+                <div class="cart-indicator"></div>
+                <i class="bi-bag-check"></i>
+              </div>
+            </a>
 
             <!-- 팝오버 트리거-->
             <div
@@ -81,13 +86,22 @@
             >
               <!-- if 로그인 -->
               <th:block th:if="${session.loginUser != null}">
-                <img
-                  th:src="@{/img/userIcon/} + ${session.loginUser.userIcon} + |.png|"
-                  class="userIcon"
-                  alt="userIcon"
-              /></th:block>
+                <a class="navBtn">
+                  <img
+                    th:src="@{/img/userIcon/} + ${session.loginUser.userIcon} + |.png|"
+                    class="userIcon"
+                    alt="userIcon" /></a
+              ></th:block>
               <!-- if not 로그인 -->
-              <th:block th:if="${session.loginUser == null}"> 로그인 </th:block>
+              <th:block th:if="${session.loginUser == null}">
+                <a class="navBtn">
+                  <i
+                    th:src="@{/img/userIcon/userDefault.svg}"
+                    class="userIcon bi-person-circle"
+                    alt="userIcon"
+                  ></i
+                ></a>
+              </th:block>
             </div>
 
             <!-- 팝오버 내용-->
