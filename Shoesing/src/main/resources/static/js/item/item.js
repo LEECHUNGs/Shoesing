@@ -20,8 +20,9 @@ const selectItems = (sortNo, cp) => {
 
         const pageUl = document.getElementById("pageUl");
         const itemListUl = document.getElementById("itemListUl");
-        itemListUl.innerHTML = "";
         
+        // 상품 목록 / 페이지 번호 비우기
+        itemListUl.innerHTML = "";
         pageUl.innerText = "";
 
         // 상품 목록 생성
