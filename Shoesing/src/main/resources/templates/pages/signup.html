@@ -38,7 +38,7 @@
       <!-- 이름 입력 -->
       <label for="userName"> <span class="required"></span>이름 </label>
       <div class="signup-input-area">
-        <input type="text" name="userName" id="userName" autocomplete="off" />
+        <input type="text" name="userName" id="userName" autocomplete="off" placeholder="이름을 입력해주세요." />
       </div>
 
       <!-- 닉네임 입력 -->
@@ -49,6 +49,7 @@
           name="userNickname"
           id="userNickname"
           autocomplete="off"
+          placeholder="닉네임을 입력해주세요."
         />
       </div>
 
@@ -64,7 +65,7 @@
           type="password"
           name="userPw"
           id="userPw"
-          placeholder="비밀번호"
+          placeholder="비밀번호를 입력해주세요."
           autocomplete="off"
         />
       </div>
@@ -78,13 +79,13 @@
           type="password"
           name="userPwConfirm"
           id="userPwConfirm"
-          placeholder="비밀번호확인"
+          placeholder="비밀번호를 일치하게 입력해주세요"
           autocomplete="off"
         />
       </div>
 
       <span class="signup-message" id="pwMessage"
-        >영어,숫자,특수문자 6~16글자 사이로 입력해주세요.</span
+        >비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.</span
       >
 
       <br />
@@ -97,13 +98,13 @@
           type="number"
           name="userTel"
           id="userTel"
-          placeholder="(-없이 숫자만 입력)"
+          placeholder="전화번호를 입력해주세요(-없이 숫자만 입력)"
           autocomplete="off"
         />
       </div>
 
       <span class="signup-message" id="telMessage"
-        >전화번호를 입력해주세요.(- 제외)</span
+        ></span
       >
 
       <br />
@@ -113,19 +114,17 @@
       <div class="signup-input-area">
         <input type="text" class="domain" id="userEmail" /> @
         <input type="text" name="inputDomain" id="inputDomain" />
-        <select
-          title="이메일 도메인 선택"
-          id="domainList"
-          onchange="this.form.inputDomain.value=this[this.selectedIndex].value;"
+        <select title="이메일 도메인 선택" id="domainList"
+       
         >
-          <option value="" selected="selected">선택</option>
-          <option value="naver.com">네이버</option>
-          <option value="gmail.com">구글</option>
-          <option value="daum.net">다음</option>
-          <option value="kh.co.kr">KH</option>
-          <option value="apple.com">애플</option>
-          <option value="kakao.com">카카오</option>
-          <option value="">직접입력</option>
+          <option selected disabled>선택</option>
+          <option  value="naver.com">네이버</option>
+          <option  value="gmail.com">구글</option>
+          <option  value="daum.net">다음</option>
+          <option  value="kh.co.kr">KH</option>
+          <option  value="apple.com">애플</option>
+          <option  value="kakao.com">카카오</option>
+          <option  value="">직접입력</option>
         </select>
         <button id="sendAuthKeyBtn" type="button">인증번호 요청</button>
       </div>

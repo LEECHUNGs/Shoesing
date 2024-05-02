@@ -67,6 +67,4 @@ public class WishListServiceImpl implements WishListService{
 		return mapper.delete(itemNoList);
 	}
 	
-	
-	
 }
