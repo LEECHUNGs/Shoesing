@@ -238,7 +238,7 @@ const sendAuthKeyBtn = document.querySelector('#sendAuthKeyBtn');
 const authKey = document.querySelector('#authKey');
 const checkAuthKeyBtn = document.querySelector('#checkAuthKeyBtn');
 const authKeyMessage = document.querySelector('#authKeyMessage');
-
+const emailVal= userEmail.value + '@' + inputDomain.value;
 let authTimer;
 const initMin = 4;
 const initSec = 59;
@@ -246,6 +246,7 @@ const initTime = '05:00';
 
 let min = initMin;
 let sec = initSec;
+
 
 sendAuthKeyBtn.addEventListener('click', () => {
   checkObj.authKey = false;
@@ -260,22 +261,22 @@ sendAuthKeyBtn.addEventListener('click', () => {
   sec = initSec;
 
   clearInterval(authTimer);
+  
   // ------ fetch 부분 수정 필요--------------------------------------
-  fetch('/email/signup', {
+  fetch('/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: userEmail
+    body: emailVal.value
   })
-    .then((resp) => resp.text())
-    .then((result) => {
-      if (result == 0) {
-        console.log('인증 번호 발송 실패');
-        emailMessage.innerText="인증번호 발송에 실패했습니다"
-        return;
+  .then((resp) => resp.text())
+  .then((result) => {
+      if (result == 1) {
+        console.log("인증 번호 발송 성공");
+        emailMessage.innerText="인증번호 발송에 성공했습니다 인증번호를 입력해주세요";
       } else {
-        console.log('인증 번호 발송 성공');
+        console.log('인증 번호 발송 실패');
       }
-    });
+  });
 
   authKeyMessage.innerText = initTime;
   authKeyMessage.classList.remove('confirm', 'error');
@@ -285,10 +286,10 @@ sendAuthKeyBtn.addEventListener('click', () => {
   authTimer = setInterval(() => {
     authKeyMessage.innerText = `${addZero(min)}:${addZero(sec)}`;
     if (min == 0 && sec == 0) {
-      checkObj.authKey = false;
-      clearInterval(authTimer);
-      authKeyMessage.classList.add('error');
-      authKeyMessage.classList.remove('confirm');
+        checkObj.authKey = false;
+        clearInterval(authTimer);
+        authKeyMessage.classList.add('error');
+        authKeyMessage.classList.remove('confirm');
       return;
     }
     if (sec == 0) {
@@ -299,8 +300,8 @@ sendAuthKeyBtn.addEventListener('click', () => {
   }, 1000);
 });
 function addZero(number) {
-  if (number < 10) return '0' + number;
-  else return number;
+  if (number < 10) return "0" + number;
+  else            return number;
 }
 
 checkAuthKeyBtn.addEventListener('click', () => {
@@ -313,8 +314,8 @@ checkAuthKeyBtn.addEventListener('click', () => {
     return;
   }
   const obj = {
-    email: userEmail.value + inputDomain.value,
-    authKey: authKey.value,
+    email: emailVal.value,
+    authKey: authKey.value
   };
   // **------ fetch 부분 수정 필요--------------------------------------
   fetch('/email/checkAuthKey', {
