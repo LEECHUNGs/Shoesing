@@ -116,6 +116,17 @@ public class UserController {
 	}
 
 	/**
+	 * 내정보 수정 페이지 
+	 * 
+	 * @return
+	 */
+	@GetMapping("updateProfile")
+	public String updateProfile() {
+		return "pages/user/updateProfile";
+	}
+	
+	
+	/**
 	 * 회원 탈퇴
 	 * 
 	 * @param request

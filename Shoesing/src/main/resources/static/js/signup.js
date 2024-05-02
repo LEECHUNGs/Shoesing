@@ -155,7 +155,7 @@ userPw.addEventListener('input', (e) => {
     return;
   }
 
-  const regExp = /^[a-zA-Z0-9!?@#$%^&*()._-]{6,16}$/;
+  const regExp = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{6,16}$/;
 
   if (!regExp.test(inputPw)) {
     pwMessage.innerText = '비밀번호가 유효하지 않습니다.';
@@ -188,46 +188,47 @@ const userEmail = document.querySelector('#userEmail');
 const inputDomain = document.querySelector('#inputDomain');
 const emailMessage = document.querySelector('#emailMessage');
 const domainList = document.querySelector('#domainList');
-let emailVal = '';
 
 // 이메일 입력
 userEmail.addEventListener('input', (e) => {
-  // 이메일 기본값 조건
-  if (
-    e.target.value.trim().length == 0 ||
-    inputDomain.value.trim().length == 0
-  ) {
+  if(e.target.value.trim().length == 0 || inputDomain.value.trim().length == 0){
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
-  // 이메일 기본값 통과 시
   checkObj.userEmail = true;
   emailMessage.innerText = '이메일을 입력 성공';
 });
 
 // 이메일 도메인 입력
 inputDomain.addEventListener('input', (e) => {
-  // 이메일 도메인 조건
-  if (e.target.value.trim().length == 0 || userEmail.value.trim().length == 0) {
+  if(e.target.value.trim().length == 0 || userEmail.value.trim().length == 0) {
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
-  // 이메일 도메인 통과 시
   checkObj.userEmail = true;
   emailMessage.innerText = '이메일을 입력 성공';
 });
 
 // 도메인 리스트
 domainList.addEventListener('change', (e) => {
-  // 이메일 도메인 조건
-  if (e.target.value.trim().length == 0 || userEmail.value.trim().length == 0) {
+  
+  const optionsValue = e.target.options[e.target.selectedIndex].value;
+  inputDomain.value = optionsValue;
+
+  if(!optionsValue == ""){
+    inputDomain.readOnly = true;
+  }else{
+      inputDomain.readOnly = false;
+  }
+
+  if(e.target.value.trim().length == 0 || userEmail.value.trim().length == 0) {
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
-  // 이메일 도메인 통과 시
+
   checkObj.userEmail = true;
-  emailMessage.innerText = '이메일을 입력 성공';
-  emailVal = userEmail.value + '@' + inputDomain.value;
+  emailMessage.innerText = '이메일 입력 성공';
+  const emailVal = userEmail.value + '@' + inputDomain.value;
   console.log(emailVal);
 });
 
@@ -247,9 +248,9 @@ let sec = initSec;
 
 sendAuthKeyBtn.addEventListener('click', () => {
   checkObj.authKey = false;
-  authKeyMessage.innerText = '';
+  authKeyMessage.innerText = "";
 
-  if (!checkObj.userEmail && inputDomain.value.trim().length == 0) {
+  if(!checkObj.userEmail) {
     alert('유효한 이메일 작성 후 클릭해 주세요');
     return;
   }
@@ -262,14 +263,16 @@ sendAuthKeyBtn.addEventListener('click', () => {
   fetch('/email/signup', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: userEmail.value,
+    body: userEmail
   })
     .then((resp) => resp.text())
     .then((result) => {
-      if (result == 1) {
-        console.log('인증 번호 발송 성공');
-      } else {
+      if (result == 0) {
         console.log('인증 번호 발송 실패');
+        emailMessage.innerText="인증번호 발송에 실패했습니다"
+        return;
+      } else {
+        console.log('인증 번호 발송 성공');
       }
     });
 
