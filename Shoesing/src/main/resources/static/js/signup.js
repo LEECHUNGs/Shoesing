@@ -57,23 +57,24 @@ userId.addEventListener('input', (e) => {
     });
 });
 
+// 이름 유효성 검사
 const userName = document.querySelector('#userName');
+const nameMessage = document.querySelector('#nameMessage');
 
 userName.addEventListener('input', (e) => {
   const inputName = e.target.value;
   if (inputName.trim().length === 0) {
-    alert = '이름을 입력해주세요';
+    nameMessage.innerText = '';
     inputName.value = null;
-    userName.value = '';
     return;
   }
   const regExp = /^[가-힣]{2,6}$/;
-
   if (!regExp.test(inputName)) {
-    alert = '이름을 입력해주세요';
+    nameMessage.innerText = '유효한 이름 형식이 아닙니다';
     inputName.value = null;
     return;
   }
+  nameMessage.innerText='유효한 이름형식입니다';
   return inputName.value;
 });
 
@@ -148,7 +149,7 @@ userPw.addEventListener('input', (e) => {
   const inputPw = e.target.value;
 
   if (inputPw.trim().length === 0) {
-    pwMessage.innerText = '영어, 숫자, 특수문자 6~16글자 사이로 입력해주세요';
+    pwMessage.innerText = '비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.';
     pwMessage.classList.remove('confirm', 'error');
     checkObj.userPw = false;
     userPw.value = '';
@@ -337,31 +338,34 @@ checkAuthKeyBtn.addEventListener('click', () => {
 });
 
 //전화번호 유효성 검사
-// 하나라도 입력하면 입력한 값으로 넘어가게 설정
-// 10~11 자리인경우 true로 변경
-// null일경우 null값으로 제출
 const userTel = document.querySelector('#userTel');
 const telMessage = document.querySelector('#telMessage');
 
 userTel.addEventListener('input', (e) => {
-  const inputTel = e.target.value;
-  if (inputTel.trim().length < 1) {
-    telMessage.innerText = '유효한 전화번호로 수정해주세요';
-    userTel.value = null;
-    return;
-  }
-  //const regExp = /^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
-
-  if (inputTel.length < 9) {
+  
+const regExp=/^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
+const inputTel = e.target.value;
+  if (!regExp.test(inputTel)) {
     telMessage.innerText = '유효한 전화번호 형식으로 수정해주세요';
     telMessage.classList.add('error');
     telMessage.classList.remove('confirm');
-    userTel.value = null;
     return;
   }
-  telMessage.innerText = '유효한 전화번호 형식입니다.';
-  telMessage.classList.add('confirm');
-  telMessage.classList.remove('error');
+
+  if (inputTel.trim().length < 9 ) {
+    telMessage.innerText = '유효한 전화번호 형식이 아닙니다';
+    telMessage.classList.add('error');
+    telMessage.classList.remove('confirm');
+    inputTel.value = null;
+    return;
+  }
+  
+    telMessage.innerText = '유효한 전화번호 형식입니다.';
+    telMessage.classList.add('confirm');
+    telMessage.classList.remove('error');
+    
+    
+  
 });
 
 //---------------------주소 다음 api ==> 수정 필요---------------------
