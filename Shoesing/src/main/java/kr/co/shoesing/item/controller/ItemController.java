@@ -29,7 +29,7 @@ public class ItemController {
 	 * @return
 	 */
 	@GetMapping("info")
-	public String getMethodName() {
+	public String itemInfo() {
 		return "pages/item";
 	}
 	
