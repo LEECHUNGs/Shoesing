@@ -6,7 +6,7 @@ const checkObj = {
   userNickname: false,
   userPw: false,
   userPwConfirm: false,
-  userEmail: false,
+  emailVal: false,
   authKey: false,
 };
 
@@ -109,8 +109,8 @@ userNickname.addEventListener('input', (e) => {
   const inputId = e.target.value;
 
   fetch('/user/checkNickname')
-    .then((resp) => resp.text())
-    .then((result) => {
+    .then(resp => resp.text())
+    .then(result => {
       if (result == 1) {
         nicknameMessage.innerText = '이미 사용중인 닉네임 입니다';
         nicknameMessage.classList.add('error');
@@ -196,7 +196,7 @@ userEmail.addEventListener('input', (e) => {
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
-  checkObj.userEmail = true;
+  checkObj.emailVal= true;
   emailMessage.innerText = '이메일을 입력 성공';
 });
 
@@ -206,7 +206,7 @@ inputDomain.addEventListener('input', (e) => {
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
-  checkObj.userEmail = true;
+  checkObj.emailVal = true;
   emailMessage.innerText = '이메일을 입력 성공';
 });
 
@@ -227,7 +227,7 @@ domainList.addEventListener('change', (e) => {
     return;
   }
 
-  checkObj.userEmail = true;
+  checkObj.emailVal = true;
   emailMessage.innerText = '이메일 입력 성공';
   const emailVal = userEmail.value + '@' + inputDomain.value;
   console.log(emailVal);
@@ -240,9 +240,9 @@ const checkAuthKeyBtn = document.querySelector('#checkAuthKeyBtn');
 const authKeyMessage = document.querySelector('#authKeyMessage');
 const emailVal= userEmail.value + '@' + inputDomain.value;
 let authTimer;
-const initMin = 4;
+const initMin = 0;
 const initSec = 59;
-const initTime = '05:00';
+const initTime = '01:00';
 
 let min = initMin;
 let sec = initSec;
@@ -252,9 +252,10 @@ sendAuthKeyBtn.addEventListener('click', () => {
   checkObj.authKey = false;
   authKeyMessage.innerText = "";
 
-  if(!checkObj.userEmail) {
+  if(!checkObj.emailVal) {
     alert('유효한 이메일 작성 후 클릭해 주세요');
     return;
+    
   }
 
   min = initMin;
@@ -262,26 +263,29 @@ sendAuthKeyBtn.addEventListener('click', () => {
 
   clearInterval(authTimer);
   
-  // ------ fetch 부분 수정 필요--------------------------------------
-  fetch('/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  
+  fetch("/email/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: emailVal.value
   })
-  .then((resp) => resp.text())
-  .then((result) => {
+ 
+  .then(resp => resp.text())
+  .then(result => {
       if (result == 1) {
-        console.log("인증 번호 발송 성공");
+        console.log('인증 번호 발송 성공');
         emailMessage.innerText="인증번호 발송에 성공했습니다 인증번호를 입력해주세요";
-      } else {
-        console.log('인증 번호 발송 실패');
+      } else { 
+        console.log("인증 번호 발송 실패");
+        emailMessage.innerText="인증번호 발송에 실패했습니다";
       }
+      
   });
 
   authKeyMessage.innerText = initTime;
   authKeyMessage.classList.remove('confirm', 'error');
 
-  alert('인증번호가 발송되었습니다');
+  alert('인증번호를 발송하였습니다. 입력하신 이메일을 확인해주세요');
 
   authTimer = setInterval(() => {
     authKeyMessage.innerText = `${addZero(min)}:${addZero(sec)}`;
@@ -305,7 +309,7 @@ function addZero(number) {
 }
 
 checkAuthKeyBtn.addEventListener('click', () => {
-  if (min === 0 && sec === 0) {
+  if (min == 0 && sec == 0) {
     alert('인증번호 입력 제한시간을 초과하였습니다!');
     return;
   }
@@ -317,7 +321,7 @@ checkAuthKeyBtn.addEventListener('click', () => {
     email: emailVal.value,
     authKey: authKey.value
   };
-  // **------ fetch 부분 수정 필요--------------------------------------
+ 
   fetch('/email/checkAuthKey', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -350,6 +354,7 @@ const inputTel = e.target.value;
     telMessage.innerText = '유효한 전화번호 형식으로 수정해주세요';
     telMessage.classList.add('error');
     telMessage.classList.remove('confirm');
+    //e.preventDefault();
     return;
   }
 
@@ -357,7 +362,7 @@ const inputTel = e.target.value;
     telMessage.innerText = '유효한 전화번호 형식이 아닙니다';
     telMessage.classList.add('error');
     telMessage.classList.remove('confirm');
-    inputTel.value = null;
+    inputTel.value = null; //e.preventDefault();
     return;
   }
   
@@ -371,7 +376,7 @@ const inputTel = e.target.value;
 
 //---------------------주소 다음 api ==> 수정 필요---------------------
 
-function sample4_execDaumPostcode() {
+function execDaumPostcode() {
   new daum.Postcode({
     oncomplete: function (data) {
       var roadAddr = data.roadAddress;
@@ -387,14 +392,14 @@ function sample4_execDaumPostcode() {
       if (extraRoadAddr !== '') {
         extraRoadAddr = ' (' + extraRoadAddr + ')';
       }
-      document.getElementById('sample4_postcode').value = data.zonecode;
-      document.getElementById('sample4_roadAddress').value = roadAddr;
-      document.getElementById('sample4_jibunAddress').value = data.jibunAddress;
+      document.getElementById('postcode').value = data.zonecode;
+      document.getElementById('roadAddress').value = roadAddr;
+      document.getElementById('jibunAddress').value = data.jibunAddress;
 
       if (roadAddr !== '') {
-        document.getElementById('sample4_extraAddress').value = extraRoadAddr;
+        document.getElementById('extraAddress').value = extraRoadAddr;
       } else {
-        document.getElementById('sample4_extraAddress').value = '';
+        document.getElementById('extraAddress').value = '';
       }
       var guideTextBox = document.getElementById('guide');
 
