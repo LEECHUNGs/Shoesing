@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html
+<!DOCTYPE html><html
   lang="en"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -13,101 +12,136 @@
             <h1>내 정보 수정</h1>
         </div>
         
-        <form>
-            <div class="profile-image-area">
-                <p>프로필 사진</p>
-                <img th:with ="user=#{user.deault.image}" th:src="@{/img/userIcon/} + ${session.loginUser.userIcon} + |.png|" id="profileImg">
-                <br>
-                <button class="userIcon" id="userIcon1">userIcon1</button>
-                <button class="userIcon" id="userIcon2">userIcon2</button>
-                <button class="userIcon" id="userIcon1">userIcon3</button>
-            <button>프로필 변경하기</button>
+        
+          <div class="profile-image-area">
+            <p>프로필 사진</p>
+            <img th:src="@{/img/userIcon/} + ${session.loginUser.userIcon} + |.png|">
+            <br>
+            <button class="userIcon" name="userIcon1" id="userIcon1" value="userIcon1"></button>
+            <button class="userIcon" name="userIcon2" id="userIcon2" value="userIcon2"></button>
+            <button class="userIcon" name="userIcon" id="userIcon3" value="userIcon3"></button>
+            <button id="changeIconBtn">프로필 변경하기</button>
           </div>
+        <form id="updateInfo">
+          <div class="update-input-area">
+            <label>아이디</label>
+            <input th:value="${session.loginUser.userId}" type="text" readonly/>
+          </div>  
 
-          <div>
+          <div class="update-input-area">
             <label>이름</label>
             <input th:value="${session.loginUser.userName}" type="text" id="updateName"  placeholder="수정할 이름을 입력해주세요" />
+            <span ID="updateNameMessage"></span>
           </div>
-          <div>
+
+          <div class="update-input-area">
             <label>닉네임</label>
             <input th:value="${session.loginUser.userNickname}" type=text id="updateNickname" placeholder="수정할 닉네임을 입력해주세요"/>
-            <button id="checkNickname">중복확인</button>
+            <span id="updateNicknameMessage"></span>
             <br/>
-            <span id="nicknameMessage"></span>
           </div>
-          <div>
+
+          <div class="update-input-area">
             <label>현재 비밀번호</label>
-            <input type=password id="userPw" placeholder="현재 비밀번호를 입력해주세요"/>
+            <input type=password id="currentPw" placeholder="현재 비밀번호를 입력해주세요"/>
             <br/>
             <span id="PwMessage"></span>
           </div>
-          <div>
+
+          <div class="update-input-area">
             <label>변경할 비밀번호</label>
             <input type=password id="updatePw" placeholder="변경할 비밀번호를 입력해주세요"/>
             <br/>
             <span id="updatePwMessage"></span>
           </div>
-          <div>
+
+          <div class="update-input-area">
             <label>변경할 비밀번호 확인</label>
             <input type=password id="updatePwConfirm" placeholder="변경할 비밀번호를 일치하게 입력해주세요"/>
             <br/>
             <span id="updatePwMessage">비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.</span>
           </div>
-          <div>
+          
+          <div class="update-input-area">
             <label>전화번호</label>
-            <input th:value="${session.loginUser.userTel}" type=number id="updateTel" placeholder="수정할 전화번호를 입력해주세요" />
+            <input th:value="${session.loginUser.userTel}" type=text id="updateTel" placeholder="수정할 전화번호를 입력해주세요" />
             <br/>
             <span id="updateTelMessage"></span>
           </div>
-          <div>
-            <label>주소</label>
-            <input th:value="${session.loginUser.userAddress}" type=text id="updateAddress" />
+
+          <div class="update-input-area">
+            <label th:value="${session.loginUser.userEmail}"><span class="required">*</span>이메일</label>
+            <input type="email" id="updateEmail" placeholder="이메일" autocomplete="off"/>
+            <button id="sendAuthKeyBtn">인증번호 받기</button>
+            <br/>
+            <label for="emailCheck">
+              <span class="required">*</span> 인증번호
+            </label>
+          
+            <input type="text" id="authKey" placeholder="인증번호 입력" autocomplete="off" >  
+            <button id="checkAuthKeyBtn" type="button">인증하기</button>
           </div>
-          <div class="profile-submit-btn">
+
+          <div th:value="${session.loginUser.userEmail}" class="update-input-area" >
+            <label for="updateAddress"><span class="required">주소</span></label>
+            
+            <input type="text" id="postcode" placeholder="우편번호">
+            <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br/>
+            <input type="text" id="roadAddress" placeholder="도로명주소">
+            <input type="text" id="jibunAddress" placeholder="지번주소">
+            <span id="guide" style="color:#999;display:none"></span>
+            <input type="text" id="detailAddress" placeholder="상세주소">
+            <input type="text" id="extraAddress" placeholder="참고항목">
+          </div>
+
+          <div class="profile-submit">
             <a href="/user/myPage" id="cancleprofile">취소</a>
             <button id="updateProfile">수정완료</button>
           </div>
-          <hr/>
-          <div>
-            <b>회원 탈퇴 이용규약</b>
-            <input type="checkbox" id="signoutCheckbox"/> 
-            <br/>
-            <textarea>
-                제1조 (회원탈퇴에 따른 제한)
-                    “회원”이 탈퇴하는 경우 3개월간 재가입이 제한됩니다. 다만 “고객사”가 “회사”에 “회원”의 재가입을 요청하는 경우에는 3개월 이내에도 재가입이 가능합니다.
-                    “회원”이 탈퇴하는 경우, “회원 “이 보유한 쿠폰, 마일리지는 모두 삭제됩니다.
-                    “회원”의 미결제 금액 및 환불 금액이 존재하는 경우, 탈퇴 후 반환 처리됩니다.
-                    제2조 (개인정보 및 위치정보 보유)
-                    “회원”이 이용계약을 해지하는 경우, “회사”는 관련법령 및 개인정보처리방침에 따라 “회원”의 개인정보 등을 보유하는 경우를 제외하고 해지 즉시 “회원”의 모든 정보를 삭제합니다. 
-                    다만 “회원”이 탈퇴하거나 자격을 상실할 경우에도 불구하고, “회사”는 [회사 내부 방침], [관계법령]에 따라 아래의 기간동안 개인정보 및 위치정보를 보유할 수 있습니다.
+        </form> 
+        <hr/>
 
-                    [회사 내부 방침에 의한 정보 보유]
+        <form action ="/user/delete" method="POST" id="signout">
+          <b>회원 탈퇴 이용규약</b>
+          <input type="checkbox" id="agreeSignout"/> 
+          <br/>
+          <textarea>
+              제1조 (회원탈퇴에 따른 제한)
+                  “회원”이 탈퇴하는 경우 3개월간 재가입이 제한됩니다. 다만 “고객사”가 “회사”에 “회원”의 재가입을 요청하는 경우에는 3개월 이내에도 재가입이 가능합니다.
+                  “회원”이 탈퇴하는 경우, “회원 “이 보유한 쿠폰, 마일리지는 모두 삭제됩니다.
+                  “회원”의 미결제 금액 및 환불 금액이 존재하는 경우, 탈퇴 후 반환 처리됩니다.
+                  제2조 (개인정보 및 위치정보 보유)
+                  “회원”이 이용계약을 해지하는 경우, “회사”는 관련법령 및 개인정보처리방침에 따라 “회원”의 개인정보 등을 보유하는 경우를 제외하고 해지 즉시 “회원”의 모든 정보를 삭제합니다. 
+                  다만 “회원”이 탈퇴하거나 자격을 상실할 경우에도 불구하고, “회사”는 [회사 내부 방침], [관계법령]에 따라 아래의 기간동안 개인정보 및 위치정보를 보유할 수 있습니다.
 
-                    개인화 프로파일은 서비스 이용 종료 후 5년 또는 동의 철회 시까지 (단, 관계법령의 별도의 규정이 명시되어 있는 경우 그 기간을 따름)
-                    농기계 작동/상태 정보, 사용 이력 정보, 진단 정보, 소모품 관리 정보 및 개인 위치 정보는 수집 · 이용 목적 달성 시 또는 동의 철회 시까지
-                    요금 결제 및 정산이 완료되지 않은 경우 요금 결제 및 정산 완료 시까지
-                    고객의 불만/민원 처리, 소송 등 분쟁이 진행 중이거나 예상되는 경우 처리 완료 시까지
-                    수집된 개인 정보의 마케팅 및 광고를 위한 이용은 회원 탈퇴 또는 동의 철회 시까지
-                    [관계법령에 의한 정보 보유]
+                  [회사 내부 방침에 의한 정보 보유]
 
-                    전자상거래 등에서의 「소비자 보호에 관한 법률」 에 따른 계약 내용 및 이행 등 거래에 관한 기록
-                    계약 또는 청약 철회 등에 관한 기록 : 5년
-                    대금 결제 및 재화 등의 공급에 관한 기록 : 5년
-                    소비자의 불만 또는 분쟁 처리에 관한 기록 : 3년
-                    「상법」 에 따른 회사의 상업 장부와 영업에 관한 중요 서류 및 전표 등에 관련된 정보
-                    상업 장부 및 영업에 관한 중요 서류 : 10년
-                    전표 또는 이와 유사한 서류: 5년
-                    「국세기본법」, 「법인세법」 에 따른 모든 거래에 관한 장부 및 증빙 서류와 관련된 정보 : 그 거래 사실이 속하는 과세 기간에 대한 해당 국세의 법정 신고 기한이 지난 날부터 5년
-                    「부가가치세법」 에 따른 장부와 교부한 세금 계산서 또는 영수증 : 5년
-                    「신용정보의 이용 및 보호에 관한 법률」 에 따른 신용 정보의 수집·처리 및 이용 등에 관한 기록 : 3년
-                    개인정보를 제공받은 제3자는 제공 목적을 달성하거나 이용자의 철회 요청이 있더라도, 내부보고, 감사 및 검사,
-                     비용 정산 (청구) 등 계약이행, 분쟁 대비를 위해 필요한 정보는 서비스 이용 종료 후 6개월까지, 미이행·분쟁이 계속될 경우
-                    이행 완료·분쟁 해결 시까지 개인정보를 보유·이용할 수 있으며, 아래의 제공받는 자의 보유 및 이용기간과 상법 등 관련 법령에 특별한 규정에 따른 기간 동안 개인정보 및 위치정보를 보관할 수 있습니다.
-            </textarea>
-            <br/>
-            <button id="signOutProfile">회원탈퇴</button>
-          </div>
+                  개인화 프로파일은 서비스 이용 종료 후 5년 또는 동의 철회 시까지 (단, 관계법령의 별도의 규정이 명시되어 있는 경우 그 기간을 따름)
+                  농기계 작동/상태 정보, 사용 이력 정보, 진단 정보, 소모품 관리 정보 및 개인 위치 정보는 수집 · 이용 목적 달성 시 또는 동의 철회 시까지
+                  요금 결제 및 정산이 완료되지 않은 경우 요금 결제 및 정산 완료 시까지
+                  고객의 불만/민원 처리, 소송 등 분쟁이 진행 중이거나 예상되는 경우 처리 완료 시까지
+                  수집된 개인 정보의 마케팅 및 광고를 위한 이용은 회원 탈퇴 또는 동의 철회 시까지
+                  [관계법령에 의한 정보 보유]
+
+                  전자상거래 등에서의 「소비자 보호에 관한 법률」 에 따른 계약 내용 및 이행 등 거래에 관한 기록
+                  계약 또는 청약 철회 등에 관한 기록 : 5년
+                  대금 결제 및 재화 등의 공급에 관한 기록 : 5년
+                  소비자의 불만 또는 분쟁 처리에 관한 기록 : 3년
+                  「상법」 에 따른 회사의 상업 장부와 영업에 관한 중요 서류 및 전표 등에 관련된 정보
+                  상업 장부 및 영업에 관한 중요 서류 : 10년
+                  전표 또는 이와 유사한 서류: 5년
+                  「국세기본법」, 「법인세법」 에 따른 모든 거래에 관한 장부 및 증빙 서류와 관련된 정보 : 그 거래 사실이 속하는 과세 기간에 대한 해당 국세의 법정 신고 기한이 지난 날부터 5년
+                  「부가가치세법」 에 따른 장부와 교부한 세금 계산서 또는 영수증 : 5년
+                  「신용정보의 이용 및 보호에 관한 법률」 에 따른 신용 정보의 수집·처리 및 이용 등에 관한 기록 : 3년
+                  개인정보를 제공받은 제3자는 제공 목적을 달성하거나 이용자의 철회 요청이 있더라도, 내부보고, 감사 및 검사,
+                  비용 정산 (청구) 등 계약이행, 분쟁 대비를 위해 필요한 정보는 서비스 이용 종료 후 6개월까지, 미이행·분쟁이 계속될 경우
+                  이행 완료·분쟁 해결 시까지 개인정보를 보유·이용할 수 있으며, 아래의 제공받는 자의 보유 및 이용기간과 상법 등 관련 법령에 특별한 규정에 따른 기간 동안 개인정보 및 위치정보를 보관할 수 있습니다.
+          </textarea>
+          <br/>
+          <button>회원탈퇴</button>
         </form>
+        
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script type="text/javascript" th:src="@{/js/user/updateProfile.js}"></script>
   </th:block>
 </html>

@@ -29,6 +29,7 @@ checkBtn.addEventListener('click', () => {
     });
 });
 
+
 const check = document.querySelector('#check');
 const answ = document.querySelector('#answ');
 
@@ -39,3 +40,4 @@ check.addEventListener('change', () => {
     answ.readOnly = false;
   }
 });
+

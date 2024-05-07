@@ -77,7 +77,9 @@ userName.addEventListener('input', (e) => {
     inputName.value = null;
     return;
   }
-  nameMessage.innerText = '유효한 이름형식입니다';
+
+  nameMessage.innerText='유효한 이름형식입니다';
+
   return inputName.value;
 });
 
@@ -111,6 +113,7 @@ userNickname.addEventListener('input', (e) => {
 
   const inputNickname = e.target.value;
 
+
   fetch('/user/checkNickname', {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
@@ -118,6 +121,7 @@ userNickname.addEventListener('input', (e) => {
   })
     .then((resp) => resp.text())
     .then((result) => {
+
       if (result == 1) {
         nicknameMessage.innerText = '이미 사용중인 닉네임 입니다';
         nicknameMessage.classList.add('error');
@@ -158,6 +162,7 @@ userPw.addEventListener('input', (e) => {
   if (inputPw.trim().length === 0) {
     pwMessage.innerText =
       '비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.';
+
     pwMessage.classList.remove('confirm', 'error');
     checkObj.userPw = false;
     userPw.value = '';
@@ -208,7 +213,8 @@ userEmail.addEventListener('input', (e) => {
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
-  checkObj.emailVal = true;
+
+  checkObj.emailVal= true;
 
   emailMessage.innerText = '이메일을 입력 성공';
 });
@@ -256,7 +262,7 @@ const sendAuthKeyBtn = document.querySelector('#sendAuthKeyBtn');
 const authKey = document.querySelector('#authKey');
 const checkAuthKeyBtn = document.querySelector('#checkAuthKeyBtn');
 const authKeyMessage = document.querySelector('#authKeyMessage');
-
+const emailVal= userEmail.value + '@' + inputDomain.value;
 let authTimer;
 const initMin = 0;
 const initSec = 59;
@@ -265,22 +271,27 @@ const initTime = '01:00';
 let min = initMin;
 let sec = initSec;
 
+
 sendAuthKeyBtn.addEventListener('click', () => {
   checkObj.authKey = false;
+
 
   authKeyMessage.innerText = '';
   const emailVal = userEmail.value + '@' + inputDomain.value;
 
   if (!checkObj.emailVal) {
 
+
     alert('유효한 이메일 작성 후 클릭해 주세요');
     return;
+    
   }
 
   min = initMin;
   sec = initSec;
 
   clearInterval(authTimer);
+
 
   console.log(emailVal);
 
@@ -300,8 +311,10 @@ sendAuthKeyBtn.addEventListener('click', () => {
         console.log('인증 번호 발송 실패');
         emailMessage.innerText = '인증번호 발송에 실패했습니다';
 
+
       }
-    });
+      
+  });
 
   authKeyMessage.innerText = initTime;
   authKeyMessage.classList.remove('confirm', 'error');
@@ -311,10 +324,10 @@ sendAuthKeyBtn.addEventListener('click', () => {
   authTimer = setInterval(() => {
     authKeyMessage.innerText = `${addZero(min)}:${addZero(sec)}`;
     if (min == 0 && sec == 0) {
-      checkObj.authKey = false;
-      clearInterval(authTimer);
-      authKeyMessage.classList.add('error');
-      authKeyMessage.classList.remove('confirm');
+        checkObj.authKey = false;
+        clearInterval(authTimer);
+        authKeyMessage.classList.add('error');
+        authKeyMessage.classList.remove('confirm');
       return;
     }
     if (sec == 0) {
@@ -325,8 +338,8 @@ sendAuthKeyBtn.addEventListener('click', () => {
   }, 1000);
 });
 function addZero(number) {
-  if (number < 10) return '0' + number;
-  else return number;
+  if (number < 10) return "0" + number;
+  else            return number;
 }
 
 // form 전달용 input
@@ -342,9 +355,11 @@ checkAuthKeyBtn.addEventListener('click', () => {
     return;
   }
   const obj = {
+
     email: userEmail.value + '@' + inputDomain.value,
     authKey: authKey.value,
   };
+
 
   fetch('/email/checkAuthKey', {
     method: 'POST',
@@ -372,8 +387,10 @@ const userTel = document.querySelector('#userTel');
 const telMessage = document.querySelector('#telMessage');
 
 userTel.addEventListener('input', (e) => {
+
   const regExp = /^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
   const inputTel = e.target.value;
+
   if (!regExp.test(inputTel)) {
     telMessage.innerText = '유효한 전화번호 형식으로 수정해주세요';
     telMessage.classList.add('error');
@@ -382,7 +399,9 @@ userTel.addEventListener('input', (e) => {
     return;
   }
 
+
   if (inputTel.trim().length < 9) {
+
     telMessage.innerText = '유효한 전화번호 형식이 아닙니다';
     telMessage.classList.add('error');
     telMessage.classList.remove('confirm');
@@ -390,9 +409,11 @@ userTel.addEventListener('input', (e) => {
     return;
   }
 
+
   telMessage.innerText = '유효한 전화번호 형식입니다.';
   telMessage.classList.add('confirm');
   telMessage.classList.remove('error');
+
 });
 
 //---------------------주소 다음 api ==> 수정 필요---------------------
