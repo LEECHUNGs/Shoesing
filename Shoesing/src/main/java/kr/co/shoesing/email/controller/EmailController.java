@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.shoesing.email.model.service.EmailService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("email")
 @RequiredArgsConstructor
@@ -19,6 +21,8 @@ public class EmailController {
 
 	@PostMapping("signup")
 	public int signup(@RequestBody String email) {
+
+		log.debug(email);
 		String authKey = service.sendEmail("emailAuth", email);
 
 		if (authKey != null) {
@@ -26,7 +30,6 @@ public class EmailController {
 		}
 
 		return 0; // 발송 실패시 0 반환
-
 	}
 
 	@PostMapping("checkAuthKey")

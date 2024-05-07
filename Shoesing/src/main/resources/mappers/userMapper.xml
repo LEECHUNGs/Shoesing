@@ -35,6 +35,7 @@
 			#{userEmail}, 
 			DEFAULT,
 			DEFAULT, 
+			DEFAULT, 
 			DEFAULT
 		)
 	</insert>
@@ -47,6 +48,10 @@
 			<choose>
 				<!-- 유저 아이디 -->
 				<when test='method == "userId"'>
+					USER_ID = #{input}
+				</when>
+				<!-- 유저 닉네임 -->
+				<when test='method == "userNickname"'>
 					USER_ID = #{input}
 				</when>
 				<!-- 유저 이메일 -->
@@ -74,6 +79,7 @@
 		WHERE USER_ID = #{userId}
 	</update>
 
+
 	<!-- 회원 아이콘 변경 -->
 	<update id="changeIcon">
 		UPDATE "USER" SET
@@ -81,5 +87,14 @@
 		WHERE USER_ID = #{userId}
 	</update>
 	
+
+	<!-- 회원 탈퇴 체크 -->
+	<select id="checkDel">
+		SELECT COUNT(*)
+		FROM "USER"
+		WHERE USER_ID = #{userId}
+		AND USER_DEL_FL = 'N'
+	</select>
+
 	
 </mapper>

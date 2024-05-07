@@ -69,7 +69,7 @@ public class EmailServiceImpl implements EmailService {
 		context.setVariable("authKey", authKey);
 
 		// template/ 에 위치한 html 파일의 내용을 String 형태로 변환
-		return templateEngine.process("fragments/components" + htmlName, context); // HTML to Java 객체
+		return templateEngine.process("fragments/components/" + htmlName, context); // HTML to Java 객체
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class EmailServiceImpl implements EmailService {
 
 			helper.setText(loadHtml(authKey, htmlName), true); // 변경 -> html 보낼 준비
 
-			helper.addInline("logo", new ClassPathResource("static/img/logo/logo.svg"));
+			helper.addInline("emailAuth", new ClassPathResource("static/img/email/emailAuth.png"));
 
 			mailSender.send(mimeMessage);
 

@@ -39,8 +39,11 @@ userId.addEventListener('input', (e) => {
   checkObj.userId = true;
 
   const inputId = e.target.value;
-
-  fetch('/user/checkId')
+  fetch('/user/checkId', {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    body: inputId,
+  })
     .then((resp) => resp.text())
     .then((result) => {
       if (result == 1) {
@@ -74,7 +77,9 @@ userName.addEventListener('input', (e) => {
     inputName.value = null;
     return;
   }
+
   nameMessage.innerText='유효한 이름형식입니다';
+
   return inputName.value;
 });
 
@@ -106,11 +111,17 @@ userNickname.addEventListener('input', (e) => {
   nicknameMessage.classList.remove('error');
   checkObj.userNickname = true;
 
-  const inputId = e.target.value;
+  const inputNickname = e.target.value;
 
-  fetch('/user/checkNickname')
-    .then(resp => resp.text())
-    .then(result => {
+
+  fetch('/user/checkNickname', {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    body: inputNickname,
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+
       if (result == 1) {
         nicknameMessage.innerText = '이미 사용중인 닉네임 입니다';
         nicknameMessage.classList.add('error');
@@ -149,7 +160,9 @@ userPw.addEventListener('input', (e) => {
   const inputPw = e.target.value;
 
   if (inputPw.trim().length === 0) {
-    pwMessage.innerText = '비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.';
+    pwMessage.innerText =
+      '비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.';
+
     pwMessage.classList.remove('confirm', 'error');
     checkObj.userPw = false;
     userPw.value = '';
@@ -192,42 +205,53 @@ const domainList = document.querySelector('#domainList');
 
 // 이메일 입력
 userEmail.addEventListener('input', (e) => {
-  if(e.target.value.trim().length == 0 || inputDomain.value.trim().length == 0){
+
+  if (
+    e.target.value.trim().length == 0 ||
+    inputDomain.value.trim().length == 0
+  ) {
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
+
   checkObj.emailVal= true;
+
   emailMessage.innerText = '이메일을 입력 성공';
 });
 
 // 이메일 도메인 입력
 inputDomain.addEventListener('input', (e) => {
-  if(e.target.value.trim().length == 0 || userEmail.value.trim().length == 0) {
+
+  if (e.target.value.trim().length == 0 || userEmail.value.trim().length == 0) {
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
   checkObj.emailVal = true;
+
   emailMessage.innerText = '이메일을 입력 성공';
 });
 
 // 도메인 리스트
 domainList.addEventListener('change', (e) => {
-  
+
   const optionsValue = e.target.options[e.target.selectedIndex].value;
   inputDomain.value = optionsValue;
 
-  if(!optionsValue == ""){
+  if (!optionsValue == '') {
     inputDomain.readOnly = true;
-  }else{
-      inputDomain.readOnly = false;
+  } else {
+    inputDomain.readOnly = false;
   }
 
-  if(e.target.value.trim().length == 0 || userEmail.value.trim().length == 0) {
+  if (e.target.value.trim().length == 0 || userEmail.value.trim().length == 0) {
+
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
 
+
   checkObj.emailVal = true;
+
   emailMessage.innerText = '이메일 입력 성공';
   const emailVal = userEmail.value + '@' + inputDomain.value;
   console.log(emailVal);
@@ -250,9 +274,14 @@ let sec = initSec;
 
 sendAuthKeyBtn.addEventListener('click', () => {
   checkObj.authKey = false;
-  authKeyMessage.innerText = "";
 
-  if(!checkObj.emailVal) {
+
+  authKeyMessage.innerText = '';
+  const emailVal = userEmail.value + '@' + inputDomain.value;
+
+  if (!checkObj.emailVal) {
+
+
     alert('유효한 이메일 작성 후 클릭해 주세요');
     return;
     
@@ -262,22 +291,27 @@ sendAuthKeyBtn.addEventListener('click', () => {
   sec = initSec;
 
   clearInterval(authTimer);
-  
-  
-  fetch("/email/signup", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: emailVal.value
+
+
+  console.log(emailVal);
+
+  fetch('/email/signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+
+    body: emailVal,
   })
- 
-  .then(resp => resp.text())
-  .then(result => {
+    .then((resp) => resp.text())
+    .then((result) => {
       if (result == 1) {
         console.log('인증 번호 발송 성공');
-        emailMessage.innerText="인증번호 발송에 성공했습니다 인증번호를 입력해주세요";
-      } else { 
-        console.log("인증 번호 발송 실패");
-        emailMessage.innerText="인증번호 발송에 실패했습니다";
+        emailMessage.innerText =
+          '인증번호 발송에 성공했습니다 인증번호를 입력해주세요';
+      } else {
+        console.log('인증 번호 발송 실패');
+        emailMessage.innerText = '인증번호 발송에 실패했습니다';
+
+
       }
       
   });
@@ -308,20 +342,25 @@ function addZero(number) {
   else            return number;
 }
 
+// form 전달용 input
+const inputEmail = document.querySelector('#inputEmail');
+
 checkAuthKeyBtn.addEventListener('click', () => {
   if (min == 0 && sec == 0) {
     alert('인증번호 입력 제한시간을 초과하였습니다!');
     return;
   }
-  if (authKey.value.length < 6) {
+  if (authKey.value.length != 6) {
     alert('인증번호를 정확히 입력해 주세요');
     return;
   }
   const obj = {
-    email: emailVal.value,
-    authKey: authKey.value
+
+    email: userEmail.value + '@' + inputDomain.value,
+    authKey: authKey.value,
   };
- 
+
+
   fetch('/email/checkAuthKey', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -338,6 +377,7 @@ checkAuthKeyBtn.addEventListener('click', () => {
       authKeyMessage.innerText = '인증 되었습니다.';
       authKeyMessage.classList.remove('error');
       authKeyMessage.classList.add('confirm');
+      inputEmail.value = userEmail.value + '@' + inputDomain.value;
       checkObj.authKey = true;
     });
 });
@@ -347,9 +387,10 @@ const userTel = document.querySelector('#userTel');
 const telMessage = document.querySelector('#telMessage');
 
 userTel.addEventListener('input', (e) => {
-  
-const regExp=/^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
-const inputTel = e.target.value;
+
+  const regExp = /^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
+  const inputTel = e.target.value;
+
   if (!regExp.test(inputTel)) {
     telMessage.innerText = '유효한 전화번호 형식으로 수정해주세요';
     telMessage.classList.add('error');
@@ -358,20 +399,21 @@ const inputTel = e.target.value;
     return;
   }
 
-  if (inputTel.trim().length < 9 ) {
+
+  if (inputTel.trim().length < 9) {
+
     telMessage.innerText = '유효한 전화번호 형식이 아닙니다';
     telMessage.classList.add('error');
     telMessage.classList.remove('confirm');
     inputTel.value = null; //e.preventDefault();
     return;
   }
-  
-    telMessage.innerText = '유효한 전화번호 형식입니다.';
-    telMessage.classList.add('confirm');
-    telMessage.classList.remove('error');
-    
-    
-  
+
+
+  telMessage.innerText = '유효한 전화번호 형식입니다.';
+  telMessage.classList.add('confirm');
+  telMessage.classList.remove('error');
+
 });
 
 //---------------------주소 다음 api ==> 수정 필요---------------------
@@ -421,8 +463,9 @@ function execDaumPostcode() {
 
 // 회원가입 버튼 클릭시 전체 유효성 검사 여부 확인
 const signupForm = document.querySelector('#signupForm');
+const submitBtn = document.querySelector('#submitBtn');
 
-signupForm.addEventListener('submit', (e) => {
+submitBtn.addEventListener('click', (e) => {
   for (let key in checkObj) {
     if (!checkObj[key]) {
       let str;
@@ -452,4 +495,5 @@ signupForm.addEventListener('submit', (e) => {
       return;
     }
   }
+  signupForm.submit();
 });

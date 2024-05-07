@@ -43,6 +43,7 @@ public interface UserService {
 	 */
 	int restoration(String userId);
 
+
 	/** 현재 비밀번호와 새로 입력한 비밀번호가 같은지 체크
 	 * @param inputPw
 	 * @return
@@ -55,5 +56,14 @@ public interface UserService {
 	 * @return
 	 */
 	int changeIcon(String userId, String inputIcon);
+
+	/**
+	 * 탈퇴한 회원인지 체크
+	 * 
+	 * @param inputId
+	 * @return
+	 */
+	int checkDel(String inputId);
+
 
 }

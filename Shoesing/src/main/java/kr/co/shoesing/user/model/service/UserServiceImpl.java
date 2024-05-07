@@ -112,4 +112,12 @@ public class UserServiceImpl implements UserService {
 		return mapper.changeIcon(map);
 	}
 
+	/**
+	 * 탈퇴한 회원인지 체크
+	 */
+	@Override
+	public int checkDel(String inputId) {
+		return mapper.checkDel(inputId);
+	}
+
 }

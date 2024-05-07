@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
+
 import kr.co.shoesing.common.util.Pagination;
 import kr.co.shoesing.item.model.dto.Item;
 import kr.co.shoesing.wishList.model.mapper.WishListMapper;
@@ -67,4 +68,5 @@ public class WishListServiceImpl implements WishListService{
 		return mapper.delete(itemNoList);
 	}
 	
+
 }

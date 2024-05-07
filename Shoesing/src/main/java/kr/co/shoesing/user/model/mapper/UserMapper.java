@@ -49,6 +49,7 @@ public interface UserMapper {
 	 */
 	int restoration(String userId);
 
+
 	/** 현재 비밀번호와 새로 입력한 비밀번호가 같은지 체크
 	 * @param inputPw
 	 * @return
@@ -61,5 +62,14 @@ public interface UserMapper {
 	 * @return
 	 */
 	int changeIcon(Map<String, String> map);
+
+	/**
+	 * 탈퇴한 회원인지 체크
+	 * 
+	 * @param inputId
+	 * @return
+	 */
+	int checkDel(String inputId);
+
 
 }
