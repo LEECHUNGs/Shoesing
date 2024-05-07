@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item key="org.eclipse.jdt.ui.lastextjar" value="C:\workspace\이민경\Shoesing"/>
+	<item key="org.eclipse.jdt.ui.lastextjar" value="C:\tools\oracleDriver\ojdbc10-full"/>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item key="group_libraries" value="true"/>
 		<item key="layout" value="2"/>
@@ -44,8 +44,8 @@
 		<item key="patterns" value="*"/>
 	</section>
 	<section name="NewClassCreationWizard.dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="392"/>
-		<item key="DIALOG_Y_ORIGIN" value="89"/>
+		<item key="DIALOG_X_ORIGIN" value="1217"/>
+		<item key="DIALOG_Y_ORIGIN" value="179"/>
 		<item key="DIALOG_WIDTH" value="575"/>
 		<item key="DIALOG_HEIGHT" value="659"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
@@ -56,5 +56,46 @@
 	<section name="NewClassWizardPage">
 		<item key="create_constructor" value="false"/>
 		<item key="create_unimplemented" value="true"/>
+	</section>
+	<section name="NewInterfaceCreationWizard.dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="387"/>
+		<item key="DIALOG_Y_ORIGIN" value="166"/>
+		<item key="DIALOG_WIDTH" value="580"/>
+		<item key="DIALOG_HEIGHT" value="543"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+	<section name="org.eclipse.jdt.internal.ui.typehierarchy.QuickHierarchy">
+		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_WIDTH" value="400"/>
+		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_HEIGHT" value="360"/>
+		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_SIZE" value="true"/>
+		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_LOCATION" value="false"/>
+	</section>
+	<section name="OverrideMethodDialog">
+		<item key="showtypes" value="true"/>
+	</section>
+	<section name="SourceActionDialog.methods">
+		<item key="FinalModifier" value="false"/>
+		<item key="SynchronizedModifier" value="false"/>
+		<item key="Comments" value="false"/>
+		<item key="LimitElements" value="false"/>
+		<item key="IgnoreDefault" value="true"/>
+		<item key="StringStyle" value="0"/>
+		<item key="LimitValue" value="10"/>
+		<item key="SkipNull" value="false"/>
+		<item key="ToStringTemplateSelected" value="0"/>
+	</section>
+	<section name="DialogBounds_OverrideMethodDialog">
+		<item key="DIALOG_X_ORIGIN" value="699"/>
+		<item key="DIALOG_Y_ORIGIN" value="186"/>
+		<item key="DIALOG_WIDTH" value="539"/>
+		<item key="DIALOG_HEIGHT" value="513"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+	<section name="DialogBounds_GenerateToStringDialog">
+		<item key="DIALOG_X_ORIGIN" value="236"/>
+		<item key="DIALOG_Y_ORIGIN" value="63"/>
+		<item key="DIALOG_WIDTH" value="516"/>
+		<item key="DIALOG_HEIGHT" value="691"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 	</section>
 </section>
