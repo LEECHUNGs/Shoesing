@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{fragments/layouts/main}"
+>
+  <head>
+    <link th:href="@{/css/pages/myPage.css}" rel="stylesheet" />
+  </head>
+  <th:block layout:fragment="main">
+    <div class="myPage-main">
+      <div class="pageTitle">관리자 > 홈</div>
+    </div>
+
+    <a href="/admin/user">유저 관리</a>
+    <a href="/admin/item">상품 관리</a>
+    <script type="text/javascript" th:src="@{/js/admin/home.js}"></script>
+  </th:block>
+</html>

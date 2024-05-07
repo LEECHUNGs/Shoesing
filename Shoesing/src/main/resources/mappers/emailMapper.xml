@@ -4,27 +4,25 @@
 	
 	<!-- 이메일 회원정보와 인증번호 추가 -->
 	<insert id="insertAuthKey">
-		INSERT INTO "TB_AUTH_KEY"
+		INSERT INTO "EMAIL_AUTH"
 		VALUES(
-			SEQ_KEY_NO.NEXTVAL, 
+			SEQ_EMAIL_AUTH_NO.NEXTVAL, 
 			#{email}, 
-			#{authKey}, 
-			DEFAULT
+			#{authKey}
 		)
 	</insert>
 	
 	<!-- 기존 회원 인증번호 수정 -->
 	<update id="updateAuthKey">
-		UPDATE "TB_AUTH_KEY" SET
-		"AUTH_KEY" = #{authKey},
-		"CREATE_TIME" = SYSDATE
+		UPDATE "EMAIL_AUTH" SET
+		"AUTH_KEY" = #{authKey}
 		WHERE "EMAIL" = #{email}
 	</update>
 	
 	<!-- 인증번호 확인(반환) -->
 	<select id="checkAuthKey" resultType="_int">
 		SELECT COUNT(*)
-		FROM "TB_AUTH_KEY"
+		FROM "EMAIL_AUTH"
 		WHERE EMAIL = #{email}
 		AND AUTH_KEY = #{authKey}
 	</select>

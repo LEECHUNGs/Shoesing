@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{fragments/layouts/main}"
+>
+  <head>
+    <link th:href="@{/css/pages/myPage.css}" rel="stylesheet" />
+  </head>
+  <th:block layout:fragment="main">
+    <div class="myPage-main">
+      <div class="pageTitle">관리자 > 회원 관리</div>
+
+      <table class="list-table" style="overflow: auto">
+        <thead>
+          <tr id="userThead">
+            <th>번호</th>
+            <th>아이디</th>
+            <th>이메일</th>
+            <th>닉네임</th>
+            <th>이름</th>
+            <th>주소</th>
+            <th>전화번호</th>
+            <th>생성일</th>
+            <th>탈퇴여부</th>
+          </tr>
+        </thead>
+
+        <tbody id="userTbody"></tbody>
+      </table>
+    </div>
+
+    <script type="text/javascript" th:src="@{/js/admin/user.js}"></script>
+  </th:block>
+</html>

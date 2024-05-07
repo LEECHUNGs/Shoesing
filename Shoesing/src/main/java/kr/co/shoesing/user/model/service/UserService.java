@@ -43,4 +43,12 @@ public interface UserService {
 	 */
 	int restoration(String userId);
 
+	/**
+	 * 탈퇴한 회원인지 체크
+	 * 
+	 * @param inputId
+	 * @return
+	 */
+	int checkDel(String inputId);
+
 }

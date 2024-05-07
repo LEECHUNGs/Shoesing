@@ -45,9 +45,13 @@
     <th:block th:replace="~{fragments/layouts/footer::footer}">푸터</th:block>
 
     <!-- 자바 스크립트 -->
-    <script type="text/javascript" src="/lib/jquery-3.7.1.js"></script>
-    <script type="text/javascript" src="/lib/bootstrap.bundle.js"></script>
-    <script type="text/javascript" src="/js/mainJquery.js"></script>
-    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" th:src="@{/lib/jquery-3.7.1.js}"></script>
+    <script
+      type="text/javascript"
+      th:src="@{/lib/bootstrap.bundle.js}"
+    ></script>
+    <script type="text/javascript" th:src="@{/js/mainJquery.js}"></script>
+    <script type="text/javascript" th:src="@{/js/cookie.js}"></script>
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
   </body>
 </html>

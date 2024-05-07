@@ -12,6 +12,8 @@
             <a href="">고객센터</a>
           </div>
           <div>
+            <a href="/admin">관리자페이지</a>
+            <a href="/user/restoration">회원복구</a>
             <a href="">주문조회</a>
             <a href="/user/signup">회원가입</a>
             <th:block th:if="${session.loginUser == null}">
@@ -109,13 +111,13 @@
               <div id="userProfileContent">
                 <!-- if not 로그인 -->
                 <th:block th:if="${session.loginUser == null}">
-                  <form action="/user/login" method="post">
-                    User ID: <input type="text" name="userId" />
+                  <form action="/user/login" method="post" id="loginForm">
+                    User ID: <input type="text" name="userId" id="loginId" />
                     <br />
                     User PW: <input type="password" name="userPw" />
                     <br />
                     <label class="remember-me"
-                      >아이디 저장<input type="checkbox" /></label
+                      >아이디 저장<input type="checkbox" name="saveId" /></label
                     ><br />
                     <button>로그인</button>
                   </form>
@@ -125,6 +127,7 @@
                 <!-- if 로그인 -->
                 <th:block th:if="${session.loginUser != null}">
                   <a href="/user/myPage">마이페이지</a>
+                  <br />
                   <a href="/user/logout">로그아웃</a>
                 </th:block>
               </div>
