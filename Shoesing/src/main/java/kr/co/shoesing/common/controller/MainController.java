@@ -9,6 +9,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MainController {
 
 	/**
+	 * 파일 테스트용!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/fileTest")
+	public String Test() {
+		return "pages/fileTest";
+	}
+
+	/**
 	 * 홈페이지 전환
 	 * 
 	 * @return

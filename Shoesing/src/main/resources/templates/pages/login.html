@@ -50,33 +50,38 @@
               aria-labelledby="nav-home-tab"
             >
               <!-- 회원 로그인-->
-              <form action="/user/login" method="POST" id="loginForm">
+              <form
+                action="/user/login"
+                method="post"
+                id="loginPageForm"
+                class="loginForm"
+              >
                 <div class="form-floating loginInput">
                   <input
                     type="text"
                     class="form-control"
-                    id="floatingID"
+                    id="loginPageId"
                     name="userId"
                     placeholder="아이디"
                   />
-                  <label for="floatingID">아이디</label>
+                  <label for="loginPageId">아이디</label>
                 </div>
 
                 <div class="form-floating loginInput">
                   <input
                     type="password"
                     class="form-control"
-                    id="floatingPassword"
+                    id="loginPagePw"
                     name="userPw"
                     placeholder="비밀번호"
                   />
-                  <label for="floatingPassword">비밀번호</label>
+                  <label for="loginPagePw">비밀번호</label>
                 </div>
                 <div class="loginInput">
                   <label class="saveId"
                     ><input
                       type="checkbox"
-                      name="saveId"
+                      name="savePageId"
                       class="checkIdCheck"
                     />아이디 저장</label
                   >
