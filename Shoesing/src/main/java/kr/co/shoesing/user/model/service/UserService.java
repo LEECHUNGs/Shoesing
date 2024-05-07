@@ -43,4 +43,17 @@ public interface UserService {
 	 */
 	int restoration(String userId);
 
+	/** 현재 비밀번호와 새로 입력한 비밀번호가 같은지 체크
+	 * @param inputPw
+	 * @return
+	 */
+	int checkPw(String inputPw);
+
+	/** 유저 아이콘 변경하기
+	 * @param inputIcon
+	 * @param inputIcon2 
+	 * @return
+	 */
+	int changeIcon(String userId, String inputIcon);
+
 }

@@ -89,5 +89,27 @@ public class UserServiceImpl implements UserService {
 	public int restoration(String userId) {
 		return mapper.restoration(userId);
 	}
+	
+	/**
+	 * 현재 비밀번호와 새로 입력한 비밀번호가 같은지 체크
+	 */
+	@Override
+	public int checkPw(String inputPw) {
+		// TODO Auto-generated method stub
+		return mapper.checkPw(inputPw);
+	}
+
+	/**
+	 * 회원 아이콘 변경
+	 */
+	@Override
+	public int changeIcon(String userId, String inputIcon) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("inputIcon", inputIcon);
+		
+		return mapper.changeIcon(map);
+	}
 
 }

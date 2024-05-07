@@ -1,11 +1,14 @@
 package kr.co.shoesing.user.controller;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -159,7 +162,7 @@ public class UserController {
 		ra.addFlashAttribute("message", "실패");
 
 		return "redirect:/";
-	}
+	}                                      
 
 	/**
 	 * 회원 복구 페이지
@@ -216,4 +219,53 @@ public class UserController {
 
 	}
 
+	/**
+	 * 현재 비밀번호와 새로 입력한 비밀번호가 같은지 체크
+	 * 
+	 * @param inputPw
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("checkPw")
+	public int checkPw(@RequestBody String inputPw) {
+
+		String method = "userpw";
+
+		
+		int result = service.checkPw(inputPw);
+		
+		String message = null;
+		String path = null;
+		
+		
+		if(result  > 0) {
+			path = "/user/delete";
+			message = "회원을 탈퇴하시겠습니까?";
+		}else {
+			path = "/user/updateProfile";
+			message = "현재 비밀번호가 일치하지 않습니다";
+		}
+
+		return result;
+
+	}
+	@ResponseBody
+	@PostMapping("changeIcon")
+	public int changeIcon(HttpServletRequest request,
+						@RequestBody Map<String, String> map,
+						Model model) {
+		log.info("map {}",map);
+		HttpSession session = request.getSession();
+
+		User loginUser = (User) session.getAttribute("loginUser");
+		
+		String userId = loginUser.getUserId();
+		
+		int result = service.changeIcon(userId, map.get("inputIcon"));
+		
+			
+		
+		return result;
+		
+	}
 }

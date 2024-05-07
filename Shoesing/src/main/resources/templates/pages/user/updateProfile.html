@@ -13,14 +13,14 @@
         </div>
         
         
-            <div class="profile-image-area">
-                <p>프로필 사진</p>
-                <img th:with ="user=#{user.deault.image}" th:src="@{/img/userIcon/} + ${session.loginUser.userIcon} + |.png|" id="profileImg">
-                <br>
-                <button class="userIcon" id="userIcon1" value="userIcon1"></button>
-                <button class="userIcon" id="userIcon2" value="userIcon2"></button>
-                <button class="userIcon" id="userIcon3" value="userIcon3"></button>
-            <!-- <button id="changeIconBtn">프로필 변경하기</button> -->
+          <div class="profile-image-area">
+            <p>프로필 사진</p>
+            <img th:src="@{/img/userIcon/} + ${session.loginUser.userIcon} + |.png|">
+            <br>
+            <button class="userIcon" name="userIcon1" id="userIcon1" value="userIcon1"></button>
+            <button class="userIcon" name="userIcon2" id="userIcon2" value="userIcon2"></button>
+            <button class="userIcon" name="userIcon" id="userIcon3" value="userIcon3"></button>
+            <button id="changeIconBtn">프로필 변경하기</button>
           </div>
         <form id="updateInfo">
           <div class="update-input-area">
@@ -101,7 +101,7 @@
         </form> 
         <hr/>
 
-        <form action="signOut" method="POST" id="signout">
+        <form action ="/user/delete" method="POST" id="signout">
           <b>회원 탈퇴 이용규약</b>
           <input type="checkbox" id="agreeSignout"/> 
           <br/>

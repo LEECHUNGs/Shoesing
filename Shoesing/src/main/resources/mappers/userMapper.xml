@@ -74,5 +74,12 @@
 		WHERE USER_ID = #{userId}
 	</update>
 
+	<!-- 회원 아이콘 변경 -->
+	<update id="changeIcon">
+		UPDATE "USER" SET
+		USER_ICON = #{inputIcon}
+		WHERE USER_ID = #{userId}
+	</update>
+	
 	
 </mapper>

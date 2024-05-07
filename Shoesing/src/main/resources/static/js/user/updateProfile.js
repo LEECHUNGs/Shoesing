@@ -52,32 +52,92 @@ function sendUpdateRequest(values) {
     })
     .catch(error => {
       // 네트워크 오류 등 예외 처리
-      console.error('회원 정보 수정 요청 중 오류 발생:', error);
-      alert('회원 정보 수정 중 오류가 발생했습니다. 다시 시도해주세요.');
+      console.error('내 정보 수정 실패:', error);
+      alert('회원 정보 수정이 실패했습니다. 다시 시도해주세요.');
     });
   }
   
 //===========================================================================
 
 //프로필 사진 button에 누르는 값으로 변경될 수 있게 하기
-const profileImg = document.querySelector("#profileImg");
+// const profileImg = document.querySelector("#profileImg");
 
-  document.getElementById('userIcon1').addEventListener('click', () => {
-    profileImg.src = '/img/userIcon/userIcon1.jpg';
-    alert ("프로필 사진이 변경되었습니다.")
-    
-  });
+// document.getElementById("changeIconBtn").addEventListener("click", (e) => {
 
-  document.getElementById('userIcon2').addEventListener('click', () => {
-    profileImg.src = "/img/userIcon/userIcon2.jpg";
-    alert ("프로필 사진이 변경되었습니다.")
-  });
+//   console.log(e.target.value);
+//   
 
-  document.getElementById('userIcon3').addEventListener('click', () => {
-    profileImg.src = '/img/userIcon/userIcon3.jpg';
-    alert ("프로필 사진이 변경되었습니다.")
-  });
+//     if(!e.target.){
+//       alert("프로필 사진이 변경이 실패했습니다");
+//     }else{
+//       profileImg.setAttribute("src",result.src);
+//       alert("프로필 사진이 변경되었습니다");
+//     }
+//   })
+// });
 
+  const userIcon1 = document.querySelector("#userIcon1");
+  const userIcon2 = document.querySelector("#userIcon2");
+  const userIcon3 = document.querySelector("#userIcon3");
+
+
+userIcon1.addEventListener("click", e =>{
+  console.log(userIcon1.value)
+  const inputIcon = userIcon1.value
+  fetch('/user/changeIcon', {
+    method: 'post',
+    headers: { 'Content-type': 'application/json' },
+    body: JSON.stringify({ "inputIcon" : inputIcon })
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        console.log('성공');
+        alert()
+      } else {
+        console.log('실패');
+      }
+    });
+
+});
+
+userIcon2.addEventListener("click", e =>{
+  console.log(userIcon2.value)
+  const inputIcon = userIcon2.value
+  fetch('/user/changeIcon', {
+    method: 'post',
+    headers: { 'Content-type': 'application/json' },
+    body: JSON.stringify({ "inputIcon" : inputIcon })
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        console.log('성공');
+      } else {
+        console.log('실패');
+      }
+    });
+});
+
+userIcon3.addEventListener("click", e =>{
+  console.log(userIcon3.value)
+  const inputIcon = userIcon3.value
+  fetch('/user/changeIcon', {
+    method: 'post',
+    headers: { 'Content-type': 'application/json' },
+    body: JSON.stringify({ "inputIcon" : inputIcon })
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        console.log('성공');
+      } else {
+        console.log('실패');
+      }
+    });
+});
+
+  
 
 // 이름 수정
 const updateName = document.querySelector("#updateName");
@@ -96,7 +156,6 @@ updateName.addEventListener("input",(e)=>{
 // 닉네임 수정 (+중복확인)
 const updateNickname = document.querySelector("#updateNickname");
 const updateNicknameMessage = document.querySelector("#updateNicknameMessage");
-
 
 updateNickname.addEventListener("input",(e)=>{
 const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
@@ -203,22 +262,23 @@ function execDaumPostcode() {
 // 회원 탈퇴
 const signout=document.querySelector("#signout");
 if(signout != null){
-    signout.addEventListener("submit",e=>{
-        const agreeSignout = document.querySelector("#agreeSignout")
-        if(currentPw.value.trim().length ==0){
-            alert=("현재 비밀번호를 입력해주세요");
-            e.preventDefault();
-            return;
-        }
-        if(!agreeSignout.checked){
-            alert("약관에 동의해주세요");
-            e.preventDefault();
-            return;
-        }
-        if(!confirm("정말 탈퇴 하시겠습니까?")){
-            alert("취소되었습니다.");
-            e.preventDefault();
-            return;
-        }
-    });
+  signout.addEventListener("submit",e=>{
+      const currentPw = document.querySelector("#currentPw");
+      const agreeSignout = document.querySelector("#agreeSignout");
+      if(currentPw.value.trim().length ==0){
+          alert=("현재 비밀번호를 입력해주세요");
+          e.preventDefault();
+          return;
+      }
+      if(!agreeSignout.checked){
+          alert("약관에 동의해주세요");
+          e.preventDefault();
+          return;
+      }
+      if(!confirm("정말 탈퇴 하시겠습니까?")){
+          alert("취소되었습니다.");
+          e.preventDefault();
+          return;
+      }
+  });
 }
