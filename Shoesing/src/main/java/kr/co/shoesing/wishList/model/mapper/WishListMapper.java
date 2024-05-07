@@ -37,9 +37,9 @@ public interface WishListMapper {
 	List<Item> selectAll(int userNo, RowBounds rowBounds);
 
 	/** 선택된 위시리스트 삭제
-	 * @param itemNoList
+	 * @param map
 	 * @return
 	 */
-	int delete(List<String> itemNoList);
+	int delete(Map<String, Object> map);
 
 }

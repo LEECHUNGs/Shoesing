@@ -72,6 +72,13 @@ const selectWishList = (cp) => {
             
             // wishListUl에 모든 내용 추가
             wishListUl.append(li);
+
+            // 단일 상품 삭제 버튼을 눌렀을 때
+            deleteBtn.addEventListener("click", e => {
+
+                let list = [wishList[i].itemNo];
+                deleteList(list);
+            });
         }
 
         // 전체 상품 선택 버튼 클릭시 전체 선택
@@ -113,11 +120,14 @@ const selectWishList = (cp) => {
     });
 }
 
+// 위시리스트 삭제용 함수
 const deleteList = (list) => {
 
+    if( !confirm("삭제 하시겠습니까?") ) {
+        return;
+    }
+
     const obj = list.map(Number);
-    console.log(obj);
-    console.log(JSON.stringify(obj));
 
     fetch("/wishList/manage", {
         method : "DELETE",
@@ -141,11 +151,13 @@ const deleteList = (list) => {
 // 처음 페이지를 열었을 때 화면 목록 초기화
 selectWishList(1);
 
+// 선택 상품 삭제 버튼을 눌렀을 때
 document.getElementById("checkDelBtn").addEventListener("click", e => {
 
     const checkList = document.querySelectorAll("[name=deleteOne]:checked");
     console.log(checkList);
 
+    // 선택 항목이 없을 때
     if(checkList.length == 0) {
         alert("항목을 선택해 주세요");
         return;
@@ -155,9 +167,6 @@ document.getElementById("checkDelBtn").addEventListener("click", e => {
     checkList.forEach(e => {
         list.push(e.value)
     });
-
-    //console.log(list);
-    //console.log(list.map(Number))
 
     deleteList(list);
 });

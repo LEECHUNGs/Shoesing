@@ -67,13 +67,12 @@ public class WishLisController {
 	 */
 	@ResponseBody
 	@DeleteMapping("manage")
-	public int delete(@RequestBody String map) {
+	public int delete(@RequestBody String itemNoString, @SessionAttribute("loginUser") User loginUser) {
 		
-		String[] itemNo = (map.substring(map.indexOf("[") + 1, map.indexOf("]"))).split(",");
+		String itemNoList = itemNoString.substring(itemNoString.indexOf("[") 
+							+ 1, itemNoString.indexOf("]"));
 		
-		List<String> itemNoList = new ArrayList<>(Arrays.asList(itemNo));
-		
-		return service.delete(itemNoList);
+		return service.delete(itemNoList, loginUser.getUserNo());
 	}
 }
 
