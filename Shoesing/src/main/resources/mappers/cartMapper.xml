@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.shoesing.cart.model.mapper.CartMapper">
+	
+	<select id="check">
+		SELECT COUNT(*)
+		FROM "CART"
+		WHERE USER_NO = #{userNo} 
+		AND ITEM_NO = #{itemNo}
+		AND SIZE_NO = #{sizeNo}
+	</select>
+	
+	<select id="getListCount">
+		SELECT COUNT(*)
+		FROM "CART"
+		WHERE USER_NO = ${userNo}
+	</select>
+	
+	<select id="selectAll">
+		SELECT ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_BRAND, ITEM_IMG_PATH, CART_ITEM_COUNT
+		FROM "CART"
+		JOIN "ITEM" USING(ITEM_NO)
+		WHERE USER_NO = ${userNo}
+		ORDER BY CART_ITEM_UPLOAD_DATE
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM "CART" 
+		WHERE USER_NO = ${userNo}
+		AND ITEM_NO IN (${itemNoList})
+	</delete>
+	
+	<update id="add">
+		UPDATE "CART" SET
+			CART_ITEM_COUNT = CART_ITEM_COUNT + (#{cartItemCount})
+		WHERE USER_NO = #{userNo}
+		AND ITEM_NO = #{itemNo}
+	</update>
+	
+	<insert id="insert">
+		INSERT INTO "CART"
+		VALUES(
+			#{itemNo}, 
+			#{sizeNo}, 
+			#{userNo}, 
+			#{cartItemCount}, 
+			DEFAULT
+		)
+	</insert>
+	
+</mapper>

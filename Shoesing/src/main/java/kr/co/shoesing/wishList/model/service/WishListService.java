@@ -21,8 +21,9 @@ public interface WishListService {
 
 	/** 선택한 위시리스트 목록 삭제하기
 	 * @param itemNoList
+	 * @param userNo 
 	 * @return
 	 */
-	int delete(List<String> itemNoList);
+	int delete(String itemNoList, int userNo);
 
 }

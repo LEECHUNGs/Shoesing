@@ -63,9 +63,13 @@ public class WishListServiceImpl implements WishListService{
 		return map;
 	}
 	@Override
-	public int delete(List<String> itemNoList) {
+	public int delete(String itemNoList, int userNo) {
 		
-		return mapper.delete(itemNoList);
+		Map<String, Object> map = new HashMap<>();
+		map.put("itemNoList", itemNoList);
+		map.put("userNo", userNo);
+		
+		return mapper.delete(map);
 	}
 	
 
