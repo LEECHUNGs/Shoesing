@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.shoesing.wishList.model.mapper.WishListMapper">
+	
+	<select id="check">
+		SELECT COUNT(*)
+		FROM "WISHLIST"
+		WHERE USER_NO = ${userNo} 
+		AND ITEM_NO = ${itemNo}
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO "WISHLIST"
+		VALUES(${userNo}, ${itemNo})		
+	</insert>
+	
+	<select id="getListCount">
+		SELECT COUNT(*)
+		FROM "WISHLIST"
+		WHERE USER_NO = ${userNo}
+	</select>
+	
+	<select id="selectAll">
+		SELECT ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_BRAND
+		FROM "WISHLIST"
+		JOIN "ITEM" USING(ITEM_NO)
+		WHERE USER_NO = ${userNo}
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM "WISHLIST" 
+		WHERE USER_NO = ${}
+		AND ITEM_NO = (
+		<foreach collection="" item="itemNoList" index="i" separator=",">
+			${itemNoList[i]}
+		</foreach>
+	</delete>
+	
+</mapper>

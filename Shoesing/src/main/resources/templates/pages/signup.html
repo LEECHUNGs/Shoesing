@@ -33,6 +33,7 @@
       <!-- 이름 입력 -->
       <label for="userName"> <span class="required"></span>이름 </label>
       <div class="signup-input-area">
+
         <input
           type="text"
           name="userName"
@@ -40,6 +41,7 @@
           autocomplete="off"
           placeholder="이름을 입력해주세요."
         />
+
       </div>
       <span class="signup-message" id="nameMessage">한글로만 2~6글자</span>
       <br />
@@ -88,8 +90,10 @@
       </div>
 
       <span class="signup-message" id="pwMessage"
+
         >비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자 1글자를
         포함해야합니다.</span
+
       >
 
       <br />
@@ -106,6 +110,7 @@
           autocomplete="off"
         />
       </div>
+
 
       <span class="signup-message" id="telMessage"></span>
 
@@ -136,6 +141,7 @@
           >메일을 받을 수 있는 이메일을 입력해주세요.</span
         >
       </form>
+
       <br />
       <!-- 인증번호 입력 -->
       <form action="/email/checkAuthKey" method="POST">
