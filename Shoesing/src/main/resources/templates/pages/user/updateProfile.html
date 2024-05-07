@@ -12,16 +12,16 @@
             <h1>내 정보 수정</h1>
         </div>
         
+        <div class="profile-image-area">
+            <p>프로필 사진</p>
+            <img th:with ="user=#{user.deault.image}" th:src="@{/img/userIcon/} + ${session.loginUser.userIcon} + |.png|" id="profileImg">
+            <br>
+            <button class="userIcon" id="userIcon1" value="userIcon1"></button>
+            <button class="userIcon" id="userIcon2" value="userIcon2"></button>
+            <button class="userIcon" id="userIcon3" value="userIcon3"></button>
+            <button id="changeIconBtn">프로필 변경하기</button>
+        </div>
         
-            <div class="profile-image-area">
-                <p>프로필 사진</p>
-                <img th:with ="user=#{user.deault.image}" th:src="@{/img/userIcon/} + ${session.loginUser.userIcon} + |.png|" id="profileImg">
-                <br>
-                <button class="userIcon" id="userIcon1" value="userIcon1"></button>
-                <button class="userIcon" id="userIcon2" value="userIcon2"></button>
-                <button class="userIcon" id="userIcon3" value="userIcon3"></button>
-            <!-- <button id="changeIconBtn">프로필 변경하기</button> -->
-          </div>
         <form id="updateInfo">
           <div class="update-input-area">
             <label>아이디</label>

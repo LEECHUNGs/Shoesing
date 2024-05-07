@@ -64,18 +64,15 @@ const profileImg = document.querySelector("#profileImg");
 
   document.getElementById('userIcon1').addEventListener('click', () => {
     profileImg.src = '/img/userIcon/userIcon1.jpg';
-    alert ("프로필 사진이 변경되었습니다.")
     
   });
 
   document.getElementById('userIcon2').addEventListener('click', () => {
     profileImg.src = "/img/userIcon/userIcon2.jpg";
-    alert ("프로필 사진이 변경되었습니다.")
   });
 
   document.getElementById('userIcon3').addEventListener('click', () => {
     profileImg.src = '/img/userIcon/userIcon3.jpg';
-    alert ("프로필 사진이 변경되었습니다.")
   });
 
 
