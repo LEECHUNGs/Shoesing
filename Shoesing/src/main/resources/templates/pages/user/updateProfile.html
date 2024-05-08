@@ -54,20 +54,18 @@
           <input type=password id="currentPw" placeholder="현재 비밀번호를 입력해주세요"/>
           <br/>
       </label>
-        <span id="PwMessage"></span>
         <button id="updatePwBtn" type="button">비밀번호 변경</button>
       </div>
 
         <!-- 변경할 비밀번호 (평소 hidden) -->
       <div class="update-input-area" style="visibility:hidden" id="updatePwDiv">
         <label>변경할 비밀번호
-        <input type=password id="updatePw" placeholder="변경할 비밀번호를 입력해주세요"/>
+        <input type=password id="updatePw" class="updateInputPw" placeholder="변경할 비밀번호를 입력해주세요"/>
         </label>
         <br/>
-        <span id="updatePwMessage"></span>
         <!-- 변경할 비밀번호 확인 (평소 hidden) -->
         <label>변경할 비밀번호 확인</label>
-        <input type=password id="updatePwConfirm" placeholder="변경할 비밀번호를 일치하게 입력해주세요"/>
+        <input type=password id="updatePwConfirm" class="updateInputPw" placeholder="변경할 비밀번호를 일치하게 입력해주세요"/>
         <br/>
         <span id="updatePwMessage">비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.</span>
       </div>
@@ -121,10 +119,10 @@
       <!-- 주소 수정 -->
       <div th:value="${session.loginUser.userAddress}" class="update-input-area" >
         <label for="updateAddress"><span class="required">주소</span>
-          <input type="text" id="postcode" placeholder="우편번호">
-          <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br/>
-          <input type="text" id="roadAddress" placeholder="도로명주소">
-          <input type="text" id="jibunAddress" placeholder="지번주소">
+          <input type="text" id="postcode" placeholder="우편번호" readonly>
+          <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기" ><br/>
+          <input type="text" id="roadAddress" placeholder="도로명주소" readonly>
+          <input type="text" id="jibunAddress" placeholder="지번주소" readonly>
           <span id="guide" style="color:#999;display:none"></span>
           <input type="text" id="detailAddress" placeholder="상세주소">
           <input type="text" id="extraAddress" placeholder="참고항목">
@@ -134,7 +132,7 @@
       <!-- 수정완료버튼, 취소버튼 -->
       <div class="profile-submit">
         <a href="/user/myPage" id="cancleprofile">취소</a>
-        <button id="updateProfile">수정완료</button>
+        <button id="updateProfile" type="button">수정완료</button>
       </div>
     </form> 
     <hr/>

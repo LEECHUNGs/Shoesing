@@ -132,7 +132,7 @@ const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
 //------------------------------------------------------------------수정전
 
 
-//비밀번호 변경 버튼 눌렀을 때 변경할 비밀번호 창 나타내기
+//비밀번호가 현재 입력한 값과 같은지 조회 (작동o)
 const updatePwBtn = document.querySelector("#updatePwBtn");
 const currentPw = document.querySelector("#currentPw");
 updatePwBtn.addEventListener("click",()=>{
@@ -140,49 +140,107 @@ updatePwBtn.addEventListener("click",()=>{
   alert('현재 비밀번호를 입력해주시기 바랍니다');
   return;
   }
-  const inputPw=currentPw.value ;
+  const inputPw = currentPw.value ;
   console.log(inputPw);
   fetch("/user/checkPw",{
       method : 'POST',
       headers : { 'Content-Type': 'application/json' },
-      body : inputPw
+      body : inputPw,
     })
   .then(resp => resp.text())
   .then(result => {
-    if(result > 0){
-    updatePwDiv.setAttribute("style","visibility:visible");  
-    }else{
-      console.log("현재 사용중인 비밀번호와 일치하지 않습니다");
+    if(result == 0){
       console.log(result);
+      console.log("비밀번호 불일치");
+      alert("비밀번호가 일치하지 않습니다")
+      currentPw.value = '';
+      return;
     }
+      updatePwDiv.setAttribute("style","visibility:visible");  
+      console.log("비밀번호 일치");
+      
     
-  })
-
-  
+  }) 
 });
 
-const updateForm = document.querySelector("#updateForm");
-if(updateForm != null){
-  updateForm.addEventListener("submit", e =>{
+//비밀번호 변경 
+const updatePw = document.querySelector("#updatePw");
+const updatePwConfirm = document.querySelector("#updatePwConfirm");
+const updatePwMessage = document.querySelector("#updatePwMessage");
 
-  
-  const PwMessage = document.querySelector("#PwMessage"); 
-  const updatePw = document.querySelector("#updatePw");
-  const updatePwConfirm = document.querySelector("#updatePwConfirm");
-  const updatePwMessage = document.querySelector("#updatePwMessage");
-  
-  let str;
-  if(currentPw.value.trim().length == 0) str = "현재 비밀번호를 입력해주세요";
-  else if(updatePw.value.trim().length == 0) str = "변경할 비밀번호를 입력해주세요";
-  else if(updatePwConfirm.value.trim().length == 0) str = "변경할 비밀번호를 확인해주세요";
+const checkUpdatePw = () => {
+  if (updatePw.value === updatePwConfirm.value) {
+    updatePwMessage.innerText = '';
+    alert("비밀번호 일치")
+    updatePwMessage.classList.add('confirm');
+    updatePwMessage.classList.remove('error');
+    return;
+  }
+  updatePwMessage.innerText = '비밀번호가 일치하지 않습니다';
+  updatePwMessage.classList.add('error');
+  updatePwMessage.classList.remove('confirm');
+};
 
+updatePw.addEventListener('input', (e) => {
+  const inputUpdatePw = e.target.value;
 
+  if (inputUpdatePw.trim().length === 0) {
+    updatePwMessage.innerText ='비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.';
+    updatePwMessage.classList.remove('confirm', 'error'); 
+    updatePw.value = '';
+    return;
+  }
 
+  const regExp = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{6,16}$/;
 
+  if (!regExp.test(inputUpdatePw)) {
+    updatePwMessage.innerText = '비밀번호가 유효하지 않습니다.';
+    updatePwMessage.classList.add('error');
+    updatePwMessage.classList.remove('confirm');
+    return;
+  }
 
+  updatePwMessage.innerText = '유효한 비밀번호 형식입니다';
+  updatePwMessage.classList.add('confirm');
+  updatePwMessage.classList.remove('error');
+
+  if (updatePwConfirm.value.length > 0) {
+    checkUpdatePw();
+  }
 });
-  
-}
+
+updatePwConfirm.addEventListener('input', () => {
+  if (updatePw.value.length !== 0) {
+    checkUpdatePw();
+    return;
+  }
+});
+
+//
+// const updateInputPw = document.querySelectorAll(".updateInputPw")
+
+// updateInputPw.forEach( (u) => {
+//   u.addEventListener("input", e=>{
+//     const inputPw = e.target.value;
+//     fetch("/user/changePw",{
+//       method : 'POST',
+//       headers : {'Content-Type' : 'application/json'},
+//       body : inputPw
+//     })
+//     console.log(inputPw)
+//     .then(resp => resp.text())
+//     .then(result => {
+//       if(result > 0){
+//         alert("비밀번호가 변경되었습니다");
+//         console.log("비밀번호 변경 성공");
+//       }else{
+//         console.log(result);
+//         alert("비밀번호 변경에 실패했습니다");
+//         console.log("비밀번호 변경 실패");
+//       }
+//     })
+//   })
+// })
 
 
 
@@ -415,6 +473,11 @@ if(signout != null){
           e.preventDefault();
           return;
       }
+      const inputPw = currentPw.value ;
+      console.log(inputPw);
+
+    //현재 비번의 값이 일치하지 않는경우 막기
+
       if(!agreeSignout.checked){
           alert("약관에 동의해주세요");
           e.preventDefault();

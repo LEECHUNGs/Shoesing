@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.mail.Session;
 import kr.co.shoesing.user.model.dto.User;
 import kr.co.shoesing.user.model.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -111,20 +112,35 @@ public class UserServiceImpl implements UserService {
 	public int checkDel(String inputId) {
 		return mapper.checkDel(inputId);
 	}
-
+	
+	
 	
 	/**
-	 * 비밀번호 변경
+	 *입력한 비밀번호가 현재 비밀번호와 같은지 조회
 	 */
 	@Override
-	public int changePw(String userId, String inputPw) {
-		
+	public int checkPw(String userId, String inputPw) {
 		String currentPw = mapper.checkPw(userId);
 		
 		if(!passwordEncoder.matches( inputPw,currentPw) ) {
 		return 0;
 		}
-		return mapper.changePw(userId,inputPw);
+		return 1;
+	}
+	
+	/**
+	 * 비밀번호 변경
+	 */
+	@Override
+	public int changePw(User loginUser, String inputPw) {
+		
+		//새로 변경한 pw 암호화 하기
+		String encPw = passwordEncoder.encode(inputPw);
+		
+		// 세션에 있는 Pw값에 넣어주기
+		loginUser.setUserPw(encPw);
+		
+		return mapper.changePw(loginUser.getUserId(),inputPw);
 	}
 
 }

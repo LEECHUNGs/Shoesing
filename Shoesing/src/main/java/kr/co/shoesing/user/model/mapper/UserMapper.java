@@ -62,19 +62,20 @@ public interface UserMapper {
 	 * @return
 	 */
 	int checkDel(String inputId);
-
-	/** 비밀번호 변경
-	 * @param userId
-	 * @param inputPw 
-	 * @return
-	 */
-	int changePw(String userId, String inputPw);
 	
 	/** 비밀번호가 입력한 값과 같은지 체크
 	 * @param userId
 	 * @return
 	 */
 	String checkPw(String userId);
+
+	/** 비밀번호 변경
+	 * @param userId
+	 * @param inputPw
+	 * @return
+	 */
+	int changePw(String userId, String inputPw);
+	
 
 
 }

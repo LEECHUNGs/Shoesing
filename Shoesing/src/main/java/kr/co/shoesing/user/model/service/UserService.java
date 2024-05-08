@@ -58,10 +58,19 @@ public interface UserService {
 	 */
 	int checkDel(String inputId);
 
-	/** 비밀번호 변경
+	
+	/** 입력한 비밀번호가 현재 비밀번호와 같은지 체크
 	 * @param userId
 	 * @param inputPw
 	 * @return
 	 */
-	int changePw(String userId, String inputPw);
+	int checkPw(String userId, String inputPw);
+	
+	/** 비밀번호 변경
+	 * @param loginUser
+	 * @param inputPw
+	 * @return
+	 */
+	int changePw(User loginUser, String inputPw);
+
 }
