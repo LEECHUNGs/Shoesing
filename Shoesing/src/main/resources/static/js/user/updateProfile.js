@@ -1,143 +1,92 @@
 // 내 정보 수정 form 제출시 나타날 이벤트
-const updateInfo= document.querySelector("#updateInfo");
-updateInfo.addEventListener('submit', handleFormSubmit);
+// const updateInfo= document.querySelector("#updateInfo");
+// updateInfo.addEventListener('submit', handleFormSubmit);
 
-function handleFormSubmit(e){
-    e.preventDefault();
+// function handleFormSubmit(e){
+//   e.preventDefault();
 
-        const data = new data(e.target);
-        const values = Object.entries(data);
-      
-        // 필수 입력 항목 확인
-        const requiredFields = ['updateNickname', 'updateEmail', 'currentPw'];
-        const emptyFields = Fields.some(field => values[field] === '');
-      
-        if (emptyFields) {
-          // 필수 입력 항목이 비어 있는 경우 에러 처리
-          alert('필수 입력 항목을 모두 입력해주세요.');
-          return;
-        }
-      
-        // 선택 입력 항목의 null 값 처리
-        const optionalFields = ['updateName', 'updateTel', 'updateAddress', 'updatePw', 'updatePwConfirm'];
-        const updatedValues = { ...values };
-        optionalFields.forEach(field => {
-          if (updatedValues[field] === '') {
-            updatedValues[field] = null;
-          }
-        });
-      
-        // 수정된 회원 정보 서버로 전송
-        sendUpdateRequest(updatedValues);          
-}
+//     const data = new data(e.target);
+//     const values = Object.entries(data);
+  
+//     // 필수 입력 항목 확인
+//     const requiredFields = ['updateNickname', 'updateEmail', 'currentPw'];
+//     const emptyFields = Fields.some(field => values[field] === '');
+  
+//     if (emptyFields) {
+//       // 필수 입력 항목이 비어 있는 경우 에러 처리
+//       alert('필수 입력 항목을 모두 입력해주세요.');
+//       return;
+//     }
+  
+//     // 선택 입력 항목의 null 값 처리
+//     const optionalFields = ['updateName', 'updateTel', 'updateAddress', 'updatePw', 'updatePwConfirm'];
+//     const updatedValues = { ...values };
+//     optionalFields.forEach(field => {
+//       if (updatedValues[field] === '') {
+//         updatedValues[field] = null;
+//       }
+//     });
+  
+//     // 수정된 회원 정보 서버로 전송
+//     sendUpdateRequest(updatedValues);          
+// }
 
-function sendUpdateRequest(values) {
-    // 서버로 AJAX 요청 보내기
-    // (예: fetch, axios 등을 사용하여 서버 API 호출)
-    fetch('/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(values)
-    })
-    .then(resp => {
-      if (resp.ok) {
-        // 회원 정보 수정 성공 처리
-        alert('회원 정보가 수정되었습니다.');
-      } else {
-        // 회원 정보 수정 실패 처리
-        alert('회원 정보 수정에 실패했습니다. 다시 시도해주세요.');
-      }
-    })
-    .catch(error => {
-      // 네트워크 오류 등 예외 처리
-      console.error('내 정보 수정 실패:', error);
-      alert('회원 정보 수정이 실패했습니다. 다시 시도해주세요.');
-    });
-  }
+// function sendUpdateRequest(values) {
+//     // 서버로 AJAX 요청 보내기
+//     // (예: fetch, axios 등을 사용하여 서버 API 호출)
+//     fetch('/', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(values)
+//     })
+//     .then(resp => {
+//       if (resp.ok) {
+//         // 회원 정보 수정 성공 처리
+//         alert('회원 정보가 수정되었습니다.');
+//       } else {
+//         // 회원 정보 수정 실패 처리
+//         alert('회원 정보 수정에 실패했습니다. 다시 시도해주세요.');
+//       }
+//     })
+//     .catch(error => {
+//       // 네트워크 오류 등 예외 처리
+//       console.error('내 정보 수정 실패:', error);
+//       alert('회원 정보 수정이 실패했습니다. 다시 시도해주세요.');
+//     });
+//   }
   
 //===========================================================================
 
-//프로필 사진 button에 누르는 값으로 변경될 수 있게 하기
-// const profileImg = document.querySelector("#profileImg");
+//프로필 사진 변경
+const userIcon = document.querySelectorAll(".userIcon");
+const profileIcon = document.querySelectorAll(".profileIcon");
 
-// document.getElementById("changeIconBtn").addEventListener("click", (e) => {
-
-//   console.log(e.target.value);
-//   
-
-//     if(!e.target.){
-//       alert("프로필 사진이 변경이 실패했습니다");
-//     }else{
-//       profileImg.setAttribute("src",result.src);
-//       alert("프로필 사진이 변경되었습니다");
-//     }
-//   })
-// });
-
-  const userIcon1 = document.querySelector("#userIcon1");
-  const userIcon2 = document.querySelector("#userIcon2");
-  const userIcon3 = document.querySelector("#userIcon3");
-
-
-userIcon1.addEventListener("click", e =>{
-  console.log(userIcon1.value)
-  const inputIcon = userIcon1.value
-  fetch('/user/changeIcon', {
-    method: 'post',
-    headers: { 'Content-type': 'application/json' },
-    body: JSON.stringify({ "inputIcon" : inputIcon })
-  })
+profileIcon.forEach( (i) => {
+  i.addEventListener("click", e =>{
+    const inputIcon = i.value;
+    fetch('/user/changeIcon', {
+      method: 'post',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify({ "inputIcon" : inputIcon })
+    })
     .then((resp) => resp.text())
     .then((result) => {
       if (result > 0) {
         console.log('성공');
-        alert()
+        alert("프로필 사진이 변경되었습니다");
+        userIcon.forEach((u)=>{
+          u.src = "/img/userIcon/" + inputIcon + ".png";
+          console.log(u.src);
+        });
       } else {
         console.log('실패');
       }
     });
-
+  });
 });
 
-userIcon2.addEventListener("click", e =>{
-  console.log(userIcon2.value)
-  const inputIcon = userIcon2.value
-  fetch('/user/changeIcon', {
-    method: 'post',
-    headers: { 'Content-type': 'application/json' },
-    body: JSON.stringify({ "inputIcon" : inputIcon })
-  })
-    .then((resp) => resp.text())
-    .then((result) => {
-      if (result > 0) {
-        console.log('성공');
-      } else {
-        console.log('실패');
-      }
-    });
-});
-
-userIcon3.addEventListener("click", e =>{
-  console.log(userIcon3.value)
-  const inputIcon = userIcon3.value
-  fetch('/user/changeIcon', {
-    method: 'post',
-    headers: { 'Content-type': 'application/json' },
-    body: JSON.stringify({ "inputIcon" : inputIcon })
-  })
-    .then((resp) => resp.text())
-    .then((result) => {
-      if (result > 0) {
-        console.log('성공');
-      } else {
-        console.log('실패');
-      }
-    });
-});
-
-  
 
 // 이름 수정
 const updateName = document.querySelector("#updateName");
@@ -145,13 +94,13 @@ const updateNameMessage = document.querySelector("#updateNameMessage");
 
 const regExp = /^[가-힣]{2,6}$/;
 updateName.addEventListener("input",(e)=>{
-    if(!regExp.test(updateName.value)){
-        updateNameMessage.innerText="유효하지 않는 이름 입니다."
-        return;
-    } else{
-        updateNameMessage.innerText="";
-    }
-})
+    if(!regExp.test(e.target.value)){
+      updateNameMessage.innerText="유효한 이름 형식이 아닙니다."
+      return;
+    } 
+      updateNameMessage.innerText="";
+      return e.target.value; 
+});
 
 // 닉네임 수정 (+중복확인)
 const updateNickname = document.querySelector("#updateNickname");
@@ -160,42 +109,82 @@ const updateNicknameMessage = document.querySelector("#updateNicknameMessage");
 updateNickname.addEventListener("input",(e)=>{
 const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
     if(!regExp.test(updateNickname.value)){
-        updateNicknameMessage.innerText="유효하지 않는 닉네임 입니다."
-        updateCheckObj.updateNickname = false;
+        updateNicknameMessage.innerText="유효하지 않는 닉네임입니다.";
         return;
     }
     updateNicknameMessage.innerText=""
-    updateCheckObj.updateNickname = true;
     const inputNickname = e.target.value;
-    console.log(inputNickname);
-
-    fetch("/user/checkNickname?userNickname="+inputNickname) 
+    fetch("/user/checkNickname",{
+      method : 'POST',
+      headers : {'Content-Type' : 'application/json'},
+      body : inputNickname,
+    })
     .then(resp => resp.text())
     .then(result => {
-        if (result == 1) {
-            if(checkObj.updateNickname.value == "${session.loginUser.userNickname}"){
-                updateNicknameMessage.innerText="현재 사용중인 닉네임명과 동일합니다"                  
-                updateCheckObj.updateNickname = false;
-                return;
-            }
-            updateNicknameMessage.innerText="이미 사용중인 닉네임 입니다";
-            updateCheckObj.updateNickname=false;
-            return;       
-        }
-        updateNicknameMessage.innerText= "사용가능한 닉네임 입니다"
-        updateCheckObj.updateNickname = true;           
+      if (result == 1) {
+        updateNicknameMessage.innerText="이미 사용중인 닉네임 입니다";
+        return;       
+      }
+      updateNicknameMessage.innerText= "사용가능한 닉네임 입니다"
+      updateCheckObj.updateNickname = true;           
     });
 });
 //------------------------------------------------------------------수정전
 
-// 현재 비밀번호 (같은 경우/ 다른경우), 정규식검사
-const currentPw = document.querySelector("#currentPw");
-const PwMessage = document.querySelector("#PwMessage");
 
-// 변경할 비밀번호와 변경할 비밀번호 확인 (같은경우/ 다른 경우), 정규식검사,  null인경우
-const updatePw = document.querySelector("#updatePw");
-const updatePwConfirm = document.querySelector("#updatePwConfirm");
-const updatePwMessage = document.querySelector("#updatePwMessage");
+//비밀번호 변경 버튼 눌렀을 때 변경할 비밀번호 창 나타내기
+const updatePwBtn = document.querySelector("#updatePwBtn");
+const currentPw = document.querySelector("#currentPw");
+updatePwBtn.addEventListener("click",()=>{
+  if(currentPw.value.trim().length ==0){
+  alert('현재 비밀번호를 입력해주시기 바랍니다');
+  return;
+  }
+  const inputPw=currentPw.value ;
+  console.log(inputPw);
+  fetch("/user/checkPw",{
+      method : 'POST',
+      headers : { 'Content-Type': 'application/json' },
+      body : inputPw
+    })
+  .then(resp => resp.text())
+  .then(result => {
+    if(result > 0){
+    updatePwDiv.setAttribute("style","visibility:visible");  
+    }else{
+      console.log("현재 사용중인 비밀번호와 일치하지 않습니다");
+      console.log(result);
+    }
+    
+  })
+
+  
+});
+
+const updateForm = document.querySelector("#updateForm");
+if(updateForm != null){
+  updateForm.addEventListener("submit", e =>{
+
+  
+  const PwMessage = document.querySelector("#PwMessage"); 
+  const updatePw = document.querySelector("#updatePw");
+  const updatePwConfirm = document.querySelector("#updatePwConfirm");
+  const updatePwMessage = document.querySelector("#updatePwMessage");
+  
+  let str;
+  if(currentPw.value.trim().length == 0) str = "현재 비밀번호를 입력해주세요";
+  else if(updatePw.value.trim().length == 0) str = "변경할 비밀번호를 입력해주세요";
+  else if(updatePwConfirm.value.trim().length == 0) str = "변경할 비밀번호를 확인해주세요";
+
+
+
+
+
+});
+  
+}
+
+
 
 //-------------------------------------------------------------------
 
@@ -205,16 +194,172 @@ const updateTelMessage = document.querySelector("#updateTelMessage");
 
 updateTel.addEventListener("input",(e)=>{
     const regExp=/^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
-    if(!regExp.test(updateTel.value)){
-        updateTelMessage.innerText="유효하지 않는 전화번호 입니다.";
+    if(!regExp.test(e.target.value)){
+        updateTelMessage.innerText="유효한 전화번호 형식으로 수정해주세요";
         return;
-    }else{
-        updateTelMessage.innerText="";}
-    
+    }
+      updateTelMessage.innerText="";  
 });
 
-// updateTel.addEventListener("input",(e))
-// 주소 
+// 이메일 수정
+const updateEmail = document.querySelector("#updateEmail");
+const inputDomain = document.querySelector("#inputDomain");
+const domainList = document.querySelector("#domainList");
+const emailMessage = document.querySelector("#emailMessage");
+
+updateEmail.addEventListener('input', (e) => {
+  if (
+    e.target.value.trim().length == 0 ||
+    inputDomain.value.trim().length == 0
+  ) {
+    emailMessage.innerText = '이메일을 입력해주세요';
+    return;
+  }
+  emailMessage.innerText = '이메일을 입력 성공';
+});
+
+inputDomain.addEventListener('input', (e) => {
+
+  if (e.target.value.trim().length == 0 || updateEmail.value.trim().length == 0) {
+    emailMessage.innerText = '이메일을 입력해주세요';
+    return;
+  }
+  emailMessage.innerText = '이메일을 입력 성공';
+});
+
+domainList.addEventListener('change', (e) => {
+  const optionsValue = e.target.options[e.target.selectedIndex].value;
+  inputDomain.value = optionsValue;
+
+  if (!optionsValue == '') {
+    inputDomain.readOnly = true;
+  } else {
+    inputDomain.readOnly = false;
+  }
+  if (e.target.value.trim().length == 0 || updateEmail.value.trim().length == 0) {
+    emailMessage.innerText = '이메일을 입력해주세요';
+    return;
+  }
+  emailMessage.innerText = '이메일 입력 성공';
+  const emailVal = userEmail.value + '@' + inputDomain.value;
+  console.log(emailVal);
+});
+
+// 이메일 인증번호 입력
+const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn");
+const authKey = document.querySelector("#authKey");
+const checkAuthKeyBtn = document.querySelector("#checkAuthKeyBtn");
+const authKeyMessage = document.querySelector("#authKeyMessage");
+
+
+let authTimer;
+const initMin = 4;
+const initSec = 59;
+const initTime = '05:00';
+
+let min = initMin;
+let sec = initSec;
+
+sendAuthKeyBtn.addEventListener('click', () => {
+  authKeyMessage.innerText = '';
+  const emailVal = updateEmail.value + '@' + inputDomain.value;
+ 
+  if (updateEmail.value.length == 0 || inputDomain.value.length == 0) {
+    alert('이메일 작성 후 클릭해 주세요');
+    return;  
+  }
+
+  authKeyDiv.setAttribute("style","visibility:visible");
+  min = initMin;
+  sec = initSec;
+
+  clearInterval(authTimer);
+
+  fetch('/email/signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: emailVal,
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result == 1) {
+        console.log('인증 번호 발송 성공');
+        emailMessage.innerText =
+          '인증번호 발송에 성공했습니다 인증번호를 입력해주세요';
+      } else {
+        console.log('인증 번호 발송 실패');
+        emailMessage.innerText = '인증번호 발송에 실패했습니다';
+      }
+      
+  });
+
+  authKeyMessage.innerText = initTime;
+  authKeyMessage.classList.remove('confirm', 'error');
+
+  alert('인증번호를 발송하였습니다. 입력하신 이메일을 확인해주세요');
+
+  authTimer = setInterval(() => {
+    authKeyMessage.innerText = `${addZero(min)}:${addZero(sec)}`;
+    if (min == 0 && sec == 0) {
+        clearInterval(authTimer);
+        authKeyMessage.classList.add('error');
+        authKeyMessage.classList.remove('confirm');
+      return;
+    }
+    if (sec == 0) {
+      sec = 60;
+      min--;
+    }
+    sec--;
+  }, 1000);
+});
+function addZero(number) {
+  if (number < 10) return "0" + number;
+  else            return number;
+}
+
+// form 전달용 input
+const inputEmail = document.querySelector('#inputEmail');
+
+checkAuthKeyBtn.addEventListener('click', () => {
+  if (min == 0 && sec == 0) {
+    alert('인증번호 입력 제한시간을 초과하였습니다!');
+    return;
+  }
+  if (authKey.value.length != 6) {
+    alert('인증번호를 정확히 입력해 주세요');
+    return;
+  }
+  const obj = {
+
+    email: updateEmail.value + '@' + inputDomain.value,
+    authKey: authKey.value,
+  };
+
+
+  fetch('/email/checkAuthKey', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(obj),
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result == 0) {
+        alert('인증번호가 일치하지 않습니다!');
+        checkObj.authKey = false;
+        return;
+      }
+      clearInterval(authTimer);
+      authKeyMessage.innerText = '인증 되었습니다.';
+      authKeyMessage.classList.remove('error');
+      authKeyMessage.classList.add('confirm');
+      inputEmail.value = userEmail.value + '@' + inputDomain.value;
+      checkObj.authKey = true;
+    });
+});
+
+
+// 주소 수정
 function execDaumPostcode() {
     new daum.Postcode({
       oncomplete: function (data) {
@@ -265,7 +410,7 @@ if(signout != null){
   signout.addEventListener("submit",e=>{
       const currentPw = document.querySelector("#currentPw");
       const agreeSignout = document.querySelector("#agreeSignout");
-      if(currentPw.value.trim().length ==0){
+      if(currentPw.value.trim().length == 0){
           alert=("현재 비밀번호를 입력해주세요");
           e.preventDefault();
           return;
