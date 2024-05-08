@@ -145,7 +145,7 @@ public class UserController {
 	}
 
 	/**
-	 * 내정보 수정 페이지 
+	 * 내정보 수정 페이지
 	 * 
 	 * @return
 	 */
@@ -153,8 +153,7 @@ public class UserController {
 	public String updateProfile() {
 		return "pages/user/updateProfile";
 	}
-	
-	
+
 	/**
 	 * 회원 탈퇴
 	 * 
@@ -192,7 +191,7 @@ public class UserController {
 		ra.addFlashAttribute("message", "실패");
 
 		return "redirect:/";
-	}                                      
+	}
 
 	/**
 	 * 회원 복구 페이지
@@ -266,7 +265,7 @@ public class UserController {
 	}
 
 	/**
-
+	 * 
 	 * 현재 비밀번호와 새로 입력한 비밀번호가 같은지 체크
 	 * 
 	 * @param inputPw
@@ -278,17 +277,15 @@ public class UserController {
 
 		String method = "userpw";
 
-		
 		int result = service.checkPw(inputPw);
-		
+
 		String message = null;
 		String path = null;
-		
-		
-		if(result  > 0) {
+
+		if (result > 0) {
 			path = "/user/delete";
 			message = "회원을 탈퇴하시겠습니까?";
-		}else {
+		} else {
 			path = "/user/updateProfile";
 			message = "현재 비밀번호가 일치하지 않습니다";
 		}
@@ -296,29 +293,28 @@ public class UserController {
 		return result;
 
 	}
+
 	@ResponseBody
 	@PostMapping("changeIcon")
-	public int changeIcon(HttpServletRequest request,
-						@RequestBody Map<String, String> map,
-						Model model) {
-		log.info("map {}",map);
+	public int changeIcon(HttpServletRequest request, @RequestBody Map<String, String> map, Model model) {
+		log.info("map {}", map);
 		HttpSession session = request.getSession();
 
 		User loginUser = (User) session.getAttribute("loginUser");
-		
+
 		String userId = loginUser.getUserId();
-		
+
 		int result = service.changeIcon(userId, map.get("inputIcon"));
-		
-			
-		
+
 		return result;
-		
+
 	}
 
+	/*
 	 * 아이디 DB에 존재하는지 체크
 	 * 
 	 * @param inputId
+	 * 
 	 * @return
 	 */
 	@ResponseBody
@@ -337,6 +333,5 @@ public class UserController {
 
 		return 2; // 회원이 존재하지않으면 2 반환
 	}
-
 
 }

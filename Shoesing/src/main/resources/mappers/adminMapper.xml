@@ -3,13 +3,12 @@
 <mapper namespace="kr.co.shoesing.admin.model.mapper.AdminMapper">
 
 	<!-- 모든 회원 조회 -->
-	<select id="selectAllUser" resultType="User">
+	<select id="selectAllUser">
 		SELECT 
 			USER_NO,
 			USER_ID ,
 			USER_PW ,
 			USER_NICKNAME ,
-			USER_NAME ,
 			USER_NAME ,
 			USER_ADDRESS ,
 			USER_TEL ,
@@ -19,6 +18,79 @@
 			USER_IDENTIFY ,
 			USER_ICON 
 		FROM "USER"
+		ORDER BY
+		
+		<!-- 기본 정렬 -->
+		<if test="sortNo == 0">
+			USER_NO
+		</if>
+		
+		<!-- 기본 역순 정렬 -->
+		<if test="sortNo == 1">
+			USER_NO DESC
+		</if>
+		
+		<!-- 이름순 정렬 -->
+		<if test="sortNo == 4">
+			USER_NAME, USER_NO
+		</if>
+		
+		<!-- 이름 역순 정렬 -->
+		<if test="sortNo == 5">
+			USER_NAME DESC, USER_NO
+		</if>
+
+		
+	</select>
+	
+	<select id="selectAllItem">
+		SELECT 
+			ITEM_NO, 
+			ITEM_NAME, 
+			ITEM_PRICE, 
+			ITEM_UPLOAD_DATE, 
+			ITEM_BRAND, 
+			ITEM_INFO, 
+			CATEGORY_NO,
+			ITEM_UPDATE_DATE
+		FROM "ITEM"
+		WHERE ITEM_COUNT > 0
+		ORDER BY 
+		
+		<!-- 기본 정렬 -->
+		<if test="sortNo == 0">
+			ITEM_NO
+		</if>
+		
+		<!-- 기본 역순 정렬 -->
+		<if test="sortNo == 1">
+			ITEM_NO DESC
+		</if>
+		
+		<!-- 가격순 정렬 -->
+		<if test="sortNo == 2">
+			ITEM_PRICE, ITEM_NO
+		</if>
+		
+		<!-- 가격 역순 정렬 -->
+		<if test="sortNo == 3">
+			ITEM_PRICE DESC, ITEM_NO
+		</if>
+		
+		<!-- 이름순 정렬 -->
+		<if test="sortNo == 4">
+			ITEM_NAME, ITEM_NO
+		</if>
+		
+		<!-- 이름 역순 정렬 -->
+		<if test="sortNo == 5">
+			ITEM_NAME DESC, ITEM_NO
+		</if>
+		
+		<!-- 리뷰순 정렬 (아직 비활성화)
+		<if test="${sortNo == 0}">
+			
+		</if> -->
 	</select>
 	
 </mapper>

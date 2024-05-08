@@ -4,27 +4,41 @@
   <body>
     <div>
       <th:block>
-        <img src="cid:emailAuth" alt="" style="position: relative" />
         <div
-          class="authKey"
-          th:text="${authKey}"
           style="
-            position: absolute;
-            text-align: center;
-            width: 540px;
-            height: 620px;
-            color: rgb(78, 78, 78);
-            font-weight: 600;
-            font-size: 28px;
-            background-position-x: 100px;
-            line-height: 720px;
-            left: 2px;
-            top: 0px;
+            border: 6px solid black;
+            border-radius: 5px;
+            width: 420px;
+            height: 320px;
+            padding-top: 100px;
           "
         >
-          이메일 인증번호입니다
-        </div></th:block
-      >
+          <img
+            src="cid:emailAuth"
+            alt=""
+            style="position: relative; margin-left: 10px"
+          />
+          <div
+            class="authKey"
+            th:text="${authKey}"
+            style="
+              text-align: center;
+              line-height: 80px;
+              color: rgb(78, 78, 78);
+              font-weight: 600;
+              font-size: 28px;
+              margin: 0 auto;
+              background-position-x: 100px;
+              width: 380px;
+              height: 80px;
+              border: 6px solid black;
+              border-radius: 5px;
+            "
+          >
+            이메일 인증번호입니다
+          </div>
+        </div>
+      </th:block>
     </div>
   </body>
 </html>

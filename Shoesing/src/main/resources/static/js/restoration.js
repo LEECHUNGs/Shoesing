@@ -28,16 +28,3 @@ checkBtn.addEventListener('click', () => {
       }
     });
 });
-
-
-const check = document.querySelector('#check');
-const answ = document.querySelector('#answ');
-
-check.addEventListener('change', () => {
-  if (check.value == '2') {
-    answ.readOnly = true;
-  } else {
-    answ.readOnly = false;
-  }
-});
-

@@ -10,9 +10,31 @@
   </head>
   <th:block layout:fragment="main">
     <div class="myPage-main">
-      <div class="pageTitle">관리자 > 상품 관리</div>
-    </div>
+      <div class="pageTitle"><a href="/admin">관리자</a> > 상품 관리</div>
+      <div class="itemSort">
+        <a href="#" onclick="itemList(0)">기본 정렬</a>||
+        <a href="#" onclick="itemList(1)">기본 역순 정렬</a>||
+        <a href="#" onclick="itemList(2)">가격순 정렬</a>||
+        <a href="#" onclick="itemList(3)">가격 역순 정렬</a>||
+        <a href="#" onclick="itemList(4)">이름순 정렬</a>||
+        <a href="#" onclick="itemList(5)">이름 역순 정렬</a>
+      </div>
+      <table class="list-table" style="overflow: auto">
+        <thead>
+          <tr id="itemThead">
+            <th>번호</th>
+            <th>상품명</th>
+            <th>가격</th>
+            <th>카테고리</th>
+            <th>등록일</th>
+            <th>수정일</th>
+            <th>수정</th>
+          </tr>
+        </thead>
 
+        <tbody id="itemTbody"></tbody>
+      </table>
+    </div>
     <script type="text/javascript" th:src="@{/js/admin/item.js}"></script>
   </th:block>
 </html>

@@ -84,7 +84,7 @@ public class EmailServiceImpl implements EmailService {
 
 			switch (htmlName) {
 			case "emailAuth":
-				subject = "SHOESING 회원가입 인증번호입니다.";
+				subject = "SHOESING 인증번호입니다.";
 				break;
 			}
 
