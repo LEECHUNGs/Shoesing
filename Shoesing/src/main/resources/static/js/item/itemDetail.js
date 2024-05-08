@@ -30,10 +30,6 @@ document.getElementById("cartBtn").addEventListener("click", () => {
     const sizeNo = document.querySelector("[name=inputSize]:checked").value;
     const cartItemCount = document.getElementById("itemCount").value;
 
-    console.log(item.itemNo);
-    console.log(sizeNo);
-    console.log(cartItemCount);
-
     const obj = {
         "itemNo" : item.itemNo,
         "sizeNo" : sizeNo,

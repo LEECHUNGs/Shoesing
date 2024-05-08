@@ -264,9 +264,9 @@ const checkAuthKeyBtn = document.querySelector('#checkAuthKeyBtn');
 const authKeyMessage = document.querySelector('#authKeyMessage');
 const emailVal= userEmail.value + '@' + inputDomain.value;
 let authTimer;
-const initMin = 0;
+const initMin = 4;
 const initSec = 59;
-const initTime = '01:00';
+const initTime = '05:00';
 
 let min = initMin;
 let sec = initSec;
@@ -496,4 +496,5 @@ submitBtn.addEventListener('click', (e) => {
     }
   }
   signupForm.submit();
+  
 });

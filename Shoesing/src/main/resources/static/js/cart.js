@@ -26,7 +26,7 @@ const selectCart = (cp) => {
             
             /* 
             <li>
-                <input type="checkbox" name="deleteOne" value="">
+                <input type="checkbox" name="checkOne" value="">
                 <img src="/img/cat1.jpg" width="150px" height="150px">
 
                 <div>
@@ -39,6 +39,10 @@ const selectCart = (cp) => {
 
             const li = document.createElement("li"); // 장바구니 Li
             const checkbox = document.createElement("input"); // 장바구니 체크박스
+
+            const itemNo = document.createElement("input");
+            const sizeNo = document.createElement("input");
+
             const img = document.createElement("img"); // 장바구니 상품 사진
             const infoDiv = document.createElement("div"); // 장바구니 설명 div
 
@@ -46,13 +50,29 @@ const selectCart = (cp) => {
             const name = document.createElement("div"); // 이름
             const price = document.createElement("div"); // 가격
             const brand = document.createElement("div"); // 브랜드
+            const size = document.createElement("div"); // 사이즈
+
+            // 수량 추가 감소 수량 뷰
+            const amountDiv = document.createElement("div");
+            const plusBtn = document.createElement("button");
+            const minusBtn = document.createElement("button");
+            const amountSpan = document.createElement("span");
 
             const deleteBtn = document.createElement("button"); // 삭제 버튼
 
             // 체크박스 설정
             checkbox.type = "checkbox";
-            checkbox.name = "deleteOne";
+            checkbox.name = "checkOne";
             checkbox.value = cartList[i].itemNo;
+
+            // 상품 주문용 hidden input 상품 번호 / 상품 사이즈
+            itemNo.type = "hidden";
+            itemNo.name = "itemNo";
+            itemNo.value = cartList[i].itemNo;
+
+            sizeNo.type = "hidden";
+            sizeNo.name = "sizeNo";
+            sizeNo.value = cartList[i].sizeNo;
 
             // 상품 이미지 세팅 (추가 예정)
             img.src = "/img/cat1.jpg";
@@ -61,10 +81,22 @@ const selectCart = (cp) => {
             name.innerText = cartList[i].itemName;
             price.innerText = cartList[i].itemPrice;
             brand.innerText = cartList[i].itemBrand;
+            size.innerText = cartList[i].sizeVal;
+
+            // 상품 수량 뷰 및 수량 추가 감소 버튼
+            plusBtn.innerHTML = "+";
+            plusBtn.type = "button";
+
+            minusBtn.innerHTML = "-";
+            minusBtn.type = "button";
+            
+            amountSpan.innerText = cartList[i].cartItemCount;
+            amountDiv.append(minusBtn, amountSpan, plusBtn);
 
             // infoDiv에 요소 추가
-            infoDiv.append(name, price, brand);
+            infoDiv.append(name, price, brand, size, amountDiv);
 
+            deleteBtn.type = "button";
             deleteBtn.innerHTML = "&times;";
 
             // li에 요소 추가
@@ -76,18 +108,27 @@ const selectCart = (cp) => {
             // 단일 상품 삭제 버튼을 눌렀을 때
             deleteBtn.addEventListener("click", e => {
 
-                let list = [cartList[i].itemNo];
+                const obj = {
+                    "itemNo" : cartList[i].itemNo,
+                    "sizeNo" : cartList[i].sizeNo
+
+                };
+                const list = [obj];
                 deleteCart(list);
             });
+
+            // 상품 수량 변경 버튼을 눌렀을 때
+            plusBtn.addEventListener("click", e => {update(cartList[i], 1);});
+            minusBtn.addEventListener("click", e => {update(cartList[i], -1);});
         }
 
         // 전체 상품 선택 버튼 클릭시 전체 선택
         checkAll.addEventListener("click", e => {
                 
-            const deleteOne = cartUl.querySelectorAll('[name=deleteOne]');
-            for(let i = 0; i<deleteOne.length; i++) {
-                if(e.target.checked) deleteOne[i].checked = true;
-                else deleteOne[i].checked = false;
+            const checkOne = cartUl.querySelectorAll('[name=checkOne]');
+            for(let i = 0; i<checkOne.length; i++) {
+                if(e.target.checked) checkOne[i].checked = true;
+                else checkOne[i].checked = false;
             }
 
         });
@@ -127,7 +168,9 @@ const deleteCart = (list) => {
         return;
     }
 
-    const obj = list.map(Number);
+    const obj = {
+        "cartList" : list
+    };
 
     fetch("/cart/manage", {
         method : "DELETE",
@@ -136,15 +179,16 @@ const deleteCart = (list) => {
     })
     .then(resp => resp.text())
     .then(result => {
-
         if(result > 0) {
-            alert("삭제 되었습니다.");
             selectCart(1);
+            alert("상품이 삭제되었습니다.");
         } else {
-            alert("삭제를 실패했습니다.");
+            alert("상품을 삭제할수 없습니다.");
             return;
         }
     });
+
+
 }
 
 
@@ -154,8 +198,7 @@ selectCart(1);
 // 선택 상품 삭제 버튼을 눌렀을 때
 document.getElementById("checkDelBtn").addEventListener("click", e => {
 
-    const checkList = document.querySelectorAll("[name=deleteOne]:checked");
-    console.log(checkList);
+    const checkList = document.querySelectorAll("[name=checkOne]:checked");
 
     // 선택 항목이 없을 때
     if(checkList.length == 0) {
@@ -165,8 +208,76 @@ document.getElementById("checkDelBtn").addEventListener("click", e => {
 
     let list = [];
     checkList.forEach(e => {
-        list.push(e.value)
+        const val = (e.value).split("/");
+
+        const obj = {
+            "itemNo" : val[0],
+            "sizeNo" : val[1]
+        };
+        list.push(obj);
     });
 
     deleteCart(list);
+});
+
+// 상품 수량 수정 버튼을 눌렀을 때
+const update = (item, val) => {
+
+    if(item.cartItemCount + val <= 0) {
+        alert("수량이 0개일 수 없습니다.");
+        return;
+    }
+
+    const obj = {
+        "itemNo" : item.itemNo,
+        "sizeNo" : item.sizeNo,
+        "cartItemCount" : val
+    };
+
+    fetch("/cart/manage", {
+        method : "PUT",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(obj)
+    })
+    .then(resp => resp.text())
+    .then(result => {
+
+        if(result > 0) {
+            selectCart(1);
+        } else {
+            alert("수량 수정을 실패했습니다.");
+            return;
+        }
+    });
+}
+
+// 선택 상품 구매 버튼을 눌렀을 때
+document.getElementById("orderBtn").addEventListener("click", e => {
+
+    const liList = document.querySelectorAll("#cartUl");
+    
+    
+    checkList.forEach(e => {
+
+        if(e.checked) {
+
+        } else {
+
+        }
+    });
+
+    // 선택 항목이 없을 때
+    if(checkList.length == 0) {
+        alert("항목을 선택해 주세요");
+        e.preventDefault();
+        return;
+    } 
+
+    // 선택 항목이 있으면
+    checkList.forEach(e => {
+
+        // disabled 처리해서 input 창 비활성화
+    });
+
+
 });

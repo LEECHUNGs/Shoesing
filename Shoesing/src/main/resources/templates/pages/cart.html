@@ -29,22 +29,28 @@
     <h1>장바구니</h1>
 
     <!-- 상품 목록 UL -->
-    <ul id="cartUl" class="cartUl">
-        <input type="checkbox" id="checkAll" name="deleteAll" value="">
-        <button type="button" id="checkDelBtn">선택 상품 삭제</button>
-        <!-- 장바구니 1개 샘플
-        <li>
-            <input type="checkbox" name="deleteOne" value="1">
-            <img src="/img/cat1.jpg" width="150px" height="150px">
-
-            <div>
-                <p>상품 이름</p>
-                <p>상품 가격</p>
-                <p>상품 브랜드</p>
-            </div>
-            <button></button>
-        </li> -->
-    </ul>
+    
+    <form action="/order/checkout" method="post">
+      <input type="checkbox" id="checkAll">
+      <button type="button" id="checkDelBtn">선택 상품 삭제</button>
+      <button type="submit" id="orderBtn">선택 상품 구매</button>
+      <ul id="cartUl" class="cartUl">
+          <!-- 장바구니 1개 샘플
+          <li>
+              <input type="checkbox" name="checkOne" value = "1">
+              <input type="hidden" name="itemNo" value="1"> 
+              <input type="hidden" name="sizeNo" value="1">
+              <img src="/img/cat1.jpg" width="150px" height="150px">
+  
+              <div>
+                  <p>상품 이름</p>
+                  <p>상품 가격</p>
+                  <p>상품 브랜드</p>
+              </div>
+              <button></button>
+          </li> -->
+      </ul>
+    </form>
 
     <!-- 페이지 UL -->
     <ul id="pageUl" class="pageUl"></ul>

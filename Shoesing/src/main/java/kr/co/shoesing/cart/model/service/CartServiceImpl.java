@@ -7,16 +7,20 @@ import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.shoesing.cart.model.dto.Cart;
+import kr.co.shoesing.cart.model.dto.CartVo;
 import kr.co.shoesing.cart.model.mapper.CartMapper;
 import kr.co.shoesing.common.util.Pagination;
-import kr.co.shoesing.item.model.dto.Item;
 import kr.co.shoesing.item.model.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
+@Slf4j
 public class CartServiceImpl implements CartService{
 
 	private final CartMapper mapper;
@@ -80,10 +84,10 @@ public class CartServiceImpl implements CartService{
 	
 	// 회원 장비구니 상품 삭제
 	@Override
-	public int delete(String cartNolist, int userNo) {
+	public int delete(CartVo cartVo, int userNo) {
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("itemNoList", cartNolist);
+		map.put("cartList", cartVo.getCartList());
 		map.put("userNo", userNo);
 		
 		return mapper.delete(map);
@@ -91,13 +95,10 @@ public class CartServiceImpl implements CartService{
 
 	// 비회원 장바구니 상품 삭제
 	@Override
-	public void delete(String cartNoString, List<Cart> cartList) {
+	public void delete(List<Cart> cartList, CartVo cartVo) {
 		
-		String[] deleteNo = cartNoString.split(",");
-		
-		for(String i : deleteNo) {
-			
-			cartList.remove(Integer.parseInt(i));
+		for(Cart cart : cartVo.getCartList()) {
+			cartList.remove(cart);
 		}
 	}
 
@@ -118,23 +119,25 @@ public class CartServiceImpl implements CartService{
 
 	// 비회원 장바구니 상품 추가
 	@Override
-	public List<Cart> insert(List<Cart> cartList, Cart cart) {
-		
+	public void insert(List<Cart> cartList, Cart cart) {
 
-		if(cartList == null) cartList = new ArrayList<>();
-
-		Item item = itemMapper.selectOne(cart.getItemNo());
-		cart.setItemName(item.getItemName());
-		cart.setItemPrice(item.getItemPrice());
-		cart.setItemBrand(item.getItemBrand());
-		cart.setItemImgPath(item.getItemImgPath());
+		log.info("cartList {}", cartList);
 		
-		System.out.println("cart : "+cart.toString());
-		if(cartList.size() != 0) System.out.println("session : " + cartList.get(0).toString());
+		Map<String, Integer> map = new HashMap<>();
+		map.put("itemNo", cart.getItemNo());
+		map.put("sizeNo", cart.getSizeNo());
+		
+		Cart newCart = mapper.selectCart(map);
+		cart.setItemName(newCart.getItemName());
+		cart.setItemPrice(newCart.getItemPrice());
+		cart.setItemBrand(newCart.getItemBrand());
+		cart.setItemImgPath(newCart.getItemImgPath());
+		cart.setSizeVal(newCart.getSizeVal());
 		
 		// 이미 장바구니에 있을 때
 		int index = cartList.indexOf(cart);
-		if(index > 0) {
+		
+		if(index >= 0) {
 			// 기존 수량에 입력받은 수량을 더함
 			cartList.get(index).setCartItemCount(
 					cartList.get(index).getCartItemCount() + cart.getCartItemCount());
@@ -142,10 +145,24 @@ public class CartServiceImpl implements CartService{
 		} else {
 			// 새 리스트 추가
 			cartList.add(cart);
-
 		}
+	}
+
+	// 비회원 장바구니 수량 수정
+	@Override
+	public void update(List<Cart> cartList, Cart cart) {
 		
-		return cartList;
+		int index = cartList.indexOf(cart);
+		
+		cartList.get(index).setCartItemCount(
+				cart.getCartItemCount() + cartList.get(index).getCartItemCount());
+	}
+
+	// 회원 장바구니 수량 수정
+	@Override
+	public int update(Cart cart) {
+
+		return mapper.update(cart);
 	}
 
 }

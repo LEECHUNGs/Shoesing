@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.co.shoesing.cart.model.dto.Cart;
+import kr.co.shoesing.cart.model.dto.CartVo;
 
 public interface CartService {
 
@@ -23,18 +24,18 @@ public interface CartService {
 	Map<String, Object> selectAll(int cp, List<Cart> cartList);
 
 	/** 회원 장바구니 상품 삭제
-	 * @param cartNolist
-	 * @param userNo
+	 * @param cartList 
+	 * @param cart
 	 * @return
 	 */
-	int delete(String cartNolist, int userNo);
+	int delete(CartVo cartVo, int userNo);
 
 	/** 비회원 장바구니 상품 삭제
 	 * @param cartNoString
 	 * @param cartList
 	 * @return
 	 */
-	void delete(String cartNoString, List<Cart> cartList);
+	void delete(List<Cart> cartList, CartVo cartVo);
 
 	/** 회원 장바구니 상품 추가
 	 * @param i
@@ -48,6 +49,19 @@ public interface CartService {
 	 * @param itemNo
 	 * @return
 	 */
-	List<Cart> insert(List<Cart> cartList, Cart cart);
+	void insert(List<Cart> cartList, Cart cart);
+
+	/** 비회원 장바구니 수량 수정
+	 * @param cartList
+	 * @param val
+	 */
+	void update(List<Cart> cartList, Cart cart);
+
+	/** 회원 장바구니 수량 수정
+	 * @param userNo
+	 * @param val
+	 * @return
+	 */
+	int update(Cart cart);
 	
 }

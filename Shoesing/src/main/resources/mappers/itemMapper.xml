@@ -86,6 +86,7 @@
 		AND ITEM_NO = ${itemNo}
 	</select>
 	
+	
 </mapper>
 
 
