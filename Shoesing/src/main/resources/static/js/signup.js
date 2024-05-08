@@ -496,4 +496,5 @@ submitBtn.addEventListener('click', (e) => {
     }
   }
   signupForm.submit();
+  
 });

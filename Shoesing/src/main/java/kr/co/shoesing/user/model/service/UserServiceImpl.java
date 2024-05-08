@@ -90,14 +90,6 @@ public class UserServiceImpl implements UserService {
 		return mapper.restoration(userId);
 	}
 	
-	/**
-	 * 현재 비밀번호와 새로 입력한 비밀번호가 같은지 체크
-	 */
-	@Override
-	public int checkPw(String inputPw) {
-		// TODO Auto-generated method stub
-		return mapper.checkPw(inputPw);
-	}
 
 	/**
 	 * 회원 아이콘 변경
@@ -108,10 +100,7 @@ public class UserServiceImpl implements UserService {
 		Map<String, String> map = new HashMap<>();
 		map.put("userId", userId);
 		map.put("inputIcon", inputIcon);
-		
-		
-		
-		
+	
 		return mapper.changeIcon(map);
 	}
 
@@ -121,6 +110,21 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int checkDel(String inputId) {
 		return mapper.checkDel(inputId);
+	}
+
+	
+	/**
+	 * 비밀번호 변경
+	 */
+	@Override
+	public int changePw(String userId, String inputPw) {
+		
+		String currentPw = mapper.checkPw(userId);
+		
+		if(!passwordEncoder.matches( inputPw,currentPw) ) {
+		return 0;
+		}
+		return mapper.changePw(userId,inputPw);
 	}
 
 }

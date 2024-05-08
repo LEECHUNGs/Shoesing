@@ -264,38 +264,8 @@ public class UserController {
 		return result;
 
 	}
-
-	/**
-
-	 * 현재 비밀번호와 새로 입력한 비밀번호가 같은지 체크
-	 * 
-	 * @param inputPw
-	 * @return
-	 */
-	@ResponseBody
-	@PostMapping("checkPw")
-	public int checkPw(@RequestBody String inputPw) {
-
-		String method = "userpw";
-
-		
-		int result = service.checkPw(inputPw);
-		
-		String message = null;
-		String path = null;
-		
-		
-		if(result  > 0) {
-			path = "/user/delete";
-			message = "회원을 탈퇴하시겠습니까?";
-		}else {
-			path = "/user/updateProfile";
-			message = "현재 비밀번호가 일치하지 않습니다";
-		}
-
-		return result;
-
-	}
+	
+	//프로필 아이콘 변경하기
 	@ResponseBody
 	@PostMapping("changeIcon")
 	public int changeIcon(HttpServletRequest request,
@@ -336,5 +306,37 @@ public class UserController {
 		return 2; // 회원이 존재하지않으면 2 반환
 	}
 
+	/**
 
+	 * 현재 비밀번호 변경
+	 * 
+	 * @param inputPw
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("changePw")
+	public int changePw(HttpServletRequest request,
+						@RequestBody String inputPw ) {
+
+		HttpSession session = request.getSession();
+		
+		User loginUser = (User)session.getAttribute("loginUser");
+		loginUser.setUserPw("inputPw");
+		
+		String userId = loginUser.getUserId();
+		
+		 int result = service.changePw(userId, inputPw);
+		 
+		 String message ="";
+		if(result>0) {
+			log.info("현재 비밀번호가 일치합니다");
+			message=("비밀번호가 일치합니다");
+		}else {
+			log.info("비밀번호가 일치하지 않습니다 다시 입력해주세요");
+			message=("비밀번호가 불일치합니다");
+		}
+
+		return result;
+
+	}
 }
