@@ -80,6 +80,11 @@ public class FileConfig implements WebMvcConfigurer {
 		return factory.createMultipartConfig();
 	}
 
+	/**
+	 * MultipartResolver 파일
+	 * 
+	 * @return
+	 */
 	@Bean
 	public MultipartResolver multipartResolver() {
 		// 파일 여러개 선택 가능

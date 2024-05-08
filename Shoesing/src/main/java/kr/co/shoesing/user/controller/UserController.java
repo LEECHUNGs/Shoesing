@@ -145,7 +145,7 @@ public class UserController {
 	}
 
 	/**
-	 * 내정보 수정 페이지 
+	 * 내정보 수정 페이지
 	 * 
 	 * @return
 	 */
@@ -153,8 +153,7 @@ public class UserController {
 	public String updateProfile() {
 		return "pages/user/updateProfile";
 	}
-	
-	
+
 	/**
 	 * 회원 탈퇴
 	 * 
@@ -192,7 +191,7 @@ public class UserController {
 		ra.addFlashAttribute("message", "실패");
 
 		return "redirect:/";
-	}                                      
+	}
 
 	/**
 	 * 회원 복구 페이지
@@ -264,7 +263,7 @@ public class UserController {
 		return result;
 
 	}
-	
+
 	//프로필 아이콘 변경하기
 	@ResponseBody
 	@PostMapping("changeIcon")
@@ -277,7 +276,7 @@ public class UserController {
 		loginUser.setUserIcon(map.get("inputIcon"));
 		session.setAttribute("loginUser", loginUser);
 		String userId = loginUser.getUserId();
-		
+
 		int result = service.changeIcon(userId, map.get("inputIcon"));
 		
 		return result;
@@ -288,6 +287,7 @@ public class UserController {
   /* 아이디 DB에 존재하는지 체크
 	 * 
 	 * @param inputId
+	 * 
 	 * @return
 	 */
 	@ResponseBody

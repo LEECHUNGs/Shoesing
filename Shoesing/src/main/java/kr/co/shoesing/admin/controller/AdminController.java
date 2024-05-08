@@ -1,13 +1,17 @@
 package kr.co.shoesing.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.shoesing.admin.model.service.AdminService;
+import kr.co.shoesing.item.model.dto.Item;
 import kr.co.shoesing.user.model.dto.User;
 import lombok.RequiredArgsConstructor;
 
@@ -55,11 +59,29 @@ public class AdminController {
 	 */
 	@ResponseBody
 	@GetMapping("userList")
-	public List<User> userList() {
+	public Map<String, Object> userList(@RequestParam("sortNo") int sortNo) {
 
-		List<User> userList = service.selectAllUser();
+		List<User> userList = service.selectAllUser(sortNo);
 
-		return userList;
+		Map<String, Object> map = new HashMap<>();
+
+		map.put("userList", userList);
+
+		return map;
+	}
+
+	@ResponseBody
+	@GetMapping("itemList")
+	public Map<String, Object> itemList(@RequestParam("sortNo") int sortNo) {
+
+		List<Item> itemList = service.selectAllItem(sortNo);
+
+		Map<String, Object> map = new HashMap<>();
+
+		map.put("itemList", itemList);
+
+		return map;
+
 	}
 
 }
