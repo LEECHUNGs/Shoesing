@@ -77,11 +77,9 @@ profileIcon.forEach( (i) => {
         console.log('성공');
         alert("프로필 사진이 변경되었습니다");
         userIcon.forEach((u)=>{
-          console.log(inputIcon)
           u.src = "/img/userIcon/" + inputIcon + ".png";
-          console.log(u.src)
+          console.log(u.src);
         });
-        console.log(userIcon);
       } else {
         console.log('실패');
       }
@@ -151,20 +149,18 @@ const updateTelMessage = document.querySelector("#updateTelMessage");
 
 updateTel.addEventListener("input",(e)=>{
     const regExp=/^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
-    if(!regExp.test(updateTel.value)){
-        updateTelMessage.innerText="유효하지 않는 전화번호 입니다.";
+    if(!regExp.test(e.target.value)){
+        updateTelMessage.innerText="유효한 전화번호 형식으로 수정해주세요";
         return;
-    }else{
-        updateTelMessage.innerText="";}
-    
+    }
+      updateTelMessage.innerText="";  
 });
 
+// 이메일 수정
 const updateEmail = document.querySelector("#updateEmail");
 
 
-
-// updateTel.addEventListener("input",(e))
-// 주소 
+// 주소 수정
 function execDaumPostcode() {
     new daum.Postcode({
       oncomplete: function (data) {
@@ -215,7 +211,7 @@ if(signout != null){
   signout.addEventListener("submit",e=>{
       const currentPw = document.querySelector("#currentPw");
       const agreeSignout = document.querySelector("#agreeSignout");
-      if(currentPw.value.trim().length ==0){
+      if(currentPw.value.trim().length == 0){
           alert=("현재 비밀번호를 입력해주세요");
           e.preventDefault();
           return;
