@@ -316,6 +316,7 @@ public class UserController {
 		
 	}
 
+	/*
 	 * 아이디 DB에 존재하는지 체크
 	 * 
 	 * @param inputId

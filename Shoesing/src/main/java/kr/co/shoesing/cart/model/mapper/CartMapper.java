@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import kr.co.shoesing.cart.model.dto.Cart;
-import kr.co.shoesing.item.model.dto.Item;
 
 @Mapper
 public interface CartMapper {
@@ -26,7 +25,7 @@ public interface CartMapper {
 	List<Cart> selectAll(int userNo, RowBounds rowBounds);
 
 	/** 회원 장바구니 상품 목록 삭제
-	 * @param map
+	 * @param cart
 	 * @return
 	 */
 	int delete(Map<String, Object> map);
@@ -54,5 +53,17 @@ public interface CartMapper {
 	 * @return
 	 */
 	Cart selectOne(int i);
+	
+	/** 장바구니 상세내용 입력용 조회
+	 * @param map
+	 * @return
+	 */
+	Cart selectCart(Map<String, Integer> map);
+
+	/** 장바구니 상품 수량 조절
+	 * @param cart
+	 * @return
+	 */
+	int update(Cart cart);
 
 }
