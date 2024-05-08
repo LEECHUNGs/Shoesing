@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
+import kr.co.shoesing.cart.model.dto.Cart;
 import kr.co.shoesing.item.model.dto.Item;
 
 @Mapper

@@ -1,5 +1,6 @@
 package kr.co.shoesing.cart.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,9 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import jakarta.servlet.http.HttpSession;
 import kr.co.shoesing.cart.model.dto.Cart;
+import kr.co.shoesing.cart.model.dto.CartVo;
 import kr.co.shoesing.cart.model.service.CartService;
-import kr.co.shoesing.item.model.dto.Item;
 import kr.co.shoesing.user.model.dto.User;
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("cart")
 @Controller
+@lombok.extern.slf4j.Slf4j
 public class CartController {
 	
 private final CartService service;
@@ -49,7 +53,7 @@ private final CartService service;
 			@SessionAttribute(value = "loginUser", required = false) User loginUser,
 			@SessionAttribute(value = "cartList", required = false) List<Cart> cartList,
 			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp) {
-				
+						
 		// 회원 일 경우
 		if(loginUser != null) {
 			
@@ -66,19 +70,20 @@ private final CartService service;
 	 */
 	@ResponseBody
 	@DeleteMapping("manage")
-	public int delete(@RequestBody String cartNoString, 
+	public int delete(@RequestBody CartVo cartVo, 
 					  @SessionAttribute(value = "cartList", required = false) List<Cart> cartList,
 					  @SessionAttribute(value = "loginUser", required = false) User loginUser,
 					  Model model) {
 		
-		String cartNolist = cartNoString.substring(cartNoString.indexOf("[") 
-				+ 1, cartNoString.indexOf("]"));
+		log.info("cartList {}", cartList);
 		
 		// 비회원일 경우
 		if(loginUser == null) {
 			
 			// 선택된 상품 삭제
-			service.delete(cartNoString, cartList);
+			service.delete(cartList, cartVo);
+			
+			log.info("cartList {}", cartList);
 			
 			// 갱신 목록 세션에 올림
 			model.addAttribute("cartList", cartList);
@@ -86,7 +91,7 @@ private final CartService service;
 			return 1;
 		}
 		
-		return service.delete(cartNolist, loginUser.getUserNo());
+		return service.delete(cartVo, loginUser.getUserNo());
 	}
 	
 
@@ -102,15 +107,17 @@ private final CartService service;
 	public int insert(@RequestBody Cart cart,
 					  @SessionAttribute(value = "cartList", required = false) List<Cart> cartList,
 					  @SessionAttribute(value = "loginUser", required = false) User loginUser,
-					  Model model) {
-		
+					  HttpSession session) {
+				
 		// 비회원일 경우
 		if(loginUser == null) {
 
-			cartList = service.insert(cartList, cart);
+			if(cartList == null) cartList = new ArrayList<>();
 			
-			model.addAttribute("cartList", cartList);
-			
+			service.insert(cartList, cart);
+						
+			session.setAttribute("cartList", cartList);
+						
 			return 1;
 		}
 		
@@ -119,7 +126,34 @@ private final CartService service;
 		return service.insert(cart);
 	}
 	
-	
+	/**
+	 * @param val : 변경할 수량
+	 * @param cartList 
+	 * @param loginUser
+	 * @param model
+	 * @return
+	 */
+	@ResponseBody
+	@PutMapping("manage")
+	public int update(@RequestBody Cart cart,
+		  			  @SessionAttribute(value = "cartList", required = false) List<Cart> cartList,
+  					  @SessionAttribute(value = "loginUser", required = false) User loginUser,
+  					  Model model) {
+		
+		// 비회원일 경우
+		if(loginUser == null) {
+
+			service.update(cartList, cart);
+						
+			model.addAttribute("cartList", cartList);
+
+			return 1;
+		}
+		
+		cart.setUserNo(loginUser.getUserNo());
+		System.out.println(cart);
+		return service.update(cart);
+	}
 }
 
 

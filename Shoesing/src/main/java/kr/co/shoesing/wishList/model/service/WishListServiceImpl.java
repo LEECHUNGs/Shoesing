@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.shoesing.common.util.Pagination;
 import kr.co.shoesing.item.model.dto.Item;
@@ -15,6 +15,7 @@ import kr.co.shoesing.wishList.model.mapper.WishListMapper;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class WishListServiceImpl implements WishListService{
 	
