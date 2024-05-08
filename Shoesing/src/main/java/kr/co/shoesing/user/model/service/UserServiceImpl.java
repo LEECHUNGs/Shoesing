@@ -109,6 +109,9 @@ public class UserServiceImpl implements UserService {
 		map.put("userId", userId);
 		map.put("inputIcon", inputIcon);
 		
+		
+		
+		
 		return mapper.changeIcon(map);
 	}
 

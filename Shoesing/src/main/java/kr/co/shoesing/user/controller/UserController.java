@@ -299,23 +299,21 @@ public class UserController {
 	@ResponseBody
 	@PostMapping("changeIcon")
 	public int changeIcon(HttpServletRequest request,
-						@RequestBody Map<String, String> map,
-						Model model) {
+						@RequestBody Map<String, String> map) {
 		log.info("map {}",map);
 		HttpSession session = request.getSession();
 
 		User loginUser = (User) session.getAttribute("loginUser");
-		
+		loginUser.setUserIcon(map.get("inputIcon"));
+		session.setAttribute("loginUser", loginUser);
 		String userId = loginUser.getUserId();
 		
 		int result = service.changeIcon(userId, map.get("inputIcon"));
 		
-			
-		
 		return result;
-		
 	}
-
+	
+/*
 	 * 아이디 DB에 존재하는지 체크
 	 * 
 	 * @param inputId

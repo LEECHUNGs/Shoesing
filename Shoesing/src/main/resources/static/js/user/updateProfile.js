@@ -3,32 +3,32 @@ const updateInfo= document.querySelector("#updateInfo");
 updateInfo.addEventListener('submit', handleFormSubmit);
 
 function handleFormSubmit(e){
-    e.preventDefault();
+  e.preventDefault();
 
-        const data = new data(e.target);
-        const values = Object.entries(data);
-      
-        // 필수 입력 항목 확인
-        const requiredFields = ['updateNickname', 'updateEmail', 'currentPw'];
-        const emptyFields = Fields.some(field => values[field] === '');
-      
-        if (emptyFields) {
-          // 필수 입력 항목이 비어 있는 경우 에러 처리
-          alert('필수 입력 항목을 모두 입력해주세요.');
-          return;
-        }
-      
-        // 선택 입력 항목의 null 값 처리
-        const optionalFields = ['updateName', 'updateTel', 'updateAddress', 'updatePw', 'updatePwConfirm'];
-        const updatedValues = { ...values };
-        optionalFields.forEach(field => {
-          if (updatedValues[field] === '') {
-            updatedValues[field] = null;
-          }
-        });
-      
-        // 수정된 회원 정보 서버로 전송
-        sendUpdateRequest(updatedValues);          
+    const data = new data(e.target);
+    const values = Object.entries(data);
+  
+    // 필수 입력 항목 확인
+    const requiredFields = ['updateNickname', 'updateEmail', 'currentPw'];
+    const emptyFields = Fields.some(field => values[field] === '');
+  
+    if (emptyFields) {
+      // 필수 입력 항목이 비어 있는 경우 에러 처리
+      alert('필수 입력 항목을 모두 입력해주세요.');
+      return;
+    }
+  
+    // 선택 입력 항목의 null 값 처리
+    const optionalFields = ['updateName', 'updateTel', 'updateAddress', 'updatePw', 'updatePwConfirm'];
+    const updatedValues = { ...values };
+    optionalFields.forEach(field => {
+      if (updatedValues[field] === '') {
+        updatedValues[field] = null;
+      }
+    });
+  
+    // 수정된 회원 정보 서버로 전송
+    sendUpdateRequest(updatedValues);          
 }
 
 function sendUpdateRequest(values) {
@@ -59,85 +59,36 @@ function sendUpdateRequest(values) {
   
 //===========================================================================
 
-//프로필 사진 button에 누르는 값으로 변경될 수 있게 하기
-// const profileImg = document.querySelector("#profileImg");
+//프로필 사진 변경
+const userIcon = document.querySelectorAll(".userIcon");
+const profileIcon = document.querySelectorAll(".profileIcon");
 
-// document.getElementById("changeIconBtn").addEventListener("click", (e) => {
-
-//   console.log(e.target.value);
-//   
-
-//     if(!e.target.){
-//       alert("프로필 사진이 변경이 실패했습니다");
-//     }else{
-//       profileImg.setAttribute("src",result.src);
-//       alert("프로필 사진이 변경되었습니다");
-//     }
-//   })
-// });
-
-  const userIcon1 = document.querySelector("#userIcon1");
-  const userIcon2 = document.querySelector("#userIcon2");
-  const userIcon3 = document.querySelector("#userIcon3");
-
-
-userIcon1.addEventListener("click", e =>{
-  console.log(userIcon1.value)
-  const inputIcon = userIcon1.value
-  fetch('/user/changeIcon', {
-    method: 'post',
-    headers: { 'Content-type': 'application/json' },
-    body: JSON.stringify({ "inputIcon" : inputIcon })
-  })
+profileIcon.forEach( (i) => {
+  i.addEventListener("click", e =>{
+    const inputIcon = i.value;
+    fetch('/user/changeIcon', {
+      method: 'post',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify({ "inputIcon" : inputIcon })
+    })
     .then((resp) => resp.text())
     .then((result) => {
       if (result > 0) {
         console.log('성공');
-        alert()
+        alert("프로필 사진이 변경되었습니다");
+        userIcon.forEach((u)=>{
+          console.log(inputIcon)
+          u.src = "/img/userIcon/" + inputIcon + ".png";
+          console.log(u.src)
+        });
+        console.log(userIcon);
       } else {
         console.log('실패');
       }
     });
-
+  });
 });
 
-userIcon2.addEventListener("click", e =>{
-  console.log(userIcon2.value)
-  const inputIcon = userIcon2.value
-  fetch('/user/changeIcon', {
-    method: 'post',
-    headers: { 'Content-type': 'application/json' },
-    body: JSON.stringify({ "inputIcon" : inputIcon })
-  })
-    .then((resp) => resp.text())
-    .then((result) => {
-      if (result > 0) {
-        console.log('성공');
-      } else {
-        console.log('실패');
-      }
-    });
-});
-
-userIcon3.addEventListener("click", e =>{
-  console.log(userIcon3.value)
-  const inputIcon = userIcon3.value
-  fetch('/user/changeIcon', {
-    method: 'post',
-    headers: { 'Content-type': 'application/json' },
-    body: JSON.stringify({ "inputIcon" : inputIcon })
-  })
-    .then((resp) => resp.text())
-    .then((result) => {
-      if (result > 0) {
-        console.log('성공');
-      } else {
-        console.log('실패');
-      }
-    });
-});
-
-  
 
 // 이름 수정
 const updateName = document.querySelector("#updateName");
@@ -145,13 +96,14 @@ const updateNameMessage = document.querySelector("#updateNameMessage");
 
 const regExp = /^[가-힣]{2,6}$/;
 updateName.addEventListener("input",(e)=>{
-    if(!regExp.test(updateName.value)){
-        updateNameMessage.innerText="유효하지 않는 이름 입니다."
-        return;
-    } else{
-        updateNameMessage.innerText="";
-    }
-})
+    if(!regExp.test(e.target.value)){
+      updateNameMessage.innerText="유효한 이름 형식이 아닙니다."
+      e.target.value = null;
+      return;
+    } 
+      updateNameMessage.innerText="";
+      return e.target.value; 
+});
 
 // 닉네임 수정 (+중복확인)
 const updateNickname = document.querySelector("#updateNickname");
@@ -160,30 +112,24 @@ const updateNicknameMessage = document.querySelector("#updateNicknameMessage");
 updateNickname.addEventListener("input",(e)=>{
 const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
     if(!regExp.test(updateNickname.value)){
-        updateNicknameMessage.innerText="유효하지 않는 닉네임 입니다."
-        updateCheckObj.updateNickname = false;
+        updateNicknameMessage.innerText="유효하지 않는 닉네임입니다.";
         return;
     }
     updateNicknameMessage.innerText=""
-    updateCheckObj.updateNickname = true;
     const inputNickname = e.target.value;
-    console.log(inputNickname);
-
-    fetch("/user/checkNickname?userNickname="+inputNickname) 
+    fetch("/user/checkNickname",{
+      method : 'POST',
+      headers : {'Content-Type' : 'application/json'},
+      body : inputNickname,
+    })
     .then(resp => resp.text())
     .then(result => {
-        if (result == 1) {
-            if(checkObj.updateNickname.value == "${session.loginUser.userNickname}"){
-                updateNicknameMessage.innerText="현재 사용중인 닉네임명과 동일합니다"                  
-                updateCheckObj.updateNickname = false;
-                return;
-            }
-            updateNicknameMessage.innerText="이미 사용중인 닉네임 입니다";
-            updateCheckObj.updateNickname=false;
-            return;       
-        }
-        updateNicknameMessage.innerText= "사용가능한 닉네임 입니다"
-        updateCheckObj.updateNickname = true;           
+      if (result == 1) {
+        updateNicknameMessage.innerText="이미 사용중인 닉네임 입니다";
+        return;       
+      }
+      updateNicknameMessage.innerText= "사용가능한 닉네임 입니다"
+      updateCheckObj.updateNickname = true;           
     });
 });
 //------------------------------------------------------------------수정전
@@ -212,6 +158,10 @@ updateTel.addEventListener("input",(e)=>{
         updateTelMessage.innerText="";}
     
 });
+
+const updateEmail = document.querySelector("#updateEmail");
+
+
 
 // updateTel.addEventListener("input",(e))
 // 주소 
