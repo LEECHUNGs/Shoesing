@@ -24,7 +24,7 @@
       <!-- 상품 사이즈 input 박스 -->
       <div>
         <form action="#" method="post">
-          <div th:each="size : ${item.sizeList}">
+          <div th:each="size : ${item.stockList}">
             <label>
               <input type="radio" name="inputSize" th:value="*{size.sizeNo}" />
               [[*{size.sizeVal}]]

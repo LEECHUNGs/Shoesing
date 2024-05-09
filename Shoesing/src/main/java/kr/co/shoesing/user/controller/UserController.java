@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -306,36 +307,81 @@ public class UserController {
 		return 2; // 회원이 존재하지않으면 2 반환
 	}
 
-	/**
-	 * 
-	 * 현재 비밀번호 변경
-	 * 
+	
+	/** 입력한 비밀번호가 현재 비밀번호와 같은지 체크
+	 * @param userId
 	 * @param inputPw
-	 * @return
+	 * @return result
+	 */
+	@ResponseBody
+	@PostMapping("checkPw")
+	public int checkPw(HttpServletRequest request,
+						@RequestBody String inputPw){
+		
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		String  userId = loginUser.getUserId();
+		
+		int result = service.checkPw(userId,inputPw);
+		
+		return result;
+	}
+	
+	/**
+	 * 비밀번호 변경
+	 * 
+	 * @param loginUser
+	 * @param inputPw
+	 * @return result
 	 */
 	@ResponseBody
 	@PostMapping("changePw")
-	public int changePw(HttpServletRequest request, @RequestBody String inputPw) {
+	public int changePw(HttpServletRequest request,
+						@RequestBody String inputPw) {
 
 		HttpSession session = request.getSession();
-
-		User loginUser = (User) session.getAttribute("loginUser");
-		loginUser.setUserPw(inputPw);
-
+		
+		User loginUser = (User)session.getAttribute("loginUser");
+		
 		String userId = loginUser.getUserId();
-
-		int result = service.changePw(userId, inputPw);
-
-		String message = "";
-		if (result > 0) {
-			log.info("현재 비밀번호가 일치합니다");
-			message = ("비밀번호가 일치합니다");
-		} else {
-			log.info("비밀번호가 일치하지 않습니다 다시 입력해주세요");
-			message = ("비밀번호가 불일치합니다");
-		}
-
+		
+		int result = service.changePw(loginUser, inputPw);
+		 
 		return result;
 
 	}
+	
+	/**
+	 * 내정보 수정 
+	 * 
+	 * @return
+	 */
+	@PostMapping("updateProfile")
+	public String updateProfile(User inputUser, RedirectAttributes ra,
+								HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		
+		int result = service.updateProfile(inputUser);
+		
+
+		if (result > 0) {
+			ra.addFlashAttribute("message", "수정완료!");
+			loginUser.setUserName(inputUser.getUserName());
+			loginUser.setUserNickname(inputUser.getUserNickname());
+			loginUser.setUserTel(inputUser.getUserTel());
+			loginUser.setUserAddress(loginUser.getUserAddress());
+			loginUser.setUserPw(inputUser.getUserPw());
+			loginUser.setUserEmail(inputUser.getUserEmail());
+		} else {
+			ra.addFlashAttribute("message", "수정실패!");
+
+		}
+
+		return "pages/user/updateProfile";
+	}
+	
+	
+	
 }

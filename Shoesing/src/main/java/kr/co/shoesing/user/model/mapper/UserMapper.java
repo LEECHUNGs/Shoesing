@@ -3,6 +3,7 @@ package kr.co.shoesing.user.model.mapper;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import kr.co.shoesing.user.model.dto.User;
 
@@ -64,6 +65,12 @@ public interface UserMapper {
 	 * @return
 	 */
 	int checkDel(String inputId);
+	
+	/** 비밀번호가 입력한 값과 같은지 체크
+	 * @param userId
+	 * @return
+	 */
+	String checkPw(String userId);
 
 	/**
 	 * 비밀번호 변경
@@ -72,15 +79,14 @@ public interface UserMapper {
 	 * @param inputPw
 	 * @return
 	 */
-	int changePw(String userId, String inputPw);
+	int changePw(@Param("userId") String userId, @Param("inputPw") String inputPw);
 
-	/**
-	 * 비밀번호가 입력한 값과 같은지 체크
-	 * 
-	 * @param userId
+	/** 회원 정보 수정
+	 * @param inputUser
 	 * @return
 	 */
-	String checkPw(String userId);
+	int updateProfile(User inputUser);
+	
 
 	/**
 	 * 회원 정보 수정 (관리자)

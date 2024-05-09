@@ -60,14 +60,9 @@ public interface UserService {
 	 */
 	int checkDel(String inputId);
 
-	/**
-	 * 비밀번호 변경
-	 * 
-	 * @param userId
-	 * @param inputPw
-	 * @return
-	 */
-	int changePw(String userId, String inputPw);
+	
+	
+
 
 	/**
 	 * 회원 정보 수정 (관리자)
@@ -85,4 +80,25 @@ public interface UserService {
 	 * @return
 	 */
 	int deleteAdmin(String userNo, String userDelFl);
+
+  /** 입력한 비밀번호가 현재 비밀번호와 같은지 체크
+	 * @param userId
+	 * @param inputPw
+	 * @return
+	 */
+	int checkPw(String userId, String inputPw);
+	
+	/** 비밀번호 변경
+	 * @param loginUser
+	 * @param inputPw
+	 * @return
+	 */
+	int changePw(User loginUser, String inputPw);
+
+	/** 내정보 수정
+	 * @param inputUser
+	 * @return
+	 */
+	int updateProfile(User inputUser);
+
 }

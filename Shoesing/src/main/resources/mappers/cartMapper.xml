@@ -6,20 +6,27 @@
 		SELECT COUNT(*)
 		FROM "CART"
 		WHERE USER_NO = #{userNo} 
-		AND ITEM_NO = #{itemNo}
-		AND SIZE_NO = #{sizeNo}
+		AND ITEM_STOCK_NO = (
+			SELECT ITEM_STOCK_NO 
+			FROM "STOCK" 
+			WHERE ITEM_NO = #{itemNo}
+			AND SIZE_NO = #{sizeNo}
+		)
 	</select>
 	
+	<!-- 해당 회원의 장바구니 리스트 개수 탐색 -->
 	<select id="getListCount">
 		SELECT COUNT(*)
 		FROM "CART"
 		WHERE USER_NO = ${userNo}
 	</select>
 	
+	<!-- 해당 회원의 장바구니 리스트를 한페이지 만큼 탐색 -->
 	<select id="selectAll">
-		SELECT ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_BRAND, 
-			   ITEM_IMG_PATH, CART_ITEM_COUNT, SIZE_NO, SIZE_VAL
+		SELECT CART_NO, ITEM_STOCK_NO, ITEM_NAME, ITEM_PRICE, ITEM_BRAND, 
+			   ITEM_IMG_PATH, CART_ITEM_COUNT, SIZE_VAL
 		FROM "CART"
+		JOIN "STOCK" USING(ITEM_STOCK_NO)
 		JOIN "ITEM" USING(ITEM_NO)
 		JOIN "SIZE" USING(SIZE_NO)
 		WHERE USER_NO = ${userNo}
@@ -29,14 +36,9 @@
 	<delete id="delete">
 		DELETE FROM "CART" 
 		WHERE USER_NO = ${userNo}
-		AND ITEM_NO IN
+		AND ITEM_STOCK_NO IN
 			<foreach collection="cartList" item="i" open="(" close=")" separator=", ">
-				#{i.itemNo}
-			</foreach>
-			
-		AND SIZE_NO IN
-			<foreach collection="cartList" item="i" open="(" close=")" separator=", ">
-				#{i.sizeNo}
+				#{i.itemStockNo}
 			</foreach>
 		
 	</delete>
@@ -45,35 +47,46 @@
 		UPDATE "CART" SET
 			CART_ITEM_COUNT = CART_ITEM_COUNT + (#{cartItemCount})
 		WHERE USER_NO = #{userNo}
-		AND ITEM_NO = #{itemNo}
+		AND ITEM_STOCK_NO = (
+			SELECT ITEM_STOCK_NO 
+			FROM "STOCK" 
+			WHERE ITEM_NO = #{itemNo}
+			AND SIZE_NO = #{sizeNo}
+		)
 	</update>
 	
+	<!-- 장바구니에 신규 상품 등록 -->
 	<insert id="insert">
 		INSERT INTO "CART"
 		VALUES(
-			#{itemNo}, 
-			#{sizeNo}, 
-			#{userNo}, 
-			#{cartItemCount}, 
+			NEXT_CART_NO(), 
+			#{userNo},
+			(
+				SELECT ITEM_STOCK_NO 
+				FROM STOCK
+				WHERE ITEM_NO = #{itemNo}
+				AND SIZE_NO = #{sizeNo}
+			),
+			#{cartItemCount},
 			DEFAULT
 		)
 	</insert>
 	
+	<!-- 비회원용 상품 1개를 검색 -->
 	<select id="selectCart">
-		SELECT ITEM_NAME, ITEM_PRICE, ITEM_BRAND, ITEM_IMG_PATH, SIZE_VAL
-		FROM "ITEM"
-		JOIN "STOCK" USING(ITEM_NO)
-		JOIN "SIZE" USING(SIZE_NO)
-		WHERE ITEM_NO = ${itemNo}
-		AND SIZE_NO = ${sizeNo}
+		SELECT ITEM_STOCK_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_BRAND, SIZE_NO, SIZE_VAL
+		FROM "STOCK"
+		JOIN "ITEM" USING(ITEM_NO)
+		JOIN "SIZE" USING(SIZE_NO) 
+		WHERE SIZE_NO = #{sizeNo}
+		AND ITEM_NO = #{itemNo}
 	</select>
 	
 	<update id="update">
 		UPDATE "CART" SET
 			CART_ITEM_COUNT = CART_ITEM_COUNT + ${cartItemCount}
-		WHERE USER_NO = ${userNo}
-		AND ITEM_NO = ${itemNo}
-		AND SIZE_NO = ${sizeNo}
+		WHERE USER_NO = #{userNo}
+		AND ITEM_STOCK_NO = #{itemStockNo}
 	</update>
 	
 </mapper>
