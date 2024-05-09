@@ -3,18 +3,18 @@ package kr.co.shoesing.file.controller;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.HttpServletRequest;
 import kr.co.shoesing.file.model.service.FileService;
 import lombok.RequiredArgsConstructor;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
-@ResponseBody
 public class FileController {
 
 	private final FileService service;
@@ -28,13 +28,19 @@ public class FileController {
 	 * @throws IllegalStateException
 	 * @throws IOException
 	 */
-	@PostMapping("file/upload")
-	public int uploadItemImg(@RequestParam("itemNo") int itemNo, @RequestParam("images") List<MultipartFile> imageList)
+	@PostMapping("file/uploadMulti")
+	public String uploadItemImg(@RequestParam("itemNo") int itemNo,
+			@RequestParam("images") List<MultipartFile> imageList, RedirectAttributes ra, HttpServletRequest request)
 			throws IllegalStateException, IOException {
 
-		service.uploadItemImg(itemNo, imageList);
+		int result = service.uploadItemImgMulti(itemNo, imageList);
 
-		return 0;
+		if (result > 0) {
+			ra.addFlashAttribute("message", "성공!");
+		} else {
+			ra.addFlashAttribute("message", "실패!");
+		}
+		return "redirect:" + request.getHeader("REFERER");
 	}
 
 }

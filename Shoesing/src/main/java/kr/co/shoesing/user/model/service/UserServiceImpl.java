@@ -90,18 +90,17 @@ public class UserServiceImpl implements UserService {
 	public int restoration(String userId) {
 		return mapper.restoration(userId);
 	}
-	
 
 	/**
 	 * 회원 아이콘 변경
 	 */
 	@Override
 	public int changeIcon(String userId, String inputIcon) {
-		
+
 		Map<String, String> map = new HashMap<>();
 		map.put("userId", userId);
 		map.put("inputIcon", inputIcon);
-	
+
 		return mapper.changeIcon(map);
 	}
 
@@ -112,18 +111,40 @@ public class UserServiceImpl implements UserService {
 	public int checkDel(String inputId) {
 		return mapper.checkDel(inputId);
 	}
-	
-	
-	
+
 	/**
 	 *입력한 비밀번호가 현재 비밀번호와 같은지 조회
 	 */
 	@Override
 	public int checkPw(String userId, String inputPw) {
 		String currentPw = mapper.checkPw(userId);
-		
-		if(!passwordEncoder.matches( inputPw,currentPw) ) {
-		return 0;
+
+		if (!passwordEncoder.matches(inputPw, currentPw)) {
+			return 0;
+		}
+		return mapper.changePw(userId, inputPw);
+	}
+
+	/**
+	 * 회원 정보 수정 (관리자)
+	 */
+	@Override
+	public int updateAdmin(User inputUser) {
+		return mapper.updateAdmin(inputUser);
+	}
+
+	/**
+	 * 회원 탈퇴/복구 (관리자)
+	 */
+	@Override
+	public int deleteAdmin(String userNo, String userDelFl) {
+		int result = 0;
+
+		if (userDelFl.equals("Y")) {
+			result = mapper.restoreAdmin(userNo);
+
+		} else if (userDelFl.equals("N")) {
+			result = mapper.deleteAdmin(userNo);
 		}
 		return 1;
 	}

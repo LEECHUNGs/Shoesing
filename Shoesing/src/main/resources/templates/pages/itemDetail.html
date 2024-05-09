@@ -13,13 +13,6 @@
 
     <!-- 상품 이미지 (추가 예정) -->
     <img th:src="${item.thumbnail}" width="300px" />
-    <form action="/file/upload" method="post" enctype="multipart/form-data">
-      <input type="file" multiple="multiple" accept="image/*" name="images" />
-      <input type="file" multiple="multiple" accept="image/*" name="images" />
-      <input type="file" multiple="multiple" accept="image/*" name="images" />
-      <input type="hidden" value="2" name="itemNo" />
-      <button>제출</button>
-    </form>
 
     <!-- 상품 util -->
     <div>

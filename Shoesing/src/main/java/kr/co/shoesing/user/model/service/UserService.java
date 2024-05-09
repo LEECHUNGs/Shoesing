@@ -43,9 +43,11 @@ public interface UserService {
 	 */
 	int restoration(String userId);
 
-	/** 유저 아이콘 변경하기
+	/**
+	 * 유저 아이콘 변경하기
+	 * 
 	 * @param inputIcon
-	 * @param inputIcon2 
+	 * @param inputIcon2
 	 * @return
 	 */
 	int changeIcon(String userId, String inputIcon);
@@ -59,7 +61,27 @@ public interface UserService {
 	int checkDel(String inputId);
 
 	
-	/** 입력한 비밀번호가 현재 비밀번호와 같은지 체크
+	
+
+
+	/**
+	 * 회원 정보 수정 (관리자)
+	 * 
+	 * @param inputUser
+	 * @return
+	 */
+	int updateAdmin(User inputUser);
+
+	/**
+	 * 회원 탈퇴/복구
+	 * 
+	 * @param userNo
+	 * @param userDelFl
+	 * @return
+	 */
+	int deleteAdmin(String userNo, String userDelFl);
+
+  /** 입력한 비밀번호가 현재 비밀번호와 같은지 체크
 	 * @param userId
 	 * @param inputPw
 	 * @return

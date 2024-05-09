@@ -144,6 +144,7 @@ function execDaumPostcode() {
 //비밀번호가 현재 입력한 값과 같은지 조회 (작동o)
 const updatePwBtn = document.querySelector("#updatePwBtn");
 const currentPw = document.querySelector("#currentPw");
+
 updatePwBtn.addEventListener("click",()=>{
   if(currentPw.value.trim().length ==0){
   alert('현재 비밀번호를 입력해주시기 바랍니다');

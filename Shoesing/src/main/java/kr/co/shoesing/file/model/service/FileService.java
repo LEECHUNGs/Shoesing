@@ -16,6 +16,6 @@ public interface FileService {
 	 * @throws IllegalStateException
 	 * @throws IOException
 	 */
-	int uploadItemImg(int itemNo, List<MultipartFile> imageList) throws IllegalStateException, IOException;
+	int uploadItemImgMulti(int itemNo, List<MultipartFile> imageList) throws IllegalStateException, IOException;
 
 }

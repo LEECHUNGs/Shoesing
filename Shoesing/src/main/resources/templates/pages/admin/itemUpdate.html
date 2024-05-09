@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{fragments/layouts/main}"
+>
+  <head>
+    <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
+  </head>
+  <th:block layout:fragment="main">
+    <!-- 내용은 여기 작성 -->
+
+    <!-- 상품 이미지 (추가 예정) -->
+    <img th:src="${item.thumbnail}" width="300px" />
+
+    <!-- 상품 이미지 수정 -->
+    <form
+      action="/file/uploadMulti"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <th:block th:if="${#lists.size(item.imageList) > 1}">
+        <th:block
+          th:each="i : ${#numbers.sequence(1, #lists.size(item.imageList) - 1)}"
+        >
+          <img
+            th:src="|${item.imageList[i].imgPath}${item.imageList[i].imgRename}|"
+            style="width: 80px"
+          />
+          <a
+            th:href="|${item.imageList[i].imgPath}${item.imageList[i].imgRename}|"
+            th:download="${item.imageList[i].imgOriginalName}"
+            >다운로드</a
+          >
+        </th:block>
+        <br />
+      </th:block>
+      <label>썸네일<input type="file" accept="image/*" name="images" /></label>
+      <br />
+      <label
+        >표본사진<input
+          type="file"
+          multiple="multiple"
+          accept="image/*"
+          name="images"
+      /></label>
+      <br />
+      <input type="hidden" th:value="${item.itemNo}" name="itemNo" />
+      <button>사진 수정</button>
+    </form>
+
+    <!-- 상품 정보 수정 -->
+    <form action="/admin/updateItem" method="post">
+      <label
+        >상품 브랜드: <input th:value="${item.itemBrand}" name="itemBrand"
+      /></label>
+      <br />
+      <label
+        >상품 명: <input th:value="${item.itemName}" name="itemName"
+      /></label>
+      <br />
+      <label
+        >상품 가격: <input th:value="${item.itemPrice}" name="itemPrice"
+      /></label>
+      <br />
+      <label
+        >상품 상세: <input th:value=" ${item.itemInfo}" name="itemInfo"
+      /></label>
+      <br />
+      <input type="hidden" th:value="${item.itemNo}" name="itemNo" />
+      <button>상세 수정</button>
+      <!-- 상품 상세 수정 -->
+    </form>
+
+    <script th:inline="javascript">
+      const item = /*[[${item}]]*/ '상품 정보';
+      const loginUser = /*[[${session.loginUser}]]*/ '로그인 유저';
+    </script>
+
+    <script src="/js/item/itemDetail.js"></script>
+  </th:block>
+</html>

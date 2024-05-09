@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.shoesing.admin.model.mapper.AdminMapper">
-
+	
 	<!-- 모든 회원 조회 -->
 	<select id="selectAllUser">
 		SELECT 
@@ -52,8 +52,11 @@
 			ITEM_BRAND, 
 			ITEM_INFO, 
 			CATEGORY_NO,
-			ITEM_UPDATE_DATE
+			ITEM_UPDATE_DATE,
+			(IMG_PATH || IMG_RENAME) THUMBNAIL
 		FROM "ITEM"
+		LEFT JOIN "ITEM_IMG"
+		USING (ITEM_NO)
 		WHERE ITEM_COUNT > 0
 		ORDER BY 
 		

@@ -52,7 +52,8 @@ public class UserController {
 	 */
 	@PostMapping("login")
 	public String login(User inputUser, Model model, RedirectAttributes ra,
-			@RequestParam(value = "saveId", required = false) String saveId, HttpServletResponse resp) {
+			@RequestParam(value = "saveId", required = false) String saveId, HttpServletResponse resp,
+			HttpServletRequest request) {
 
 		User loginUser = service.login(inputUser);
 
@@ -265,12 +266,11 @@ public class UserController {
 
 	}
 
-	//프로필 아이콘 변경하기
+	// 프로필 아이콘 변경하기
 	@ResponseBody
 	@PostMapping("changeIcon")
-	public int changeIcon(HttpServletRequest request,
-						@RequestBody Map<String, String> map) {
-		log.info("map {}",map);
+	public int changeIcon(HttpServletRequest request, @RequestBody Map<String, String> map) {
+		log.info("map {}", map);
 		HttpSession session = request.getSession();
 
 		User loginUser = (User) session.getAttribute("loginUser");
@@ -279,13 +279,12 @@ public class UserController {
 		String userId = loginUser.getUserId();
 
 		int result = service.changeIcon(userId, map.get("inputIcon"));
-		
+
 		return result;
 	}
 
-	
-
-  /* 아이디 DB에 존재하는지 체크
+	/*
+	 * 아이디 DB에 존재하는지 체크
 	 * 
 	 * @param inputId
 	 * 
@@ -329,7 +328,6 @@ public class UserController {
 	}
 	
 	/**
-
 	 * 비밀번호 변경
 	 * 
 	 * @param loginUser
