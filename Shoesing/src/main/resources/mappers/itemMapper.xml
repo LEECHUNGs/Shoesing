@@ -13,15 +13,24 @@
 					ofType="Size"
 		/>
 		
-		
+		<collection property="imageList"
+					select = "selectImageList"
+					column = "ITEM_NO"
+					javaType = "java.util.ArrayList"
+					ofType = "ItemImg"
+		/>
 	</resultMap>
 	
+	<!-- 상품 전체 조회 -->
 	<select id="selectAll">
-		SELECT ITEM_NO, ITEM_NAME, ITEM_PRICE, (IMG_PATH || IMG_RENAME) THUMBNAIL
+		SELECT ITEM_NO, ITEM_NAME, ITEM_PRICE, 
+			(SELECT IMG_PATH || IMG_RENAME
+			FROM "ITEM_IMG"
+			WHERE IMG_ORDER = 0
+			) THUMBNAIL
 		FROM "ITEM"
-		LEFT JOIN "ITEM_IMG"
+		JOIN "ITEM_IMG"
 		USING (ITEM_NO)
-		WHERE ITEM_COUNT > 0
 		ORDER BY 
 		
 		<!-- 기본 정렬 -->
@@ -86,6 +95,40 @@
 		AND ITEM_NO = ${itemNo}
 	</select>
 	
+	<!-- 상품 이미지 조회 -->
+	<select id="selectImageList" resultType="ItemImg">
+		SELECT IMG_NO, IMG_PATH, IMG_ORIGINAL_NAME, IMG_RENAME, IMG_ORDER, ITEM_NO
+		FROM "ITEM_IMG"
+		WHERE ITEM_NO = #{itemNo}
+		ORDER BY IMG_ORDER
+	</select>
+	
+	<!-- 상품 상세 수정 (관리자) -->
+	<update id="updateItem">
+		UPDATE "ITEM" SET
+		ITEM_BRAND = #{itemBrand},
+		ITEM_NAME = #{itemName},
+		ITEM_PRICE = #{itemPrice},
+		ITEM_INFO = #{itemInfo}
+		WHERE ITEM_NO = #{itemNo}
+	</update>
+	
+	<!-- 상품 추가 (관리자) -->
+	<insert id="insertItem">
+	INSERT INTO "ITEM"
+	VALUES(
+		SEQ_ITEM_NO.NEXTVAL, 
+		SEQ_ITEM_NO.CURRVAL || '번째 상품', 
+		0,
+		0,
+		DEFAULT, 
+		SEQ_ITEM_NO.CURRVAL || '번쨰 상품의 브랜드', 
+		SEQ_ITEM_NO.CURRVAL || '번쨰 상품의 설명~',
+		NULL,
+		NULL, 
+		1
+	)
+	</insert>
 	
 </mapper>
 

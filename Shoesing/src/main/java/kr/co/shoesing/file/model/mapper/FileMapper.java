@@ -9,6 +9,20 @@ import kr.co.shoesing.item.model.dto.ItemImg;
 @Mapper
 public interface FileMapper {
 
-	int uploadItemImg(List<ItemImg> uploadList);
+	/**
+	 * 상품 이미지 한번에 수정
+	 * 
+	 * @param uploadList
+	 * @return
+	 */
+	int uploadItemImgMulti(List<ItemImg> uploadList);
+
+	/**
+	 * 상품 이미지 한번에 제거
+	 * 
+	 * @param itemNo
+	 * @return
+	 */
+	int deleteItemImgMulti(int itemNo);
 
 }

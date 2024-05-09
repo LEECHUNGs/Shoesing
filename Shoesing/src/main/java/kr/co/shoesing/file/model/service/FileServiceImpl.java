@@ -34,7 +34,7 @@ public class FileServiceImpl implements FileService {
 	 * 상품 이미지 추가
 	 */
 	@Override
-	public int uploadItemImg(int itemNo, List<MultipartFile> imageList) throws IllegalStateException, IOException {
+	public int uploadItemImgMulti(int itemNo, List<MultipartFile> imageList) throws IllegalStateException, IOException {
 		int result = 0;
 
 		List<ItemImg> uploadList = new ArrayList<>();
@@ -63,16 +63,18 @@ public class FileServiceImpl implements FileService {
 
 		// 선택한 파일이 존재하지 않으면
 		if (uploadList.isEmpty()) {
-			return itemNo;
+			return 0;
 		}
 
-		result = mapper.uploadItemImg(uploadList);
+		result = mapper.deleteItemImgMulti(itemNo);
+		result = mapper.uploadItemImgMulti(uploadList);
 
 		if (result == uploadList.size()) {
 			// 서버에 파일 저장
 			for (ItemImg img : uploadList) {
 				img.getUploadFile().transferTo(new File(folderPath + img.getImgRename()));
 			}
+
 		} else {
 			// 부분적으로 삽입 실패 -> 전체 서비스 실패로 판단
 			// 이전에 삽입된 내용을 모두 rollback

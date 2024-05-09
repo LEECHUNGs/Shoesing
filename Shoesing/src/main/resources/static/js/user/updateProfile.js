@@ -135,6 +135,7 @@ const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
 //비밀번호 변경 버튼 눌렀을 때 변경할 비밀번호 창 나타내기
 const updatePwBtn = document.querySelector("#updatePwBtn");
 const currentPw = document.querySelector("#currentPw");
+
 updatePwBtn.addEventListener("click",()=>{
   if(currentPw.value.trim().length ==0){
   alert('현재 비밀번호를 입력해주시기 바랍니다');

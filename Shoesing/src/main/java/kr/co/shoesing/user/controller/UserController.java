@@ -51,7 +51,8 @@ public class UserController {
 	 */
 	@PostMapping("login")
 	public String login(User inputUser, Model model, RedirectAttributes ra,
-			@RequestParam(value = "saveId", required = false) String saveId, HttpServletResponse resp) {
+			@RequestParam(value = "saveId", required = false) String saveId, HttpServletResponse resp,
+			HttpServletRequest request) {
 
 		User loginUser = service.login(inputUser);
 
@@ -264,12 +265,11 @@ public class UserController {
 
 	}
 
-	//프로필 아이콘 변경하기
+	// 프로필 아이콘 변경하기
 	@ResponseBody
 	@PostMapping("changeIcon")
-	public int changeIcon(HttpServletRequest request,
-						@RequestBody Map<String, String> map) {
-		log.info("map {}",map);
+	public int changeIcon(HttpServletRequest request, @RequestBody Map<String, String> map) {
+		log.info("map {}", map);
 		HttpSession session = request.getSession();
 
 		User loginUser = (User) session.getAttribute("loginUser");
@@ -278,13 +278,12 @@ public class UserController {
 		String userId = loginUser.getUserId();
 
 		int result = service.changeIcon(userId, map.get("inputIcon"));
-		
+
 		return result;
 	}
 
-	
-
-  /* 아이디 DB에 존재하는지 체크
+	/*
+	 * 아이디 DB에 존재하는지 체크
 	 * 
 	 * @param inputId
 	 * 
@@ -308,7 +307,7 @@ public class UserController {
 	}
 
 	/**
-
+	 * 
 	 * 현재 비밀번호 변경
 	 * 
 	 * @param inputPw
@@ -316,25 +315,24 @@ public class UserController {
 	 */
 	@ResponseBody
 	@PostMapping("changePw")
-	public int changePw(HttpServletRequest request,
-						@RequestBody String inputPw ) {
+	public int changePw(HttpServletRequest request, @RequestBody String inputPw) {
 
 		HttpSession session = request.getSession();
-		
-		User loginUser = (User)session.getAttribute("loginUser");
-		loginUser.setUserPw("inputPw");
-		
+
+		User loginUser = (User) session.getAttribute("loginUser");
+		loginUser.setUserPw(inputPw);
+
 		String userId = loginUser.getUserId();
-		
-		 int result = service.changePw(userId, inputPw);
-		 
-		 String message ="";
-		if(result>0) {
+
+		int result = service.changePw(userId, inputPw);
+
+		String message = "";
+		if (result > 0) {
 			log.info("현재 비밀번호가 일치합니다");
-			message=("비밀번호가 일치합니다");
-		}else {
+			message = ("비밀번호가 일치합니다");
+		} else {
 			log.info("비밀번호가 일치하지 않습니다 다시 입력해주세요");
-			message=("비밀번호가 불일치합니다");
+			message = ("비밀번호가 불일치합니다");
 		}
 
 		return result;

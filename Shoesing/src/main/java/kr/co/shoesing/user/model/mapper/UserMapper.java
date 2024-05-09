@@ -49,7 +49,9 @@ public interface UserMapper {
 	 */
 	int restoration(String userId);
 
-	/** 회원 아이콘 변경
+	/**
+	 * 회원 아이콘 변경
+	 * 
 	 * @param Map<String, String> map
 	 * @return
 	 */
@@ -63,18 +65,45 @@ public interface UserMapper {
 	 */
 	int checkDel(String inputId);
 
-	/** 비밀번호 변경
+	/**
+	 * 비밀번호 변경
+	 * 
 	 * @param userId
-	 * @param inputPw 
+	 * @param inputPw
 	 * @return
 	 */
 	int changePw(String userId, String inputPw);
-	
-	/** 비밀번호가 입력한 값과 같은지 체크
+
+	/**
+	 * 비밀번호가 입력한 값과 같은지 체크
+	 * 
 	 * @param userId
 	 * @return
 	 */
 	String checkPw(String userId);
 
+	/**
+	 * 회원 정보 수정 (관리자)
+	 * 
+	 * @param inputUser
+	 * @return
+	 */
+	int updateAdmin(User inputUser);
+
+	/**
+	 * 회원 복구 (관리자)
+	 * 
+	 * @param userNo
+	 * @return
+	 */
+	int restoreAdmin(String userNo);
+
+	/**
+	 * 회원 삭제 (관리자)
+	 * 
+	 * @param userNo
+	 * @return
+	 */
+	int deleteAdmin(String userNo);
 
 }

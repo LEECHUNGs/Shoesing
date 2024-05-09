@@ -3,9 +3,8 @@
 <mapper namespace="kr.co.shoesing.file.model.mapper.FileMapper">
 
 	<!-- 모든 회원 조회 -->
-	<insert id="uploadItemImg" parameterType="list">
+	<insert id="uploadItemImgMulti" parameterType="list">
 		INSERT INTO "ITEM_IMG"
-		
 		<foreach collection="list" item="img" open="(" close=")" separator=" UNION ">
 			SELECT NEXT_ITEM_IMG_NO(), 
 			#{img.imgPath}, 
@@ -15,7 +14,11 @@
 			#{img.itemNo} 
 			FROM DUAL
 		</foreach>
-		
 	</insert>
+	
+	<delete id="deleteItemImgMulti">
+		DELETE FROM "ITEM_IMG"
+		WHERE ITEM_NO = #{itemNo}
+	</delete>
 	
 </mapper>

@@ -56,4 +56,20 @@ public class ItemServiceImpl implements ItemService {
 		return mapper.selectOne(itemNo);
 	}
 
+	/**
+	 * 상품 상세내용 수정 (관리자)
+	 */
+	@Override
+	public int updateItem(Item inputItem) {
+		return mapper.updateItem(inputItem);
+	}
+
+	/**
+	 * 상품 추가
+	 */
+	@Override
+	public int insertItem() {
+		return mapper.insertItem();
+	}
+
 }
