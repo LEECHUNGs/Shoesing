@@ -374,7 +374,8 @@ checkAuthKeyBtn.addEventListener('click', () => {
         return;
       }
       clearInterval(authTimer);
-      authKeyMessage.innerText = '인증 되었습니다.';
+      authKeyMessage.innerText = '인증 되었습니다.'; 
+      alert('인증이 완료되었습니다') // 5.8 자습때 이 내용 추가했음!
       authKeyMessage.classList.remove('error');
       authKeyMessage.classList.add('confirm');
       inputEmail.value = userEmail.value + '@' + inputDomain.value;
