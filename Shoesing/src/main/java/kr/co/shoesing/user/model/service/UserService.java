@@ -73,4 +73,10 @@ public interface UserService {
 	 */
 	int changePw(User loginUser, String inputPw);
 
+	/** 내정보 수정
+	 * @param inputUser
+	 * @return
+	 */
+	int updateProfile(User inputUser);
+
 }

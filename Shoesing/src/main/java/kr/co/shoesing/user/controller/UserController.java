@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -351,5 +352,38 @@ public class UserController {
 		return result;
 
 	}
+	
+	/**
+	 * 내정보 수정 
+	 * 
+	 * @return
+	 */
+	@PostMapping("updateProfile")
+	public String updateProfile(User inputUser, RedirectAttributes ra,
+								HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		
+		int result = service.updateProfile(inputUser);
+		
+
+		if (result > 0) {
+			ra.addFlashAttribute("message", "수정완료!");
+			loginUser.setUserName(inputUser.getUserName());
+			loginUser.setUserNickname(inputUser.getUserNickname());
+			loginUser.setUserTel(inputUser.getUserTel());
+			loginUser.setUserAddress(loginUser.getUserAddress());
+			loginUser.setUserPw(inputUser.getUserPw());
+			loginUser.setUserEmail(inputUser.getUserEmail());
+		} else {
+			ra.addFlashAttribute("message", "수정실패!");
+
+		}
+
+		return "pages/user/updateProfile";
+	}
+	
+	
 	
 }

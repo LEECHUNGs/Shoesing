@@ -143,4 +143,14 @@ public class UserServiceImpl implements UserService {
 		return mapper.changePw(loginUser.getUserId(),inputPw);
 	}
 
+	/**
+	 * 내 정보 수정
+	 */
+	@Override
+	public int updateProfile(User inputUser) {
+
+		
+		return mapper.updateProfile(inputUser);
+	}
+
 }
