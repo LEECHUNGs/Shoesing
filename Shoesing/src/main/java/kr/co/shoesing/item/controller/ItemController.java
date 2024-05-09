@@ -42,6 +42,7 @@ public class ItemController {
 	@GetMapping("itemList")
 	public Map<String, Object> itemList(@RequestParam("sortNo") int sortNo,
 			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp) {
+		System.out.println(service.selectAll(sortNo, cp).get("itemList"));
 
 		return service.selectAll(sortNo, cp);
 	}
