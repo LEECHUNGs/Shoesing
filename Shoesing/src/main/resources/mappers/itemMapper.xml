@@ -13,20 +13,13 @@
 					ofType="Stock"
 		/>
 		
-		<collection property="imageList"
-					select = "selectImageList"
-					column = "ITEM_NO"
-					javaType = "java.util.ArrayList"
-					ofType = "ItemImg"
-		/>
+
 	</resultMap>
 	
 	<!-- 상품 전체 조회 -->
 	<select id="selectAll">
-		SELECT ITEM_NO, ITEM_NAME, ITEM_PRICE, (IMG_PATH || IMG_RENAME) THUMBNAIL
+		SELECT ITEM_NO, ITEM_NAME, ITEM_PRICE
 		FROM "ITEM"
-		JOIN "ITEM_IMG"
-		USING (ITEM_NO)
 		ORDER BY 
 		
 		<!-- 기본 정렬 -->
