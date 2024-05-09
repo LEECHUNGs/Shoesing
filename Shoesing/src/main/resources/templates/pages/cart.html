@@ -30,14 +30,14 @@
 
     <!-- 상품 목록 UL -->
     
-    <form action="/order/checkout" method="post">
+    <form action="/order/checkout" id="orderForm" method="post">
       <input type="checkbox" id="checkAll">
       <button type="button" id="checkDelBtn">선택 상품 삭제</button>
       <button type="submit" id="orderBtn">선택 상품 구매</button>
       <ul id="cartUl" class="cartUl">
           <!-- 장바구니 1개 샘플
           <li>
-              <input type="checkbox" name="checkOne" value = "1">
+              <input type="checkbox" name="itemStockNoList" value = "1">
               <input type="hidden" name="itemNo" value="1"> 
               <input type="hidden" name="sizeNo" value="1">
               <img src="/img/cat1.jpg" width="150px" height="150px">

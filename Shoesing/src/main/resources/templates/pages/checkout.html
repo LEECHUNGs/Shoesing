@@ -12,5 +12,51 @@
     <!-- 내용은 여기 작성 -->
 
     <h1>주문 페이지</h1>
+
+    <!-- 배송지 선택 -->
+    <div>
+      <h1>배송지 선택창</h1>
+    </div>
+
+    <!-- 배송시 요청사항 -->
+    <div>
+      <h1>배송시 요청사항</h1>
+    </div>
+
+    <!-- 결재 수단 -> 추가 예정 -->
+    
+    <!-- 주문한 상품 목록 -->
+    <div>
+      <h1>주문한 상품 목록</h1>
+
+      <ul>
+        <th:block th:each="orderDetail : ${order.itemStockNoList}">
+
+          <li>
+            <p th:text="|상품명 : *{orderDetail.itemName}|"></p>
+            <p th:text="|상품 가격 : *{orderDetail.itemPrice} 원|"></p>
+            <p th:text="|사이즈 : *{orderDetail.sizeVal}mm|"></p>
+            <p>
+              <span th:text="|수량 : *{orderDetail.orderItemCount}|"></span> / 
+              <span th:text="|*{orderDetail.itemPrice * orderDetail.orderItemCount} 원|"></span>
+            </p>
+          </li>
+
+        </th:block>
+      </ul>
+    </div>
+
+    <!-- 최종 결제 금액 -->
+    <div>
+      <p th:text="|${order.totalPrice} 원|"></p>
+    </div>
+
+    <button type="button" id="orderBtn">주문하기</button>
+
+    <script th:inline="javascript">
+      const order = /*[[${order}]]*/"주문내역";
+    </script>
+
+    <script src="/js/order/checkout.js"></script>
   </th:block>
 </html>

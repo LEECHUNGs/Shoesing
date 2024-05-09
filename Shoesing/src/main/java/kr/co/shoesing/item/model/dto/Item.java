@@ -29,6 +29,6 @@ public class Item {
 
 	private String thumbnail;
 
-	private List<Size> sizeList; // 상품 사이즈별 재고, (Size, Stock)
+	private List<Stock> stockList; // 상품 사이즈별 재고, (Size, Stock)
 	private List<ItemImg> imageList; // 상품 이미지
 }
