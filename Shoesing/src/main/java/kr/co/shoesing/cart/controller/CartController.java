@@ -41,7 +41,7 @@ private final CartService service;
 		return "pages/cart";
 	}
 
-	/**
+	/** 장바구니 목록 뷰
 	 * @param loginUser : 현재 로그인한 유저 번호를 얻기위한 User 객체, 로그인 안했을 시 -1
 	 * @param cartList : 세션에 저장된 장바구니 목록 
 	 * @param cp : 현재 페이지 번호
@@ -56,6 +56,8 @@ private final CartService service;
 						
 		// 회원 일 경우
 		if(loginUser != null) {
+			
+			if(cartList == null) cartList = new ArrayList<>();
 			
 			return service.selectAll(loginUser.getUserNo(), cp);
 		}
@@ -75,7 +77,7 @@ private final CartService service;
 					  @SessionAttribute(value = "loginUser", required = false) User loginUser,
 					  Model model) {
 		
-		log.info("cartList {}", cartList);
+		//log.info("cartList {}", cartList);
 		
 		// 비회원일 경우
 		if(loginUser == null) {
@@ -83,7 +85,7 @@ private final CartService service;
 			// 선택된 상품 삭제
 			service.delete(cartList, cartVo);
 			
-			log.info("cartList {}", cartList);
+			//log.info("cartList {}", cartList);
 			
 			// 갱신 목록 세션에 올림
 			model.addAttribute("cartList", cartList);
@@ -112,10 +114,13 @@ private final CartService service;
 		// 비회원일 경우
 		if(loginUser == null) {
 
+			// 장바구니에 아무 상품도 없어 List 객체가 없으면 생성해줌
 			if(cartList == null) cartList = new ArrayList<>();
 			
+			// 상품 추가
 			service.insert(cartList, cart);
 						
+			// 수정 내용을 세션에 저장
 			session.setAttribute("cartList", cartList);
 						
 			return 1;
@@ -151,7 +156,6 @@ private final CartService service;
 		}
 		
 		cart.setUserNo(loginUser.getUserNo());
-		System.out.println(cart);
 		return service.update(cart);
 	}
 }

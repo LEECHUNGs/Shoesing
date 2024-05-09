@@ -72,8 +72,9 @@ public class CartServiceImpl implements CartService{
 			for(int i = offset; i<offset + limit && i<cartList.size(); i++) {
 				cartList2.add(cartList.get(i));
 			}
+			
 		}
-		
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("cartList", cartList2);
 		map.put("pagination", pagination);
@@ -98,6 +99,8 @@ public class CartServiceImpl implements CartService{
 	public void delete(List<Cart> cartList, CartVo cartVo) {
 		
 		for(Cart cart : cartVo.getCartList()) {
+			log.info(cart.toString());
+			
 			cartList.remove(cart);
 		}
 	}
@@ -114,28 +117,28 @@ public class CartServiceImpl implements CartService{
 			return mapper.add(inputCart);
 		}
 		
+		log.info(inputCart.toString());
+		
 		return mapper.insert(inputCart);
 	}
 
 	// 비회원 장바구니 상품 추가
 	@Override
 	public void insert(List<Cart> cartList, Cart cart) {
-
-		log.info("cartList {}", cartList);
+		
+		log.info(cart.toString());
 		
 		Map<String, Integer> map = new HashMap<>();
 		map.put("itemNo", cart.getItemNo());
 		map.put("sizeNo", cart.getSizeNo());
 		
-		Cart newCart = mapper.selectCart(map);
-		cart.setItemName(newCart.getItemName());
-		cart.setItemPrice(newCart.getItemPrice());
-		cart.setItemBrand(newCart.getItemBrand());
-		cart.setItemImgPath(newCart.getItemImgPath());
-		cart.setSizeVal(newCart.getSizeVal());
+		Cart newCart = mapper.selectCart(cart);
+		newCart.setCartItemCount(cart.getCartItemCount());
+		
+		log.info(newCart.toString());
 		
 		// 이미 장바구니에 있을 때
-		int index = cartList.indexOf(cart);
+		int index = cartList.indexOf(newCart);
 		
 		if(index >= 0) {
 			// 기존 수량에 입력받은 수량을 더함
@@ -144,7 +147,7 @@ public class CartServiceImpl implements CartService{
 
 		} else {
 			// 새 리스트 추가
-			cartList.add(cart);
+			cartList.add(newCart);
 		}
 	}
 

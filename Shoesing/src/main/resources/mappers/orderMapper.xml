@@ -2,5 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.shoesing.order.model.mapper.OrderMapper">
 
+	<select id="selectDetailList">
+		SELECT ITEM_STOCK_NO, ITEM_NO, ITEM_NAME, SIZE_NO, SIZE_VAL, ITEM_PRICE
+		FROM "STOCK"
+		JOIN "ITEM" USING(ITEM_NO)
+		JOIN "SIZE" USING(SIZE_NO)
+		WHERE ITEM_STOCK_NO IN 
+			<foreach collection="list" item="i" open="(" close=")" separator=", " >
+				#{i}
+			</foreach>
+	</select>
 	
 </mapper>
