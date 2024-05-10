@@ -378,6 +378,7 @@ public class UserController {
 
 		return "redirect:/user/updateProfile";
 	}
+
 	
 	
 	

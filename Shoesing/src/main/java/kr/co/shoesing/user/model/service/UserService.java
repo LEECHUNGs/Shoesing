@@ -104,4 +104,8 @@ public interface UserService {
 
 
 
+	int updateProfile(String userId, String userPw);
+
+
+
 }

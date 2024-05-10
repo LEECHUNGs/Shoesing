@@ -1,3 +1,4 @@
+
 //프로필 사진 변경
 const userIcon = document.querySelectorAll(".userIcon");
 const profileIcon = document.querySelectorAll(".profileIcon");
@@ -160,7 +161,7 @@ updatePwBtn.addEventListener("click",()=>{
       checkObj.currentPw=false;
       return;
     }
-      updatePwDiv.setAttribute("style","visibility:visible");  
+      document.getElementById('updatePwDiv').setAttribute("style","visibility:visible");  
       console.log("비밀번호 일치");
       checkObj.currentPw=true;     
     
@@ -176,10 +177,12 @@ const checkUpdatePw = () => {
   if (updatePw.value == updatePwConfirm.value) {
     updatePwMessage.innerText = '';
     alert("비밀번호 일치")
+
     checkObj.updatePw = true;
     return;
   }
   updatePwMessage.innerText = '비밀번호가 일치하지 않습니다';
+
   checkObj.updatePw = false; 
 };
 
@@ -197,6 +200,7 @@ updatePw.addEventListener('input', (e) => {
 
   if (!regExp.test(inputUpdatePw)) {
     updatePwMessage.innerText = '비밀번호가 유효하지 않습니다.';
+
     return;
   }
 
@@ -361,6 +365,7 @@ checkAuthKeyBtn.addEventListener('click', () => {
   // if (authKey.value.length != 6) {
   //   alert('인증번호를 정확히 입력해 주세요');
   // }
+
   const obj = {
 
     email: updateEmail.value + '@' + inputDomain.value,
@@ -503,6 +508,7 @@ document.querySelector('#updateProfileBtn').addEventListener("click", (e) => {
       }
     }
   }
+
 
 
   checkObj.updateNickname =true;
