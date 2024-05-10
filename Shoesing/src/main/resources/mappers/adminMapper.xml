@@ -44,6 +44,7 @@
 	</select>
 	
 	<select id="selectAllItem">
+
 		SELECT 
 			A.ITEM_NO, 
 			ITEM_NAME, 

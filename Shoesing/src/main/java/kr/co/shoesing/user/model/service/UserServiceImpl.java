@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
 		if (!passwordEncoder.matches(inputPw, currentPw)) {
 			return 0;
 		}
-		return mapper.changePw(userId, inputPw);
+		return 1;
 	}
 
 	/**
@@ -156,23 +156,50 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public int changePw(User loginUser, String inputPw) {
+		
+		// 현재 비밀번호가 같은지 보기
+		String currentPw = mapper.checkPw(loginUser.getUserId());
+		
+		if(!passwordEncoder.matches(loginUser.getUserPw(), currentPw)) {
+			return 0;
+		}
+		
+		// 변경한 비밀번호 암호화 처리해주기
+		loginUser.setUserPw(passwordEncoder.encode(inputPw));
+		
+		User user= new User();
+		
+		user.setUserId(loginUser.getUserId());
+		user.setUserPw(loginUser.getUserPw());
+		
+		return mapper.changePw(user);
 
-		// 새로 변경한 pw 암호화 하기
-		String encPw = passwordEncoder.encode(inputPw);
-
-		// 세션에 있는 Pw값에 넣어주기
-		loginUser.setUserPw(encPw);
-
-		return mapper.changePw(loginUser.getUserId(), inputPw);
 	}
 
 	/**
 	 * 내 정보 수정
 	 */
 	@Override
-	public int updateProfile(User inputUser) {
+	public int updateProfile(User loginUser, String inputPw) {
+		
+		// 현재 비밀번호가 같은지 여부 !
+		String currentPw = mapper.checkPw(loginUser.getUserId());
+		
+		if(!passwordEncoder.matches(loginUser.getUserPw(), currentPw)) {
+			return 0;
+		}
+		
+		// 새롭게 변경한 pw값을 암호화해주기
+		loginUser.setUserPw(passwordEncoder.encode(currentPw));
+		
+	
+		
+		return mapper.updateProfile(loginUser);
+	
 
-		return mapper.updateProfile(inputUser);
 	}
+
+	
+
 
 }
