@@ -3,6 +3,7 @@ const checkObj ={
   updateNickname : false,
   currentPw : false,
   updateEmail : false,
+  updatePw : false
 };
  
 
@@ -168,7 +169,7 @@ updatePwBtn.addEventListener("click",()=>{
       checkObj.currentPw=false;
       return;
     }
-      updatePwDiv.setAttribute("style","visibility:visible");  
+      document.getElementById('updatePwDiv').setAttribute("style","visibility:visible");  
       console.log("비밀번호 일치");
       checkObj.currentPw=true;
       
@@ -190,11 +191,13 @@ const checkUpdatePw = () => {
     alert("비밀번호 일치")
     updatePwMessage.classList.add('confirm');
     updatePwMessage.classList.remove('error');
+    checkObj.updatePw = true;
     return;
   }
   updatePwMessage.innerText = '비밀번호가 일치하지 않습니다';
   updatePwMessage.classList.add('error');
   updatePwMessage.classList.remove('confirm');
+  checkObj.updatePw = false; 
 };
 
 updatePw.addEventListener('input', (e) => {
@@ -204,6 +207,7 @@ updatePw.addEventListener('input', (e) => {
     updatePwMessage.innerText ='비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.';
     updatePwMessage.classList.remove('confirm', 'error'); 
     updatePw.value = '';
+    checkObj.updatePw = false; 
     return;
   }
 
@@ -213,11 +217,13 @@ updatePw.addEventListener('input', (e) => {
     updatePwMessage.innerText = '비밀번호가 유효하지 않습니다.';
     updatePwMessage.classList.add('error');
     updatePwMessage.classList.remove('confirm');
+    constObj.updatePw = false; 
     return;
   }
 
   if(currentPw.value == updatePw.value){
     updatePwMessage.innerText='현재 비밀번호와 일치합니다';
+    constObj.currentPw = true; 
     return;
   }
 
@@ -404,8 +410,7 @@ checkAuthKeyBtn.addEventListener('click', () => {
     return;
   }
   if (authKey.value.length != 6) {
-    alert('인증번호를 정확히 입력해 주세요');
-    return;
+    alert('인증번호를 정확히 입력해 주세요');0
   }
   const obj = {
 
@@ -472,8 +477,10 @@ checkAuthKeyBtn.addEventListener('click', () => {
 
 //========================================================================
 
+/* 
+document.getElementById('updateProfileForm').addEventListener("submit", e => {
 
-updateProfileForm.addEventListener("submit",(e)=>{
+  e.preventDefault(); 
 
   if(updateNickname.value.trim().length == 0){
     e.preventDefault();
@@ -493,10 +500,40 @@ updateProfileForm.addEventListener("submit",(e)=>{
     alert('이메일을 입력해주세요')
   }
   
-  // if(authKeyDiv.style.visibility === 'visible')
+  if(authKeyDiv.style.visibility === 'visible'){
+    if(authKey.value.trim().length==null){
+      
+    }
+  }
 
 
-})
+});*/
+
+document.querySelector('#updateProfileBtn').addEventListener("click", (e) => {
+  e.preventDefault(); 
+
+  if(updateNickname.value.trim().length === 0){
+    alert('닉네임을 입력해주세요');
+    return;
+  }
+  if(currentPw.value.trim().length === 0){
+    alert('비밀번호를 입력해주세요');
+    return;
+  }
+  if(updatePw.value == currentPw.value){
+    alert('변경된 비밀번호가 현재 비밀번호와 일치합니다. 수정해주세요');
+    return;
+  }
+  if(updateEmail.value.trim().length === 0){
+    alert('이메일을 입력해주세요');
+    return;
+  }
+  
+  const form = document.getElementById('updateProfileForm'); 
+  // 모든 검사를 통과했다면 폼 제출
+  form.submit(); 
+});
+
 
 
 

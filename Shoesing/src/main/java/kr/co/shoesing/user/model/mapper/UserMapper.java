@@ -79,7 +79,7 @@ public interface UserMapper {
 	 * @param inputPw
 	 * @return
 	 */
-	int changePw(@Param("userId") String userId, @Param("inputPw") String inputPw);
+	int changePw(User user);
 
 	/** 회원 정보 수정
 	 * @param inputUser
@@ -111,5 +111,8 @@ public interface UserMapper {
 	 * @return
 	 */
 	int deleteAdmin(String userNo);
+
+
+
 
 }
