@@ -15,7 +15,7 @@
       <!-- 프로필 사진 -->
     <div class="profile-image-area">
       <p>프로필 사진</p>
-      <img th:src="@{/img/userIcon/} + ${session.loginUser.userIcon} + |.png|" class="userIcon">
+     <img th:src="@{/img/userIcon/} + ${session.loginUser.userIcon} + |.png|" class="userIcon">
       <br>
       <button class="profileIcon"  value="userIcon1"></button>
       <button class="profileIcon"  value="userIcon2"></button>
@@ -34,7 +34,7 @@
       <!-- 이름 수정-->
       <div class="update-input-area">
         <label>이름
-          <input th:value="${session.loginUser.userName}" type="text" id="updateName"  placeholder="수정할 이름을 입력해주세요" />
+          <input th:value="${session.loginUser.userName}" type="text" id="updateName"  name="userName" placeholder="수정할 이름을 입력해주세요" />
           <span ID="updateNameMessage"></span>
         </label>
       </div>
@@ -42,7 +42,7 @@
       <!-- 닉네임 수정-->
       <div class="update-input-area">
         <label>닉네임
-          <input th:value="${session.loginUser.userNickname}" type=text id="updateNickname" placeholder="수정할 닉네임을 입력해주세요"/>
+          <input th:value="${session.loginUser.userNickname}" type=text id="updateNickname" name="userNickname" placeholder="수정할 닉네임을 입력해주세요"/>
           <span id="updateNicknameMessage"></span>
         </label>
         <br/>
@@ -51,7 +51,7 @@
       <!-- 전화번호 수정-->
       <div class="update-input-area">
         <label>전화번호
-          <input th:value="${session.loginUser.userTel}" type=text id="updateTel" placeholder="수정할 전화번호를 입력해주세요" />
+          <input th:value="${session.loginUser.userTel}" type=text id="updateTel" name="userTel" placeholder="수정할 전화번호를 입력해주세요" />
         </label>
         <br/>
         <span id="updateTelMessage"></span>
@@ -67,6 +67,9 @@
           <span id="guide" style="color:#999;display:none"></span>
           <input type="text" id="detailAddress" placeholder="상세주소">
           <input type="text" id="extraAddress" placeholder="참고항목">
+
+
+          <input id="a" name="userAddress" hiddenn >
         </label>
       </div>
     
@@ -76,7 +79,7 @@
       <!-- 현재 비밀번호 -->
       <div class="update-input-area">
         <label>현재 비밀번호
-          <input type=password id="currentPw" placeholder="현재 비밀번호를 입력해주세요"/>
+          <input type=password id="currentPw" name="userPw" placeholder="현재 비밀번호를 입력해주세요"/>
           <br/>
       </label>
         <button id="updatePwBtn" type="button">비밀번호 변경</button>
@@ -85,12 +88,12 @@
         <!-- 변경할 비밀번호 (평소 hidden) -->
       <div class="update-input-area" style="visibility:hidden" id="updatePwDiv">
         <label>변경할 비밀번호
-        <input type=password id="updatePw" class="updateInputPw" placeholder="변경할 비밀번호를 입력해주세요"/>
+        <input type=password id="updatePw" class="updatePw" name="updatePw" placeholder="변경할 비밀번호를 입력해주세요"/>
         </label>
         <br/>
         <!-- 변경할 비밀번호 확인 (평소 hidden) -->
         <label>변경할 비밀번호 확인</label>
-        <input type=password id="updatePwConfirm" class="updateInputPw" placeholder="변경할 비밀번호를 일치하게 입력해주세요"/>
+        <input type=password id="updatePwConfirm" class="updatePwConfirm" name="updatePwConfirm" placeholder="변경할 비밀번호를 일치하게 입력해주세요"/>
         <br/>
         <span id="updatePwMessage">비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.</span>
       </div>   
@@ -99,7 +102,7 @@
       <div class="update-input-area" >
         <div class="update-input-area" id="emailDiv" style="pointer-events:none"> 
           <label for="updateEmail"> <span class="required">*</span>이메일 </label>
-          <input type="text" class="domain" id="updateEmail" th:value="${#strings.substringBefore(session.loginUser.userEmail,'@')}"/> @
+          <input type="text" class="domain" id="updateEmail" name="userEmail" th:value="${#strings.substringBefore(session.loginUser.userEmail,'@')}"/> @
           <input type="text" name="inputDomain" id="inputDomain" th:value="${#strings.substringAfter(session.loginUser.userEmail,'@')}"/>
           <select title="이메일 도메인 선택" id="domainList">
             <option selected disabled>선택</option>

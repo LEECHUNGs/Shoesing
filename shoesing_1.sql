@@ -64,7 +64,7 @@ ROLLBACK;
 
 GRANT CREATE PROCEDURE TO shoesing;
 
-CREATE OR REPLACE FUNCTION shoesing.NEXT_ITEM_IMG_NO
+CREATE OR REPLACE FUNCTION shoesing.NEXT_CART_NO
 
 -- 반환형
 RETURN NUMBER
@@ -78,3 +78,39 @@ BEGIN
 END;
 
 COMMIT;
+
+
+UPDATE "USER" SET
+		USER_NAME='user00',
+		USER_NICKNAME= '유저',
+		USER_TEL= 'ㅣ',
+		USER_ADDRESS= #{userAddress},
+		USER_EMAIL=#{userEmail},
+		USER_PW= #{userPw},
+		
+		
+		
+		SELECT USER_ID
+		FROM "USER"
+		WHERE USER_ID ='user01'
+		AND USER_DEL_FL ='N';
+		WHERE USER_ID = #{userId}
+
+
+
+
+
+
+
+
+
+SELECT count(*)
+FROM "USER"
+WHERE USER_ID = 'java88'
+AND USER_DEL_FL ='N';
+
+
+SELECT USER_PW 
+		FROM "USER"
+		WHERE USER_ID = 'java88'
+		AND USER_DEL_FL ='N';

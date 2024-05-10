@@ -101,4 +101,8 @@ public interface UserService {
 	 */
 	int updateProfile(User inputUser);
 
+	int updateProfile(String userId, String userPw);
+
+
+
 }

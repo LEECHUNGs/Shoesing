@@ -356,31 +356,31 @@ public class UserController {
 	 * 
 	 * @return
 	 */
-	@PostMapping("updateProfile")
-	public String updateProfile(User inputUser, RedirectAttributes ra,
-								HttpServletRequest request) {
-		
-		HttpSession session = request.getSession();
-		User loginUser = (User)session.getAttribute("loginUser");
-		
-		int result = service.updateProfile(inputUser);
-		
-
-		if (result > 0) {
-			ra.addFlashAttribute("message", "수정완료!");
-			loginUser.setUserName(inputUser.getUserName());
-			loginUser.setUserNickname(inputUser.getUserNickname());
-			loginUser.setUserTel(inputUser.getUserTel());
-			loginUser.setUserAddress(loginUser.getUserAddress());
-			loginUser.setUserPw(inputUser.getUserPw());
-			loginUser.setUserEmail(inputUser.getUserEmail());
-		} else {
-			ra.addFlashAttribute("message", "수정실패!");
-
-		}
-
-		return "pages/user/updateProfile";
-	}
+//	@PostMapping("updateProfile")
+//	public String updateProfile(@SessionAttribute("loginUser") User loginUser,
+//								RedirectAttributes ra,
+//								@Requestparm("userPw") String userPw) {
+//		
+//		String usetId = loginUser.getUserId();
+//		
+//		int result = service.updateProfile(loginUser.getUserId(),userPw);
+//		
+//
+//		if (result > 0) {
+//			ra.addFlashAttribute("message", "수정완료!");
+//			loginUser.setUserName(loginUser.getUserName());
+//			loginUser.setUserNickname(loginUser.getUserNickname());
+//			loginUser.setUserTel(loginUser.getUserTel());
+//			loginUser.setUserAddress(loginUser.getUserAddress());
+//			loginUser.setUserPw(loginUser.getUserPw());
+//			loginUser.setUserEmail(loginUser.getUserEmail());
+//		} else {
+//			ra.addFlashAttribute("message", "수정실패!");
+//
+//		}
+//
+//		return "pages/user/updateProfile";
+//	}
 	
 	
 	
