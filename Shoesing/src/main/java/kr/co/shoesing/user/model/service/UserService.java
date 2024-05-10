@@ -95,7 +95,6 @@ public interface UserService {
 	 */
 	int changePw(User loginUser, String inputPw);
 
-
 	/**
 	 * 내정보 수정
 	 * 
@@ -103,12 +102,5 @@ public interface UserService {
 	 * @return
 	 */
 	int updateProfile(User loginUser, String inputPw);
-
-
-
-
-	int updateProfile(String userId, String userPw);
-
-
 
 }
