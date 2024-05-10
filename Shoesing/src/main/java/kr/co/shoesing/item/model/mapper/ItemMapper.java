@@ -1,11 +1,13 @@
 package kr.co.shoesing.item.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import kr.co.shoesing.item.model.dto.Item;
+import kr.co.shoesing.item.model.dto.Stock;
 
 @Mapper
 public interface ItemMapper {
@@ -47,6 +49,21 @@ public interface ItemMapper {
 	 * 
 	 * @return
 	 */
-	int insertItem();
+	int insertItem(Map map);
+
+	/**
+	 * 상품 삭제 (관리자)
+	 * 
+	 * @return
+	 */
+	int deleteItem(int itemNo);
+
+	/**
+	 * 재고 수정 (관리자)
+	 * 
+	 * @param stock
+	 * @return
+	 */
+	int updateStock(Stock stock);
 
 }

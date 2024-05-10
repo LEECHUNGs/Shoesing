@@ -89,8 +89,7 @@
 		SELECT SIZE_NO, ITEM_NO, SIZE_VAL, SIZE_STOCK
 		FROM "STOCK"
 		JOIN "SIZE" USING(SIZE_NO)
-		WHERE SIZE_STOCK > 0
-		AND ITEM_NO = ${itemNo}
+		WHERE ITEM_NO = ${itemNo}
 	</select>
 	
 	<!-- 상품 이미지 조회 -->
@@ -112,9 +111,11 @@
 	</update>
 	
 	<!-- 상품 추가 (관리자) -->
-	<insert id="insertItem" useGeneratedKeys="true" keyColumn="ITEM_NO">
-	<selectKey resultType="_int" order="AFTER" keyColumn="ITEM_NO">
-        SELECT SEQ_ITEM_NO.CURRVAL
+	<insert id="insertItem" useGeneratedKeys="true" parameterType="map">
+	<selectKey resultType="_int" keyProperty="itemNo" order="BEFORE">
+        SELECT LAST_NUMBER 
+		FROM USER_SEQUENCES
+		WHERE SEQUENCE_NAME = 'SEQ_ITEM_NO'
     </selectKey>
 	INSERT INTO "ITEM"
 	VALUES(
@@ -130,6 +131,21 @@
 		1
 	)
 	</insert>
+	
+	<!-- 상품 하나 삭제 -->
+	<delete id="deleteItem">
+		DELETE FROM "ITEM" 
+		WHERE ITEM_NO = #{itemNo}
+	</delete>
+	
+	<update id="updateStock">
+		UPDATE "STOCK" SET
+		SIZE_STOCK = #{sizeStock}
+		WHERE ITEM_NO = #{itemNo}
+		AND SIZE_NO = #{sizeNo}
+	</update>
+
+	
 	
 </mapper>
 

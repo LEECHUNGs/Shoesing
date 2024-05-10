@@ -49,7 +49,7 @@
       <input type="hidden" th:value="${item.itemNo}" name="itemNo" />
       <button>사진 수정</button>
     </form>
-
+    -----------------------
     <!-- 상품 정보 수정 -->
     <form action="/admin/updateItem" method="post">
       <label
@@ -65,19 +65,33 @@
       /></label>
       <br />
       <label
-        >상품 상세: <input th:value=" ${item.itemInfo}" name="itemInfo"
+        >상품 상세: <input type="" th:value=" ${item.itemInfo}" name="itemInfo"
       /></label>
       <br />
       <input type="hidden" th:value="${item.itemNo}" name="itemNo" />
       <button>상세 수정</button>
-      <!-- 상품 상세 수정 -->
     </form>
-
-    <script th:inline="javascript">
-      const item = /*[[${item}]]*/ '상품 정보';
-      const loginUser = /*[[${session.loginUser}]]*/ '로그인 유저';
-    </script>
-
-    <script src="/js/item/itemDetail.js"></script>
+    ---------------------------
+    <form action="/admin/updateStock" method="post">
+      <th:block
+        th:each="i : ${#numbers.sequence(0, #lists.size(item.stockList) - 1)}"
+      >
+        <th:block th:text="${item.stockList[i].sizeVal}"></th:block>
+        <input
+          type="number"
+          th:value="${item.stockList[i].sizeStock}"
+          name="sizeList"
+        />개
+        <br />
+      </th:block>
+      <input type="hidden" th:value="${item.itemNo}" name="itemNo" />
+      <button>재고 수정</button>
+    </form>
+    ---------------------
+    <form action="/admin/deleteItem" method="post">
+      <input type="hidden" th:value="${item.itemNo}" name="itemNo" />
+      <button id="itemDelete">삭제</button>
+    </form>
+    -----------------------
   </th:block>
 </html>

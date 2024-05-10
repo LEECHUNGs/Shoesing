@@ -39,10 +39,16 @@
       <div>
         <form action="#" method="post">
           <div th:each="size : ${item.stockList}">
-            <label>
-              <input type="radio" name="inputSize" th:value="*{size.sizeNo}" />
-              [[*{size.sizeVal}]]
-            </label>
+            <th:block th:if="*{size.sizeStock} > 0">
+              <label>
+                <input
+                  type="radio"
+                  name="inputSize"
+                  th:value="*{size.sizeNo}"
+                />
+                [[*{size.sizeVal}]]
+              </label></th:block
+            >
           </div>
 
           <!-- 상품 수량 입력창 -->

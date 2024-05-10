@@ -6,7 +6,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import groovy.util.logging.Slf4j;
 import kr.co.shoesing.common.filter.LoggedInFilter;
 import kr.co.shoesing.common.filter.LoggedOutFilter;
 
@@ -20,8 +19,6 @@ public class FilterConfig {
 	 */
 	@Bean
 	public FilterRegistrationBean<LoggedInFilter> loggedInFilter() {
-
-		System.out.println("loggedInFilter 가동");
 		// Filter
 		FilterRegistrationBean<LoggedInFilter> filter = new FilterRegistrationBean<>();
 
@@ -48,14 +45,12 @@ public class FilterConfig {
 	 */
 	@Bean
 	public FilterRegistrationBean<LoggedOutFilter> loggedOutFilter() {
-
-		System.out.println("loggedOutFilter 가동");
 		// Filter
 		FilterRegistrationBean<LoggedOutFilter> filter = new FilterRegistrationBean<>();
 
 		filter.setFilter(new LoggedOutFilter());
 
-		String[] filteringURL = { "/user/myPage", "/user/delete" };
+		String[] filteringURL = { "/user/myPage", "/user/delete", "/wishList/info" };
 
 		// Array.asList(filteringURL) == filteringURL을 List로
 		filter.setUrlPatterns(Arrays.asList(filteringURL));
