@@ -343,7 +343,7 @@ public class UserController {
 		
 		User loginUser = (User)session.getAttribute("loginUser");
 		
-		String userId = loginUser.getUserId();
+//		String userId = loginUser.getUserId();
 		
 		int result = service.changePw(loginUser, inputPw);
 		 
@@ -356,31 +356,29 @@ public class UserController {
 	 * 
 	 * @return
 	 */
-//	@PostMapping("updateProfile")
-//	public String updateProfile(@SessionAttribute("loginUser") User loginUser,
-//								RedirectAttributes ra,
-//								@Requestparm("userPw") String userPw) {
-//		
-//		String usetId = loginUser.getUserId();
-//		
-//		int result = service.updateProfile(loginUser.getUserId(),userPw);
-//		
-//
-//		if (result > 0) {
-//			ra.addFlashAttribute("message", "수정완료!");
-//			loginUser.setUserName(loginUser.getUserName());
-//			loginUser.setUserNickname(loginUser.getUserNickname());
-//			loginUser.setUserTel(loginUser.getUserTel());
-//			loginUser.setUserAddress(loginUser.getUserAddress());
-//			loginUser.setUserPw(loginUser.getUserPw());
-//			loginUser.setUserEmail(loginUser.getUserEmail());
-//		} else {
-//			ra.addFlashAttribute("message", "수정실패!");
-//
-//		}
-//
-//		return "pages/user/updateProfile";
-//	}
+	@PostMapping("updateProfile")
+	public String updateProfile(@SessionAttribute("loginUser") User loginUser,
+								RedirectAttributes ra,
+								@RequestBody String inputPw,
+								HttpSession session
+								 
+								) {
+		
+		
+		int result = service.updateProfile(loginUser, inputPw);
+		
+
+		if (result > 0) {
+			ra.addFlashAttribute("message", "수정완료!");
+			session.setAttribute("loginUser", loginUser);
+		} else {
+			ra.addFlashAttribute("message", "수정실패!");
+			
+		}
+
+		return "redirect:/user/updateProfile";
+	}
+
 	
 	
 	

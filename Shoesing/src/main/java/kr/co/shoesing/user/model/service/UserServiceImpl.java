@@ -177,28 +177,25 @@ public class UserServiceImpl implements UserService {
 	 * 내 정보 수정
 	 */
 	@Override
-	public int updateProfile(User inputUser) {
+	public int updateProfile(User loginUser, String inputPw) {
 		
 		// 현재 비밀번호가 같은지 여부 !
-		String currentPw = mapper.checkPw(inputUser.getUserId());
+		String currentPw = mapper.checkPw(loginUser.getUserId());
 		
-		if(!passwordEncoder.matches(inputUser.getUserPw(), currentPw)) {
+		if(!passwordEncoder.matches(loginUser.getUserPw(), currentPw)) {
 			return 0;
 		}
 		
 		// 새롭게 변경한 pw값을 암호화해주기
-		inputUser.setUserPw(passwordEncoder.encode(currentPw));
+		loginUser.setUserPw(passwordEncoder.encode(currentPw));
+		
 	
 		
-		return mapper.updateProfile(inputUser);
+		return mapper.updateProfile(loginUser);
 	
 	}
 
-	@Override
-	public int updateProfile(String userId, String userPw) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 
 }
