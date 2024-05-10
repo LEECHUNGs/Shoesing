@@ -11,8 +11,22 @@
   <th:block layout:fragment="main">
     <!-- 내용은 여기 작성 -->
 
-    <!-- 상품 이미지 (추가 예정) -->
+    <!-- 상품 썸네일 이미지 -->
     <img th:src="${item.thumbnail}" width="300px" />
+
+    <!-- 상품 이미지 리스트 -->
+    <th:block th:if="${#lists.size(item.imageList) > 1}">
+      <br />
+      <th:block
+        th:each="i : ${#numbers.sequence(1, #lists.size(item.imageList) - 1)}"
+      >
+        <img
+          th:src="|${item.imageList[i].imgPath}${item.imageList[i].imgRename}|"
+          style="width: 80px"
+        />
+      </th:block>
+      <br />
+    </th:block>
 
     <!-- 상품 util -->
     <div>
