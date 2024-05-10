@@ -1,12 +1,3 @@
-// 
-const checkObj ={
-  updateNickname : false,
-  currentPw : false,
-  updateEmail : false,
-  updatePw : false
-};
- 
-
 //프로필 사진 변경
 const userIcon = document.querySelectorAll(".userIcon");
 const profileIcon = document.querySelectorAll(".profileIcon");
@@ -142,10 +133,10 @@ function execDaumPostcode() {
 
 
 //==========================================================================
-//비밀번호가 현재 입력한 값과 같은지 조회 (작동o)
+//비밀번호가 현재 입력한 값과 같은지 조회
 const updatePwBtn = document.querySelector("#updatePwBtn");
 const currentPw = document.querySelector("#currentPw");
-
+const updatePwDiv = document.querySelector("#updatePwDiv");
 updatePwBtn.addEventListener("click",()=>{
   if(currentPw.value.trim().length ==0){
   alert('현재 비밀번호를 입력해주시기 바랍니다');
@@ -169,10 +160,9 @@ updatePwBtn.addEventListener("click",()=>{
       checkObj.currentPw=false;
       return;
     }
-      document.getElementById('updatePwDiv').setAttribute("style","visibility:visible");  
+      updatePwDiv.setAttribute("style","visibility:visible");  
       console.log("비밀번호 일치");
-      checkObj.currentPw=true;
-      
+      checkObj.currentPw=true;     
     
   }) 
 });
@@ -182,21 +172,14 @@ const updatePw = document.querySelector("#updatePw");
 const updatePwConfirm = document.querySelector("#updatePwConfirm");
 const updatePwMessage = document.querySelector("#updatePwMessage");
 
-
-  
-
 const checkUpdatePw = () => {
-  if (updatePw.value === updatePwConfirm.value) {
+  if (updatePw.value == updatePwConfirm.value) {
     updatePwMessage.innerText = '';
     alert("비밀번호 일치")
-    updatePwMessage.classList.add('confirm');
-    updatePwMessage.classList.remove('error');
     checkObj.updatePw = true;
     return;
   }
   updatePwMessage.innerText = '비밀번호가 일치하지 않습니다';
-  updatePwMessage.classList.add('error');
-  updatePwMessage.classList.remove('confirm');
   checkObj.updatePw = false; 
 };
 
@@ -205,7 +188,6 @@ updatePw.addEventListener('input', (e) => {
 
   if (inputUpdatePw.trim().length === 0) {
     updatePwMessage.innerText ='비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.';
-    updatePwMessage.classList.remove('confirm', 'error'); 
     updatePw.value = '';
     checkObj.updatePw = false; 
     return;
@@ -215,9 +197,6 @@ updatePw.addEventListener('input', (e) => {
 
   if (!regExp.test(inputUpdatePw)) {
     updatePwMessage.innerText = '비밀번호가 유효하지 않습니다.';
-    updatePwMessage.classList.add('error');
-    updatePwMessage.classList.remove('confirm');
-    constObj.updatePw = false; 
     return;
   }
 
@@ -228,9 +207,6 @@ updatePw.addEventListener('input', (e) => {
   }
 
   updatePwMessage.innerText = '유효한 비밀번호 형식입니다';
-  updatePwMessage.classList.add('confirm');
-  updatePwMessage.classList.remove('error');
-
   if (updatePwConfirm.value.length > 0) {
     checkUpdatePw();
   }
@@ -243,36 +219,12 @@ updatePwConfirm.addEventListener('input', () => {
   }
 });
 
-
-// 비동기 (비밀번호 변경)
-//     fetch("/user/changePw",{
-//       method : 'POST',
-//       headers : {'Content-Type' : 'application/json'},
-//       body : 
-//     })
-//     console.log()
-//     .then(resp => resp.text())
-//     .then(result => {
-//       if(result > 0){
-//         alert("비밀번호가 변경되었습니다");
-//         console.log("비밀번호 변경 성공");
-//       }else{
-//         console.log(result);
-//         alert("비밀번호 변경에 실패했습니다");
-//         console.log("비밀번호 변경 실패");
-//       }
-//     })
-//   })
-// })
-//
-
-
 // 이메일 수정
 const updateEmailBtn = document.querySelector("#updateEmailBtn");
 const emailDiv = document.querySelector("#emailDiv");
 updateEmailBtn.addEventListener("click",e =>{
   emailDiv.setAttribute("style","pointer-events:auto"); 
-  // alert("변경할 이메일을 작성후 인증번호 요청 버튼을 눌러주세요");
+ 
   sendAuthKeyBtn.setAttribute("style","visibility:visible");
 })
  
@@ -288,7 +240,6 @@ updateEmail.addEventListener('input', (e) => {
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
-  checkObj.updateEmail=true;
   emailMessage.innerText = '이메일을 입력 성공';
 
   
@@ -319,7 +270,6 @@ domainList.addEventListener('change', (e) => {
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
-  checkObj.updateEmail=true;
   emailMessage.innerText = '이메일 입력 성공';
   const emailVal = userEmail.value + '@' + inputDomain.value;
   console.log(emailVal);
@@ -330,7 +280,7 @@ const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn");
 const authKey = document.querySelector("#authKey");
 const checkAuthKeyBtn = document.querySelector("#checkAuthKeyBtn");
 const authKeyMessage = document.querySelector("#authKeyMessage");
-const authKeyDiv = document.querySelector("authKeyDiv");
+const authKeyDiv = document.querySelector("#authKeyDiv");
 
 
 let authTimer;
@@ -350,8 +300,7 @@ sendAuthKeyBtn.addEventListener('click', () => {
     alert('이메일 작성 후 클릭해 주세요');
     return;  
   }
-
-  authKeyDiv.setAttribute("style","visibility:visible");
+  authKeyDiv.setAttribute("style","visibility:visible");  
   min = initMin;
   sec = initSec;
 
@@ -409,9 +358,9 @@ checkAuthKeyBtn.addEventListener('click', () => {
     alert('인증번호 입력 제한시간을 초과하였습니다!');
     return;
   }
-  if (authKey.value.length != 6) {
-    alert('인증번호를 정확히 입력해 주세요');0
-  }
+  // if (authKey.value.length != 6) {
+  //   alert('인증번호를 정확히 입력해 주세요');
+  // }
   const obj = {
 
     email: updateEmail.value + '@' + inputDomain.value,
@@ -441,117 +390,158 @@ checkAuthKeyBtn.addEventListener('click', () => {
 });
 
 
-
-
-
-
-// 최종 회원정보 수정
-// const updateProfileBtn = document.querySelector("#updateProfileBtn");
-
-// updateProfile.addEventListener("click",(e)=>{
-//   for(let key in checkObj){
-//     if(!checkObj[key]){
-//       let str;
-//       switch(key){
-//         case 'updateNickname':
-//           str = '필수항목을 작성해주세요';
-//           break;
-//         case 'currentPw':
-//           str = '필수항목을 작성해주세요';
-//           break;
-//         case 'updateEmail':
-//           str = '필수항목을 작성해주세요';
-//           break;
-//       }
-//       alert(str);
-//       document.getElementById(key).focus();
-//       e.preventDefault();
-//       return;
-//     }
-//   }
-//   updateProfileForm.submit();
-// })
-
-
-//
-
 //========================================================================
+//최종 수정하기 전 검사?! 체크?
 
-/* 
-document.getElementById('updateProfileForm').addEventListener("submit", e => {
+///필수 항목 
+const checkObj ={
+  updateNickname : false,
+  currentPw : false,
+  updateEmail : false,
+  updatePw : false
+};
 
-  e.preventDefault(); 
-
+//필수항목 닉네임, 현재 비번(만약 변경비번 입력했을 때 변경비번 필수), 이메일(이메일 변경했을 때 인증번호 필수)
+document.querySelector('#updateProfileBtn').addEventListener("click", (e) => {
+  
   if(updateNickname.value.trim().length == 0){
-    e.preventDefault();
-    alert('닉네임을 입력해주세요')
+    alert('닉네임을 입력해주세요');
+    updateNickname.focus();
+    checkObj.updateNickname = false;
     return;
   }
   if(currentPw.value.trim().length == 0){
-    e.preventDefault();
-    alert('비밀번호를 입력해주세요');
+    alert('현재 비밀번호를 입력해주세요');
+    checkObj.currentPw = false;
+    currentPw.focus();
+    return;
   }
-  if(!updatePw.value == currentPw.value){
-    e.preventDefault();
-    alert('변경된 비밀번호가 현재 비밀번호와 일치합니다 수정해주세요')
-  }
-  if(updateEmail.value.trim().length == 0){
-    e.preventDefault();
-    alert('이메일을 입력해주세요')
-  }
-  
-  if(authKeyDiv.style.visibility === 'visible'){
-    if(authKey.value.trim().length==null){
-      
+    // 만약 변경할 비밀번호를 입력하는 칸이 작성되었을 때
+    if(updatePw.value.trim().length != 0){
+
+      // 변경 비밀번호의 값과 변경 비밀번호 확인 칸이 일치하지 않으면 return 하고 alert창 띄우기
+      if(updatePw.value != updatePwConfirm.value){
+        alert('변경할 비밀번호가 일치하지 않습니다 다시 입력해주세요')
+        updatePw.value='';
+        updatePwConfirm.value='';
+        checkObj.currentPw = false;
+        updatePw.focus();
+        return;
+      }
+      // 만약 현재 비밀번호와 변경할 비밀번호가 동일한 경우에는 comfirm창을 통해서 같은 비번을 사용할것인지 새롭게 변경할것인지 물어보기
+      if(updatePw.value == currentPw.value){
+        confirm('현재 비밀번호와 변경할 비밀번호가 동일합니다. 기존 비밀번호를 계속해서 사용하시겠습니까?')
+          // 해당 창에서 확인(true)를 입력하면 새로 입력한 변경할 비번을 빈문자열로 바꿔주기
+          if(confirm.value == false){
+              updatePw.value= '';
+              updatePwConfirm = '';
+              checkObj.currentPw = false;
+              updatePw.focus();
+              return;
+          }
+            updatePw.value = '';
+            updatePwConfirm.value = '';
+            checkObj.currentPw = true;      
+            return;       
+      }
+      const inputPw = updatePw.value;
+      // 비동기 (변경한 비밀번호 비밀번호 변경하고 암호화하기)
+      fetch("/user/changePw",{
+        method : 'POST',
+        headers : {'Content-Type' : 'application/json'},
+        body :  inputPw
+      })
+      .then(resp => resp.text())
+      .then(result => {
+        if(result > 0){
+          alert("비밀번호가 변경되었습니다");
+          console.log("비밀번호 변경 성공");
+          checkObj.currentPw = true;
+        }else{
+          console.log(result);
+          alert("비밀번호 변경에 실패했습니다");
+          console.log("비밀번호 변경 실패");
+          checkObj.currentPw = false;
+        }
+      })
+    } 
+    // 위 조건을 모두 충족 시킨다면 입력한 비밀번호와 현재 사용중인 비밀번호가 같은지 확인하기
+    const inputPw = currentPw.value ;
+    console.log(inputPw);
+    fetch("/user/checkPw",{
+        method : 'POST',
+        headers : { 'Content-Type': 'application/json' },
+        body : inputPw,
+      })
+    .then(resp => resp.text())
+    .then(result => {
+      if(result == 0){
+        console.log(result);
+        console.log("비밀번호 불일치");
+        alert("비밀번호가 일치하지 않습니다")
+        currentPw.value = '';
+        checkObj.currentPw=false;
+        return;
+      }
+        console.log("비밀번호 일치");
+        checkObj.currentPw=true; 
+        
+    })  
+  if(updateEmail.value.trim().length === 0){
+    alert('이메일을 입력해주세요');
+    checkObj.updateEmail = false;
+    updateEmail.focus();
+    return;
+  }else{
+    //만약 인증번호 요청 버튼이 클릭되는 경우에
+    if(sendAuthKeyBtn.clicked){
+      if(authKey.value.trim().length == 0){
+        alert('인증번호가 입력되지 않았습니다. 입력해주세요')
+        checkObj.updateEmail = false;
+        sendAuthKeyBtn.focus();
+        return;
+      }
     }
   }
 
 
-});*/
+  checkObj.updateNickname =true;
+  checkObj.currentPw =true;
+  checkObj.updateEmail =true;
+  const updateProfileForm= document.querySelector('#updateProfileForm');
 
-document.querySelector('#updateProfileBtn').addEventListener("click", (e) => {
-  e.preventDefault(); 
-
-  if(updateNickname.value.trim().length === 0){
-    alert('닉네임을 입력해주세요');
-    return;
-  }
-  if(currentPw.value.trim().length === 0){
-    alert('비밀번호를 입력해주세요');
-    return;
-  }
-  if(updatePw.value == currentPw.value){
-    alert('변경된 비밀번호가 현재 비밀번호와 일치합니다. 수정해주세요');
-    return;
-  }
-  if(updateEmail.value.trim().length === 0){
-    alert('이메일을 입력해주세요');
-    return;
-  }
+  updateProfileForm.submit();
+  alert("회원정보가 수정되었습니다!");
   
-  const form = document.getElementById('updateProfileForm'); 
-  // 모든 검사를 통과했다면 폼 제출
-  form.submit(); 
+    
 });
 
+// 모든 검사를 통과한경우에 폼 제출하기
+// const updateProfileForm= document.querySelector('#updateProfileForm'); 
+  
+// updateProfileForm.addEventListener("submit",(e)=>{
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//   if(!checkObj.updateNickname){
+//     e.preventDefault();
+//     alert('회원정보 수정에 오류가 있습니다(닉네임)')
+//     return;
+//   }
+//   if(!checkObj.currentPw){
+//     e.preventDefault();
+//     alert('회원정보 수정에 오류가 있습니다(비밀번호)')
+//     return;
+//   }
+//   if(!checkObj.updateEmail){
+//     e.preventDefault();
+//     alert('회원정보 수정에 오류가 있습니다(이메일)')
+//     return;
+//   }
+//     alert("회원정보가 수정되었습니다!");
+//     return true;
+//   })
 
 //=========================================================================
-// 회원 탈퇴
+// 회원 탈퇴 (성공!)
 
 const checkSignout ={
   "agreeSignout" : false,
@@ -603,7 +593,7 @@ agreeSignout.addEventListener("change", (e) => {
   else      checkSignout.agreeSignout = false;
 })
 
-// 최종 서브밋 될 떄 이벤트
+// 최종 서브밋 될 때 이벤트
 signoutForm.addEventListener("submit", (e) => {
 
   if(!checkSignout.agreeSignout){

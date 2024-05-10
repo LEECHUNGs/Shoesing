@@ -59,17 +59,14 @@
       
       <!-- 주소 수정 -->
       <div th:value="${session.loginUser.userAddress}" class="update-input-area" >
-        <label for="updateAddress"><span class="required">주소</span>
+        <label for="updateAddress"><span class="required" name="userAddress">주소</span>
           <input type="text" id="postcode" placeholder="우편번호" readonly>
           <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기" ><br/>
           <input type="text" id="roadAddress" placeholder="도로명주소" readonly>
           <input type="text" id="jibunAddress" placeholder="지번주소" readonly>
           <span id="guide" style="color:#999;display:none"></span>
-          <input type="text" id="detailAddress" placeholder="상세주소">
+          <input type="text" id="detailAddress" name ="userAddress" placeholder="상세주소">
           <input type="text" id="extraAddress" placeholder="참고항목">
-
-
-          <input id="a" name="userAddress" hiddenn >
         </label>
       </div>
     
@@ -156,6 +153,7 @@
         />
         <button id="checkAuthKeyBtn" type="button">인증하기</button>
         <span class="update-message" id="authKeyMessage"></span>
+        
       </div>
 
       <!-- 수정완료버튼, 취소버튼 -->

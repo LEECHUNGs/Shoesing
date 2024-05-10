@@ -89,19 +89,18 @@ public interface UserService {
 	int checkPw(String userId, String inputPw);
 	
 	/** 비밀번호 변경
-	 * @param loginUser
+	 * @param userId
 	 * @param inputPw
 	 * @return
 	 */
 	int changePw(User loginUser, String inputPw);
 
 	/** 내정보 수정
-	 * @param inputUser
+	 * @param string
 	 * @return
 	 */
-	int updateProfile(User inputUser);
+	int updateProfile(User loginUser, String inputPw);
 
-	int updateProfile(String userId, String userPw);
 
 
 
