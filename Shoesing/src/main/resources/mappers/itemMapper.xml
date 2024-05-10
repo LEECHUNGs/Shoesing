@@ -13,14 +13,23 @@
 					ofType="Stock"
 		/>
 		
-
+		<collection property="imageList"
+					select = "selectImageList"
+					column = "ITEM_NO"
+					javaType = "java.util.ArrayList"
+					ofType = "ItemImg"
+		/>
 	</resultMap>
 	
 	<!-- 상품 전체 조회 -->
 	<select id="selectAll">
-		SELECT ITEM_NO, ITEM_NAME, ITEM_PRICE
-		FROM "ITEM"
-		ORDER BY 
+		SELECT A.ITEM_NO, ITEM_NAME, ITEM_PRICE, (IMG_PATH || IMG_RENAME) THUMBNAIL
+		FROM "ITEM" A
+		LEFT JOIN "ITEM_IMG" B
+		ON A.ITEM_NO = B.ITEM_NO
+		WHERE IMG_ORDER = 0
+		OR IMG_ORDER IS NULL
+		ORDER BY
 		
 		<!-- 기본 정렬 -->
 		<if test="sortNo == 0">
@@ -103,7 +112,10 @@
 	</update>
 	
 	<!-- 상품 추가 (관리자) -->
-	<insert id="insertItem">
+	<insert id="insertItem" useGeneratedKeys="true" keyColumn="ITEM_NO">
+	<selectKey resultType="_int" order="AFTER" keyColumn="ITEM_NO">
+        SELECT SEQ_ITEM_NO.CURRVAL
+    </selectKey>
 	INSERT INTO "ITEM"
 	VALUES(
 		SEQ_ITEM_NO.NEXTVAL, 
