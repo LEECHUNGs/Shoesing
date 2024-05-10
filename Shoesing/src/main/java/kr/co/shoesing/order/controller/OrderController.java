@@ -1,6 +1,7 @@
 package kr.co.shoesing.order.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderController {
 	
 	private final OrderService service;
+	//priavte final UserSer
 	
 	/** 주문 목록 메인 페이지
 	 * @return
@@ -47,28 +49,33 @@ public class OrderController {
 						   Model model) {
 		
 		log.info(itemStockNoList.toString());
-		
-		// 비회원 주문 시
-		if(loginUser == null) {
-			return "pages/checkout";
-		}
-		
-		// 회원 주문 시
 
-		Order order  = service.selectDetailList(loginUser.getUserNo(), itemStockNoList, itemCountList);
+		Order order  = service.selectDetailList(itemStockNoList, itemCountList);
 		
 		model.addAttribute("order", order);
 		
 		return "pages/checkout";
 	}
 	
+	/** 새 주문 생성
+	 * @param order
+	 * @param loginUser
+	 * @return
+	 */
 	@ResponseBody
 	@PostMapping("manage")
-	public int insert(@RequestBody Order order) {
+	public int insert(@RequestBody Order order, 
+					  @SessionAttribute(value = "loginUser", required = false) User loginUser) {
+
+		// 회원일 때 Order 객체의 userNo 값을 회원 번호로 초기화
+		if(loginUser != null) {
+			
+			order.setUserNo(loginUser.getUserNo());
+		}
 		
-		log.info(order.toString());
+		int result = service.insert(order);
 		
-		return 0;
+		return result;
 	}
 	
 	
