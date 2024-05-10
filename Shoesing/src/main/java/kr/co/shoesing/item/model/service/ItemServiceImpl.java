@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.shoesing.common.util.Pagination;
 import kr.co.shoesing.item.model.dto.Item;
+import kr.co.shoesing.item.model.dto.Stock;
 import kr.co.shoesing.item.model.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -68,8 +69,24 @@ public class ItemServiceImpl implements ItemService {
 	 * 상품 추가
 	 */
 	@Override
-	public int insertItem() {
-		return mapper.insertItem();
+	public int insertItem(Map<String, Integer> map) {
+		return mapper.insertItem(map);
+	}
+
+	/**
+	 * 상품 삭제
+	 */
+	@Override
+	public int deleteItem(int itemNo) {
+		return mapper.deleteItem(itemNo);
+	}
+
+	/**
+	 * 재고 수정 (관리자)
+	 */
+	@Override
+	public int updateStock(Stock stock) {
+		return mapper.updateStock(stock);
 	}
 
 }

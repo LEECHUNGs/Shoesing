@@ -7,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.mail.Session;
 import kr.co.shoesing.user.model.dto.User;
 import kr.co.shoesing.user.model.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -113,7 +112,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 *입력한 비밀번호가 현재 비밀번호와 같은지 조회
+	 * 입력한 비밀번호가 현재 비밀번호와 같은지 조회
 	 */
 	@Override
 	public int checkPw(String userId, String inputPw) {
@@ -137,18 +136,21 @@ public class UserServiceImpl implements UserService {
 	 * 회원 탈퇴/복구 (관리자)
 	 */
 	@Override
-	public int deleteAdmin(String userNo, String userDelFl) {
+	public int userDelFl(String userNo, String userDelFl) {
 		int result = 0;
 
 		if (userDelFl.equals("Y")) {
 			result = mapper.restoreAdmin(userNo);
+			return result;
 
 		} else if (userDelFl.equals("N")) {
 			result = mapper.deleteAdmin(userNo);
+			return result;
 		}
-		return 1;
+
+		return 0;
 	}
-	
+
 	/**
 	 * 비밀번호 변경
 	 */
@@ -171,6 +173,7 @@ public class UserServiceImpl implements UserService {
 		user.setUserPw(loginUser.getUserPw());
 		
 		return mapper.changePw(user);
+
 	}
 
 	/**
@@ -193,6 +196,7 @@ public class UserServiceImpl implements UserService {
 		
 		return mapper.updateProfile(loginUser);
 	
+
 	}
 
 	
