@@ -13,4 +13,35 @@
 			</foreach>
 	</select>
 	
+	<!-- 주문목록 생성 -->
+	<insert id="insertOrder" useGeneratedKeys="true" keyProperty="orderNo" keyColumn="ORDER_NO">
+	
+		<selectKey order="BEFORE" resultType="_int" keyProperty="orderNo">
+			SELECT SEQ_ORDER_NO.NEXTVAL FROM DUAL
+		</selectKey>
+	
+		INSERT INTO "USER_ORDER"
+		VALUES(
+			#{orderNo},
+			DEFAULT,
+			#{orderAddress},
+			DEFAULT,
+			#{orderPrice},
+			
+			<if test="userNo == 0">#{orderNo}</if>
+			<if test="userNo != 0">#{userNo}</if>
+		)
+	</insert>
+	
+	<!-- 세부 주문목록 생성 -->
+	<insert id="insertOrderDetail" >
+	
+		INSERT INTO "ORDER_DETAIL"
+			<foreach collection="itemStockNoList" item="i" open="(" close=")" separator=" UNION ">
+				SELECT NEXT_ORDER_DETAIL_NO(), #{orderNo}, #{i.itemStockNo}, #{i.orderItemCount}
+				FROM DUAL
+			</foreach>	
+		
+	</insert>
+	
 </mapper>

@@ -2,6 +2,7 @@ package kr.co.shoesing.order.model.dto;
 
 import java.util.List;
 
+import kr.co.shoesing.user.model.dto.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,8 +21,9 @@ public class Order {
 	private String orderAddress;	// 배송지
 	private char orderConfirm;		// 주문 확정
 	private int userNo;				// 주문한 회원 번호
+	private User orderUser;			// 주문한 회원 정보를 저장한 객체
 	
-	private int totalPrice;			// 총 주문 금액
+	private int orderPrice;			// 총 주문 금액
 	
 	private List<OrderDetail> itemStockNoList;	// 주문한 상품 세부정보 리스트
 
@@ -67,12 +69,12 @@ public class Order {
 	}
 
 	public int getTotalPrice() {
-		return totalPrice;
+		return orderPrice;
 	}
 
 	public void setTotalPrice(int totalPrice) {
 		
-		this.totalPrice = totalPrice;
+		this.orderPrice = totalPrice;
 	}
 
 	public List<OrderDetail> getItemStockNoList() {
@@ -86,17 +88,25 @@ public class Order {
 		// 재고 리스트에 값이 없으면 0원으로 초기화
 		if(this.itemStockNoList == null) {
 			
-			this.totalPrice = 0;
+			this.orderPrice = 0;
 		} else {
 			
-			this.totalPrice = 0;
+			this.orderPrice = 0;
 			
 			// 재고들의 가격을 모두 합하여 저장
 			for(OrderDetail detail : this.itemStockNoList) {
 				
-				this.totalPrice += detail.getItemPrice() * detail.getOrderItemCount();
+				this.orderPrice += detail.getItemPrice() * detail.getOrderItemCount();
 			}
 		}
+	}
+
+	public User getOrderUser() {
+		return orderUser;
+	}
+
+	public void setOrderUser(User orderUser) {
+		this.orderUser = orderUser;
 	}
 	
 	

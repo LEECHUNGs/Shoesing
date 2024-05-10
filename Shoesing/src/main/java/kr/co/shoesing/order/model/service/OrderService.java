@@ -13,6 +13,12 @@ public interface OrderService {
 	 * @param itemCount 
 	 * @return
 	 */
-	Order selectDetailList(int userNo, List<Integer> itemStockNo, List<Integer> itemCountList);
+	Order selectDetailList(List<Integer> itemStockNo, List<Integer> itemCountList);
+
+	/** 주문 정보 서버에 입력
+	 * @param order
+	 * @return
+	 */
+	int insert(Order order);
 
 }
