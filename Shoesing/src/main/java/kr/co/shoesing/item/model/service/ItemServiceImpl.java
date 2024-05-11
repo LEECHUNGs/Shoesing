@@ -89,4 +89,12 @@ public class ItemServiceImpl implements ItemService {
 		return mapper.updateStock(stock);
 	}
 
+	/**
+	 * 신상 상품 리스트 조회
+	 */
+	@Override
+	public List<Item> selectNew() {
+		return mapper.selectNew();
+	}
+
 }

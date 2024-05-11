@@ -25,13 +25,14 @@
           placeholder="아이디를 입력해주세요"
         />
       </div>
-      <span class="signup-message" id="idMessage">영어,숫자,_로만 5~10글자</span>
+      <span class="signup-message" id="idMessage"
+        >영어,숫자,_로만 5~10글자</span
+      >
       <br />
 
       <!-- 이름 입력 -->
       <label for="userName"> <span class="required"></span>이름 </label>
       <div class="signup-input-area">
-
         <input
           type="text"
           name="userName"
@@ -39,12 +40,10 @@
           autocomplete="off"
           placeholder="이름을 입력해주세요."
         />
-
       </div>
       <span class="signup-message" id="nameMessage">한글로만 2~6글자</span>
 
       <br />
-
 
       <!-- 닉네임 입력 -->
       <label for="userNickname"> <span class="required">*</span>닉네임 </label>
@@ -54,11 +53,14 @@
           name="userNickname"
           id="userNickname"
           autocomplete="off"
-          placeholder="닉네임을 입력해주세요."/>
+          placeholder="닉네임을 입력해주세요."
+        />
       </div>
 
-      <span class="signup-message" id="nicknameMessage">한글,영어,숫자로만 2~8글자</span>
-      <br/>
+      <span class="signup-message" id="nicknameMessage"
+        >한글,영어,숫자로만 2~8글자</span
+      >
+      <br />
 
       <!-- 비밀번호 입력 -->
       <label for="userPw"> <span class="required">*</span>비밀번호 </label>
@@ -87,12 +89,8 @@
       </div>
 
       <span class="signup-message" id="pwMessage"
-
-
         >비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자 1글자를
         포함해야합니다.</span
-
-
       >
 
       <br />
@@ -110,10 +108,7 @@
         />
       </div>
 
-
-
       <span class="signup-message" id="telMessage"></span>
-
 
       <br />
       <!-- 이메일 입력 -->
@@ -121,7 +116,6 @@
         <label for="userEmail"> <span class="required">*</span>이메일 </label>
 
         <div class="signup-input-area">
-
           <!-- form 전달용 input -->
           <input type="hidden" name="userEmail" id="inputEmail" />
 
@@ -137,11 +131,9 @@
             <option value="apple.com">애플</option>
             <option value="kakao.com">카카오</option>
             <option value="">직접입력</option>
-
           </select>
           <button id="sendAuthKeyBtn" type="button">인증번호 요청</button>
         </div>
-
 
         <span class="signup-message" id="emailMessage"
           >메일을 받을 수 있는 이메일을 입력해주세요.</span
@@ -173,29 +165,27 @@
       <!-- 주소 입력 -->
       <label for="userAddress"><span class="required">주소</span></label>
       <div class="signup-input-area">
-        <input type="text" id="postcode" placeholder="우편번호" readonly/>
+        <input type="text" id="postcode" placeholder="우편번호" readonly />
         <input
           type="button"
           onclick="execDaumPostcode()"
           value="우편번호 찾기"
         /><br />
-        <input type="text" id="roadAddress" placeholder="도로명주소" readonly/>
-        <input type="text" id="jibunAddress" placeholder="지번주소" readonly/>
+        <input type="text" id="roadAddress" placeholder="도로명주소" readonly />
+        <input type="text" id="jibunAddress" placeholder="지번주소" readonly />
         <span id="guide" style="color: #999; display: none"></span>
         <input type="text" id="detailAddress" placeholder="상세주소" />
         <input type="text" id="extraAddress" placeholder="참고항목" />
       </div>
 
-
       <button>취소</button>
       <button type="submit" id="submitBtn">가입하기</button>
     </form>
 
-    <script type="text/javascript" th:src="@{/js/signup.js}"></script>
+    <script type="text/javascript" th:src="@{/js/user/signup.js}"></script>
 
     <script
       src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
     ></script>
-
   </th:block>
 </html>

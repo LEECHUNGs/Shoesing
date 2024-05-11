@@ -66,4 +66,11 @@ public interface ItemMapper {
 	 */
 	int updateStock(Stock stock);
 
+	/**
+	 * 신상 상품 리스트 조회
+	 * 
+	 * @return
+	 */
+	List<Item> selectNew();
+
 }

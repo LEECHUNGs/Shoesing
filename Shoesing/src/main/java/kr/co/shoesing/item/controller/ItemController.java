@@ -1,5 +1,6 @@
 package kr.co.shoesing.item.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class ItemController {
 	 */
 	@GetMapping("info")
 	public String itemInfo() {
-		return "pages/item";
+		return "pages/item/item";
 	}
 
 	/**
@@ -42,9 +43,21 @@ public class ItemController {
 	@GetMapping("itemList")
 	public Map<String, Object> itemList(@RequestParam("sortNo") int sortNo,
 			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp) {
-		System.out.println(service.selectAll(sortNo, cp).get("itemList"));
 
 		return service.selectAll(sortNo, cp);
+	}
+
+	/**
+	 * 최신 상품 목록 불러오기
+	 * 
+	 * @param sortNo
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("itemListNew")
+	public List<Item> itemList() {
+
+		return service.selectNew();
 	}
 
 	/**
@@ -59,7 +72,7 @@ public class ItemController {
 
 		Item item = service.selectOne(itemNo);
 		model.addAttribute("item", item);
-		return "pages/itemDetail";
+		return "pages/item/itemDetail";
 	}
 
 }

@@ -18,6 +18,29 @@ const selectItems = (sortNo, cp) => {
 
       const pageUl = document.getElementById('pageUl');
       const itemListUl = document.getElementById('itemListUl');
+      const sortName = document.querySelector('#sortName');
+
+      // 정렬명 가져오기
+      switch (sortNo) {
+        case 0:
+          sortName.innerText = '기본 정렬';
+          break;
+        case 1:
+          sortName.innerText = '최신 순';
+          break;
+        case 2:
+          sortName.innerText = '가격 낮은 순';
+          break;
+        case 3:
+          sortName.innerText = '가격 높은 순';
+          break;
+        case 4:
+          sortName.innerText = '이름 정렬(A-Z)';
+          break;
+        case 5:
+          sortName.innerText = '이름 정렬(Z-A)';
+          break;
+      }
 
       // 상품 목록 / 페이지 번호 비우기
       itemListUl.innerHTML = '';
@@ -28,10 +51,27 @@ const selectItems = (sortNo, cp) => {
         const itemLi = document.createElement('li');
         const itemA = document.createElement('a');
 
-        itemA.innerHTML = `<img src="${itemList[i].thumbnail}" width="100px" /><br/>
-                                상품 번호 : ${itemList[i].itemNo}<br/>
-                                상품 이름 : ${itemList[i].itemName}<br/>
-                                상품 가격 : ${itemList[i].itemPrice}원`;
+        itemA.innerHTML = `
+        <div class="itemThumbnail">
+        <img src="${itemList[i].thumbnail}" />
+        <div class="itemA">
+        <div class="itemNo">
+        No. ${itemList[i].itemNo}
+        </div>
+        <a id="wishListBtn" class="itemWishList">
+        <i id="heart" class="bi-suit-heart"></i>
+        </a>
+        </div>
+        </div>
+        <div class="itemText">
+        <div class="itemName">${itemList[i].itemName}</div>
+        <div class="itemDetail">${
+          itemList[i].itemName
+        }은 정말 좋은 신발입니다</div>
+        <div class="itemPrice"> 
+        ${itemList[i].itemPrice.toLocaleString('en-US', 'currency')}₩
+        </div>
+        </div>`;
 
         itemA.href = `detail?itemNo=${itemList[i].itemNo}`;
 

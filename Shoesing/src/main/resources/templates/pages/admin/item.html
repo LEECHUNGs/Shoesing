@@ -6,10 +6,10 @@
   layout:decorate="~{fragments/layouts/main}"
 >
   <head>
-    <link th:href="@{/css/pages/myPage.css}" rel="stylesheet" />
+    <link th:href="@{/css/pages/common/page.css}" rel="stylesheet" />
   </head>
   <th:block layout:fragment="main">
-    <div class="myPage-main">
+    <div class="pageMain">
       <div class="pageTitle"><a href="/admin">관리자</a> > 상품 관리</div>
       <button id="insertItem">상품 추가</button>
       <div class="itemSort">

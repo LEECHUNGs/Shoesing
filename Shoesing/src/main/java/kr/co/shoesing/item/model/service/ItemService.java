@@ -1,5 +1,6 @@
 package kr.co.shoesing.item.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import kr.co.shoesing.item.model.dto.Item;
@@ -54,5 +55,12 @@ public interface ItemService {
 	 * @param stock
 	 */
 	int updateStock(Stock stock);
+
+	/**
+	 * 신상 상품 조회
+	 * 
+	 * @return
+	 */
+	List<Item> selectNew();
 
 }

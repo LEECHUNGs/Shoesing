@@ -40,7 +40,7 @@ public class UserController {
 	 */
 	@GetMapping("login")
 	public String login() {
-		return "pages/login";
+		return "pages/user/login";
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class UserController {
 	 */
 	@GetMapping("signup")
 	public String signup() {
-		return "pages/signup";
+		return "pages/user/signup";
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class UserController {
 	 */
 	@GetMapping("myPage")
 	public String myPage() {
-		return "pages/myPage";
+		return "pages/user/myPage";
 	}
 
 	/**
@@ -202,7 +202,7 @@ public class UserController {
 	 */
 	@GetMapping("restoration")
 	public String restoration() {
-		return "pages/restoration";
+		return "pages/user/restoration";
 	}
 
 	/**
@@ -307,26 +307,26 @@ public class UserController {
 		return 2; // 회원이 존재하지않으면 2 반환
 	}
 
-	
-	/** 입력한 비밀번호가 현재 비밀번호와 같은지 체크
+	/**
+	 * 입력한 비밀번호가 현재 비밀번호와 같은지 체크
+	 * 
 	 * @param userId
 	 * @param inputPw
 	 * @return result
 	 */
 	@ResponseBody
 	@PostMapping("checkPw")
-	public int checkPw(HttpServletRequest request,
-						@RequestBody String inputPw){
-		
+	public int checkPw(HttpServletRequest request, @RequestBody String inputPw) {
+
 		HttpSession session = request.getSession();
-		User loginUser = (User)session.getAttribute("loginUser");
-		String  userId = loginUser.getUserId();
-		
-		int result = service.checkPw(userId,inputPw);
-		
+		User loginUser = (User) session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
+
+		int result = service.checkPw(userId, inputPw);
+
 		return result;
 	}
-	
+
 	/**
 	 * 비밀번호 변경
 	 * 
@@ -336,50 +336,42 @@ public class UserController {
 	 */
 	@ResponseBody
 	@PostMapping("changePw")
-	public int changePw(HttpServletRequest request,
-						@RequestBody String inputPw) {
+	public int changePw(HttpServletRequest request, @RequestBody String inputPw) {
 
 		HttpSession session = request.getSession();
-		
-		User loginUser = (User)session.getAttribute("loginUser");
-		
+
+		User loginUser = (User) session.getAttribute("loginUser");
+
 //		String userId = loginUser.getUserId();
-		
+
 		int result = service.changePw(loginUser, inputPw);
-		 
+
 		return result;
 
 	}
-	
+
 	/**
-	 * 내정보 수정 
+	 * 내정보 수정
 	 * 
 	 * @return
 	 */
 	@PostMapping("updateProfile")
-	public String updateProfile(@SessionAttribute("loginUser") User loginUser,
-								RedirectAttributes ra,
-								@RequestBody String inputPw,
-								HttpSession session
-								 
-								) {
-		
-		
+	public String updateProfile(@SessionAttribute("loginUser") User loginUser, RedirectAttributes ra,
+			@RequestBody String inputPw, HttpSession session
+
+	) {
+
 		int result = service.updateProfile(loginUser, inputPw);
-		
 
 		if (result > 0) {
 			ra.addFlashAttribute("message", "수정완료!");
 			session.setAttribute("loginUser", loginUser);
 		} else {
 			ra.addFlashAttribute("message", "수정실패!");
-			
+
 		}
 
 		return "redirect:/user/updateProfile";
 	}
 
-	
-	
-	
 }

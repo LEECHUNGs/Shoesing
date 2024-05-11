@@ -6,10 +6,11 @@
   layout:decorate="~{fragments/layouts/main}"
 >
   <head>
-    <link th:href="@{/css/pages/myPage.css}" rel="stylesheet" />
+    <link th:href="@{/css/pages/common/page.css}" rel="stylesheet" />
+    <link th:href="@{/css/pages/user/myPage.css}" rel="stylesheet" />
   </head>
   <th:block layout:fragment="main">
-    <div class="myPage-main">
+    <div class="pageMain">
       <div class="pageTitle">
         안녕하세요
         <div class="userNickname">

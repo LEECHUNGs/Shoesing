@@ -1,11 +1,13 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
+/* TEKROT 로고 폰트 */
 @font-face {
   font-family: 'tekrot';
   src: url('../font/Tekrot.ttf') format('truetype');
   font-style: normal;
 }
 
+/* ROKAF 메인 폰트 */
 @font-face {
   font-family: 'rokaf';
   src: url('../font/ROKAF Slab Serif Bold.ttf') format('truetype');
@@ -14,7 +16,7 @@
 :root {
   --title-font-family: 'tekrot';
 
-  --devColor: rgba(38, 36, 48, 0.03);
+  /* --devColor: rgba(38, 36, 48, 0.03); */
 
   --black: rgb(0, 0, 0);
 
@@ -133,36 +135,6 @@ body {
   height: 42px;
 }
 
-/* ------------------------- 공통 디자인 ------------------------- */
-
-/* 페이지별 타이틀 */
-.pageTitle,
-.pageTitle * {
-  display: flex;
-  padding: 0;
-  margin: 0;
-  font-size: 30px;
-  font-weight: 700;
-  font-family: 'rokaf';
-}
-
-.pageTitle {
-  margin: 8px;
-  justify-content: center;
-}
-
-/* 기본 상자 */
-.simpleBox {
-  background-color: white;
-  height: 100px;
-  width: 100px;
-  box-shadow: 0 6px 20px -2px rgba(0, 0, 0, 0.12);
-  border-radius: 0.5rem;
-  padding: 12px;
-  height: 100%;
-  width: 100%;
-}
-
 /* 부트스트랩 초기화 */
 textarea:focus,
 input[type='text']:focus,
@@ -184,6 +156,8 @@ input[type='color']:focus,
   box-shadow: none;
   outline: 0 none;
 }
+
+/* ------------------------- 반응형 설정 ------------------------- */
 
 /* sm --- Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {

@@ -144,6 +144,18 @@
 		WHERE ITEM_NO = #{itemNo}
 		AND SIZE_NO = #{sizeNo}
 	</update>
+	
+	<!-- 상품 전체 조회 -->
+	<select id="selectNew">
+		SELECT ROWNUM, A.ITEM_NO, ITEM_NAME, ITEM_PRICE, (IMG_PATH || IMG_RENAME) THUMBNAIL
+		FROM "ITEM" A
+		LEFT JOIN "ITEM_IMG" B
+		ON A.ITEM_NO = B.ITEM_NO
+		WHERE (IMG_ORDER = 0
+		OR IMG_ORDER IS NULL)
+		AND ROWNUM <![CDATA[ < ]]>  11
+		ORDER BY ITEM_NO DESC
+	</select>
 
 	
 	
