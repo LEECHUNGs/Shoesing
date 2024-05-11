@@ -90,7 +90,11 @@ public class UserController {
 
 		}
 
-		return "redirect:/";
+		if (request.getRequestURI().equals("/user/login")) {
+			return "redirect:/";
+		}
+
+		return "redirect:" + request.getHeader("REFERER");
 	}
 
 	/**

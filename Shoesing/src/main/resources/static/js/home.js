@@ -3,7 +3,6 @@ const selectItems = () => {
   fetch('/item/itemListNew') // GET 방식 요청
     .then((resp) => resp.json())
     .then((itemList) => {
-      console.log(itemList);
       const itemListUl = document.getElementById('itemListUl');
 
       itemListUl.innerHTML = '';
@@ -35,7 +34,7 @@ const selectItems = () => {
           </div>
           </div>`;
 
-        itemA.href = `detail?itemNo=${itemList[i].itemNo}`;
+        itemA.href = `/item/detail?itemNo=${itemList[i].itemNo}`;
 
         itemLi.appendChild(itemA);
 

@@ -23,7 +23,7 @@
 /* 카로우셀 요소 */
 .carousel {
   width: 100%;
-  height: calc(50cqw); /* width  속성의 50% */
+  height: calc(37cqw); /* width  속성의 50% */
 }
 
 .carousel-inner {
@@ -47,30 +47,52 @@
   height: 10px;
 }
 
+/* -------------------- 영상 -------------------- */
+.videoMain {
+  position: relative;
+  width: 100%;
+}
+iframe {
+  pointer-events: none;
+  width: 100%;
+  height: calc(36cqw);
+}
+.videoText {
+  width: 100%;
+  margin-top: 8cqw;
+  position: absolute;
+  text-align: center;
+  font-family: var(--title-font-family);
+  font-weight: 300;
+  font-size: 16cqw;
+  color: rgba(255, 255, 255, 0.4);
+}
+
 /* -------------------- 신상 상품 리스트 -------------------- */
 /* 상품 감싸는 ul */
-#itemListUl {
+.listUl {
   display: flex;
-  margin: 10px 0;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
   justify-content: flex-start;
   overflow-x: scroll;
   width: 100%;
 }
-#itemListUl::-webkit-scrollbar {
+.listUl::-webkit-scrollbar {
   background-color: transparent;
   height: 8px;
 }
-#itemListUl::-webkit-scrollbar-thumb {
-  background-color: var(--secondaryColor);
-  border-radius: 5px;
-}
-#itemListUl::-webkit-scrollbar-thumb:hover {
+.listUl::-webkit-scrollbar-thumb {
   background-color: rgb(228, 228, 224);
   border-radius: 5px;
 }
-#itemListUl::-webkit-scrollbar-track {
+.listUl::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(220, 220, 215);
+  border-radius: 5px;
 }
-#itemListUl::-webkit-scrollbar-button {
+.listUl::-webkit-scrollbar-track {
+}
+.listUl::-webkit-scrollbar-button {
   display: none;
 }
 
@@ -82,7 +104,7 @@
 
 .itemBox > a {
   width: 300px;
-  height: calc(40cqw); /* width  속성의 50% */
+  height: 380px; /* width  속성의 50% */
   align-items: center;
   overflow-y: hidden;
   display: flex;
@@ -175,4 +197,22 @@
   font-weight: 700;
   font-size: 16px;
   margin: 2px 0;
+}
+
+/* ------------------------- 반응형 설정 ------------------------- */
+
+/* sm --- Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/* md --- Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+}
+
+/* lg --- Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+}
+
+/* xl --- Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
 }
