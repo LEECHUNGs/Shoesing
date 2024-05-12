@@ -26,6 +26,7 @@ public class Order {
 	private int orderPrice;			// 총 주문 금액
 	
 	private List<OrderDetail> itemStockNoList;	// 주문한 상품 세부정보 리스트
+	
 
 	public int getOrderNo() {
 		return orderNo;
@@ -68,13 +69,13 @@ public class Order {
 		this.userNo = userNo;
 	}
 
-	public int getTotalPrice() {
+	public int getOrderPrice() {
 		return orderPrice;
 	}
 
-	public void setTotalPrice(int totalPrice) {
+	public void setOrderPrice(int orderPrice) {
 		
-		this.orderPrice = totalPrice;
+		this.orderPrice = orderPrice;
 	}
 
 	public List<OrderDetail> getItemStockNoList() {

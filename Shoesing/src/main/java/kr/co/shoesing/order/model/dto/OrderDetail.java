@@ -26,7 +26,7 @@ public class OrderDetail {
 	private int sizeNo;				// 상품 사이즈 번호
 	private int sizeVal;			// 상품 사이즈
 	
-	private int itemPrice;				// 상품 가격
+	private int itemPrice;			// 상품 가격
 	
 	private int orderItemCount;		// 주문 수량
 }

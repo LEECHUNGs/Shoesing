@@ -67,4 +67,22 @@ public class OrderServiceImpl implements OrderService{
 		
 		return result;
 	}
+
+	@Override
+	public List<Order> selectAll(int userNo) {
+		
+		// 관리자 번호일 경우
+		if(userNo == 1) {
+			
+			return mapper.selectOrder();
+		}
+		
+		return mapper.selectUserOrder(userNo);
+	}
+
+	@Override
+	public List<OrderDetail> detailInfo(int orderNo) {
+		
+		return mapper.detailInfo(orderNo);
+	}
 }
