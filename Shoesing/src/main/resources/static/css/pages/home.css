@@ -55,16 +55,16 @@
 iframe {
   pointer-events: none;
   width: 100%;
-  height: calc(36cqw);
+  height: 42cqw;
 }
 .videoText {
   width: 100%;
-  margin-top: 8cqw;
+  margin-top: 9cqw;
   position: absolute;
   text-align: center;
   font-family: var(--title-font-family);
   font-weight: 300;
-  font-size: 16cqw;
+  font-size: 18cqw;
   color: rgba(255, 255, 255, 0.4);
 }
 

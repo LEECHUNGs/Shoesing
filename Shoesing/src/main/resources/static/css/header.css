@@ -38,6 +38,12 @@ header {
   width: 100%;
 }
 
+.modal-open {
+  overflow: hidden;
+  overflow-y: scroll !important;
+  padding-right: 0 !important;
+}
+
 /* -------------------- 메인 헤더 -------------------- */
 .header-main {
   height: 73%;
@@ -176,6 +182,7 @@ header {
   background-color: var(--secondaryColor);
 }
 
+/* -------------------- 네비 아이콘 -------------------- */
 .navigation {
   display: flex;
   align-items: center;
@@ -249,15 +256,38 @@ header .userIcon:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.28);
 }
 
-/* Searchbar */
-#searchbar {
+/* -------------------- 검색창 -------------------- */
+.searchbar .modal.fade,
+.searchbar .modal-dialog {
+  transition: transform 0.18s ease-out !important;
+  transform: translate(0, 0) !important;
+}
+.searchbar .modal-dialog {
+  top: 42.5px;
+  max-width: 100%;
+  height: 40px;
+  width: calc(100cqw - var(--spacerWidth));
+  margin: auto;
+}
+.searchbar .modal-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+}
+.searchbar .modal-content {
+  border-radius: 0;
+  background-color: var(--primaryColor);
+  height: 40px;
+}
+.searchbarInput {
   width: 100%;
+  height: 100%;
+  padding: 0 5px;
+  border: transparent;
 }
 
-#searchbar-input {
-  width: 100%;
-}
-
+/* -------------------- 반응형 설정 -------------------- */
 @media (min-width: 768px) {
   .title-text {
     display: flex;

@@ -57,6 +57,7 @@
                   data-bs-toggle="modal"
                   data-bs-target="#searchbar"
                   class="bi-search"
+                  id="searchTrigger"
                 >
                 </a>
               </div>
@@ -195,7 +196,7 @@
 
     <!-- 검색창 내용 -->
     <div
-      class="modal fade"
+      class="modal fade searchbar"
       id="searchbar"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
@@ -203,13 +204,12 @@
     >
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-body">
-            <input class="searchbar-input" type="text" />
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
+          <div class="modal-body ui-front">
+            <input
+              class="searchbarInput"
+              id="searchbarInput"
+              type="text"
+              autofocus
             />
           </div>
         </div>
