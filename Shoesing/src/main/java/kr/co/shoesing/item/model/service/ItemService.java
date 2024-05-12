@@ -63,4 +63,11 @@ public interface ItemService {
 	 */
 	List<Item> selectNew();
 
+	/**
+	 * 모든 상품 조회(검색용)
+	 * 
+	 * @return
+	 */
+	List<Item> selectAllNo();
+
 }

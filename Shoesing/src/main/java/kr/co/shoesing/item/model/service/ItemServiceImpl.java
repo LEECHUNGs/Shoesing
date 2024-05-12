@@ -97,4 +97,12 @@ public class ItemServiceImpl implements ItemService {
 		return mapper.selectNew();
 	}
 
+	/**
+	 * 모든 상품 조회 (검색용)
+	 */
+	@Override
+	public List<Item> selectAllNo() {
+		return mapper.selectAllNo();
+	}
+
 }
