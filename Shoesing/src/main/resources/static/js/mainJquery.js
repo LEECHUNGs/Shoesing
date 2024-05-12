@@ -126,7 +126,6 @@ jQuery(document).ready(function ($) {
   };
   Magnify.prototype = {
     constructor: Magnify,
-
     init: function (type, element, options) {
       var event = 'mousemove',
         eventOut = 'mouseleave';
@@ -160,21 +159,18 @@ jQuery(document).ready(function ($) {
         options,
         this.$element.data()
       );
-
       if (options.delay && typeof options.delay == 'number') {
         options.delay = {
           show: options.delay,
           hide: options.delay,
         };
       }
-
       return options;
     },
     check: function (e) {
       var container = $(e.currentTarget);
       var self = container.children('img');
       var mag = container.children('.magnify-large');
-
       // Get the native dimensions of the image
       if (!this.nativeWidth && !this.nativeHeight) {
         var image = new Image();
