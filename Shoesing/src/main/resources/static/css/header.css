@@ -1,3 +1,4 @@
+/* -------------------- 헤더 기본 설정 -------------------- */
 :root {
   --headerHeight: 100px;
   --spacerWidth: 42%;
@@ -37,6 +38,13 @@ header {
   width: 100%;
 }
 
+.modal-open {
+  overflow: hidden;
+  overflow-y: scroll !important;
+  padding-right: 0 !important;
+}
+
+/* -------------------- 메인 헤더 -------------------- */
 .header-main {
   height: 73%;
   padding: 5px;
@@ -49,6 +57,7 @@ header {
   backdrop-filter: blur(10px);
 }
 
+/* -------------------- 정보 헤더 -------------------- */
 .header-info {
   height: 27%;
   display: flex;
@@ -69,11 +78,12 @@ header {
   color: var(--secondaryColor);
 }
 
+/* -------------------- 헤더-콘텐츠 간격 조정용 -------------------- */
 .spacer {
   height: 100%;
 }
 
-/* Navigation List Content */
+/* 네비게이션 */
 .navigationLink li {
   padding: 5px;
 }
@@ -82,7 +92,7 @@ header {
   font-weight: 700;
 }
 
-/* Popover */
+/* 로그인 팝오버 */
 .popover-header {
   background-color: black;
   font-size: 15px;
@@ -104,7 +114,7 @@ header {
   user-select: none; /* Prevent Text Highlight*/
 }
 
-/* Header Hide When Scroll Up */
+/* 헤더 스크롤시 사라짐 설정 */
 .scrolled-down {
   transform: translateY(-100%);
   transition: all 0.5s ease-in-out;
@@ -115,8 +125,8 @@ header {
   transition: all 0.5s ease-in-out;
 }
 
-/* Offcanvas Component */
-/* Menu */
+/* -------------------- 오프캔버스 설정 -------------------- */
+/* 메뉴 */
 .menu {
   width: var(--spacerWidth);
 }
@@ -139,7 +149,7 @@ header {
   background-color: var(--secondaryColor);
 }
 
-/* Dropdown Component */
+/* 드랍다운 요소 */
 .dropdown * {
   border-radius: 0;
 }
@@ -172,6 +182,7 @@ header {
   background-color: var(--secondaryColor);
 }
 
+/* -------------------- 네비 아이콘 -------------------- */
 .navigation {
   display: flex;
   align-items: center;
@@ -245,15 +256,38 @@ header .userIcon:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.28);
 }
 
-/* Searchbar */
-#searchbar {
+/* -------------------- 검색창 -------------------- */
+.searchbar .modal.fade,
+.searchbar .modal-dialog {
+  transition: transform 0.18s ease-out !important;
+  transform: translate(0, 0) !important;
+}
+.searchbar .modal-dialog {
+  top: 42.5px;
+  max-width: 100%;
+  height: 40px;
+  width: calc(100cqw - var(--spacerWidth));
+  margin: auto;
+}
+.searchbar .modal-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+}
+.searchbar .modal-content {
+  border-radius: 0;
+  background-color: var(--primaryColor);
+  height: 40px;
+}
+.searchbarInput {
   width: 100%;
+  height: 100%;
+  padding: 0 5px;
+  border: transparent;
 }
 
-#searchbar-input {
-  width: 100%;
-}
-
+/* -------------------- 반응형 설정 -------------------- */
 @media (min-width: 768px) {
   .title-text {
     display: flex;

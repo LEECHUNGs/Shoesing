@@ -89,5 +89,43 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
+
+    <!-- 신상품 리스트 -->
+    <div>
+      <div>신상품!</div>
+      <ul id="itemListUl" class="listUl"></ul>
+    </div>
+
+    <!-- 이벤트 리스트 -->
+    <div>
+      <div>다양한 이벤트!</div>
+      <ul class="listUl">
+        <a href="#">
+          <img th:src="@{/img/cat1.jpg}" alt="" />
+        </a>
+        <a href="#">
+          <img th:src="@{/img/cat2.jpg}" alt="" />
+        </a>
+        <a href="#">
+          <img th:src="@{/img/cat3.jpg}" alt="" />
+        </a>
+      </ul>
+    </div>
+
+    <!-- 영상 -->
+    <!-- 영상 설정: autoplay=1&mute=1&showinfo=0&controls=0&loop=1 -->
+    <a href="#" class="videoMain">
+      <div class="videoText">SHOESING</div>
+      <iframe
+        src="https://www.youtube.com/embed/GAgj5ISeZAM?autoplay=1&mute=1&showinfo=0&controls=0&loop=1"
+        title="YouTube video player"
+        frameborder="0"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      >
+      </iframe>
+    </a>
+
+    <script th:src="@{/js/home.js}"></script>
   </th:block>
 </html>

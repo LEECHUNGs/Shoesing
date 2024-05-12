@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{fragments/layouts/main}"
+>
+  <head>
+    <link th:href="@{/css/pages/common/page.css}" rel="stylesheet" />
+    <link th:href="@{/css/pages/item/item.css}" rel="stylesheet" />
+  </head>
+  <th:block layout:fragment="main">
+    <div class="pageMain">
+      <div class="pageTitle">상품 목록 페이지</div>
+
+      <!-- 상품 정렬 버튼 -->
+      <div class="item-content">
+        <div class="itemOption">
+          <div class="dropdown itemSort">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="sortName"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            ></button>
+            <ul class="dropdown-menu" aria-labelledby="sortName">
+              <li>
+                <a href="#" onclick="selectItems(0, 1)">기본 정렬</a>
+              </li>
+              <li>
+                <a href="#" onclick="selectItems(1, 1)">최신 순</a>
+              </li>
+              <li>
+                <a href="#" onclick="selectItems(2, 1)">가격 낮은 순</a>
+              </li>
+              <li>
+                <a href="#" onclick="selectItems(3, 1)">가격 높은 순</a>
+              </li>
+              <li>
+                <a href="#" onclick="selectItems(4, 1)">이름 정렬(A-Z)</a>
+              </li>
+              <li>
+                <a href="#" onclick="selectItems(5, 1)">이름 정렬(Z-A)</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 상품 목록 영역 -->
+        <div class="itemList">
+          <ul id="itemListUl" class="itemListUl"></ul>
+        </div>
+
+        <div class="page">
+          <ul id="pageUl" class="pageUl"></ul>
+        </div>
+      </div>
+    </div>
+    <script th:src="@{/js/item/item.js}"></script>
+  </th:block>
+</html>

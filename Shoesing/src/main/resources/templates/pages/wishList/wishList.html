@@ -9,20 +9,19 @@
     <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
 
     <style>
-        .wishListUl > li {
-            display: flex;
-        }
+      .wishListUl > li {
+        display: flex;
+      }
 
-        .wishListUl img {
-            width: 150px;
-            height: 150px;
-        }
+      .wishListUl img {
+        width: 150px;
+        height: 150px;
+      }
 
-        .pageUl {
-            display: flex;
-        }
+      .pageUl {
+        display: flex;
+      }
     </style>
-
   </head>
   <th:block layout:fragment="main">
     <!-- 내용은 여기 작성 -->
@@ -30,9 +29,9 @@
 
     <!-- 상품 목록 UL -->
     <ul id="wishListUl" class="wishListUl">
-        <input type="checkbox" id="checkAll" name="deleteAll" value="">
-        <button type="button" id="checkDelBtn">선택 상품 삭제</button>
-        <!-- 위시리스트 1개 샘플
+      <input type="checkbox" id="checkAll" name="deleteAll" value="" />
+      <button type="button" id="checkDelBtn">선택 상품 삭제</button>
+      <!-- 위시리스트 1개 샘플
         <li>
             <input type="checkbox" name="deleteOne" value="1">
             <img src="/img/cat1.jpg" width="150px" height="150px">
@@ -48,7 +47,10 @@
 
     <!-- 페이지 UL -->
     <ul id="pageUl" class="pageUl"></ul>
-    
-    <script src="/js/wishList.js"></script>
+
+    <script
+      type="text/javascript"
+      th:src="@{/js/wishList/wishList.js}"
+    ></script>
   </th:block>
 </html>

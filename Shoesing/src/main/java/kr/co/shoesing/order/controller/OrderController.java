@@ -1,7 +1,6 @@
 package kr.co.shoesing.order.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import kr.co.shoesing.item.model.dto.Stock;
 import kr.co.shoesing.order.model.dto.Order;
-import kr.co.shoesing.order.model.dto.OrderDetail;
 import kr.co.shoesing.order.model.service.OrderService;
 import kr.co.shoesing.user.model.dto.User;
 import lombok.RequiredArgsConstructor;
@@ -26,57 +23,61 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RequestMapping("order")
 public class OrderController {
-	
+
 	private final OrderService service;
-	//priavte final UserSer
-	
-	/** 주문 목록 메인 페이지
+	// priavte final UserSer
+
+	/**
+	 * 주문 목록 메인 페이지
+	 * 
 	 * @return
 	 */
 	@GetMapping("info")
 	public String info() {
-		return "pages/orderList";
+		return "pages/order/orderList";
 	}
-	
-	/** 주문 페이지
+
+	/**
+	 * 주문 페이지
+	 * 
 	 * @param itemStockNo
 	 * @return
 	 */
 	@PostMapping("checkout")
 	public String checkout(@SessionAttribute(value = "loginUser", required = false) User loginUser,
-						   @RequestParam("itemStockNoList") List<Integer> itemStockNoList,
-						   @RequestParam("itemCountList") List<Integer> itemCountList,
-						   Model model) {
-		
+			@RequestParam("itemStockNoList") List<Integer> itemStockNoList,
+			@RequestParam("itemCountList") List<Integer> itemCountList, Model model) {
+
 		log.info(itemStockNoList.toString());
 
-		Order order  = service.selectDetailList(itemStockNoList, itemCountList);
-		
+		Order order = service.selectDetailList(itemStockNoList, itemCountList);
+
 		model.addAttribute("order", order);
-		
-		return "pages/checkout";
+
+		return "pages/order/checkout";
 	}
-	
-	/** 새 주문 생성
+
+	/**
+	 * 새 주문 생성
+	 * 
 	 * @param order
 	 * @param loginUser
 	 * @return
 	 */
 	@ResponseBody
 	@PostMapping("manage")
-	public int insert(@RequestBody Order order, 
-					  @SessionAttribute(value = "loginUser", required = false) User loginUser) {
+	public int insert(@RequestBody Order order,
+			@SessionAttribute(value = "loginUser", required = false) User loginUser) {
 
 		// 회원일 때 Order 객체의 userNo 값을 회원 번호로 초기화
-		if(loginUser != null) {
-			
+		if (loginUser != null) {
+
 			order.setUserNo(loginUser.getUserNo());
 		}
-		
+
 		int result = service.insert(order);
-		
+
 		return result;
 	}
-	
-	
+
 }

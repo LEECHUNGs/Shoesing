@@ -1,7 +1,3 @@
-.myPage-main {
-  flex-direction: column;
-}
-
 .myPage-content {
   margin: 8px;
   display: flex;

@@ -9,33 +9,32 @@
     <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
 
     <style>
-        .cartUl > li {
-            display: flex;
-        }
+      .cartUl > li {
+        display: flex;
+      }
 
-        .cartUl img {
-            width: 150px;
-            height: 150px;
-        }
+      .cartUl img {
+        width: 150px;
+        height: 150px;
+      }
 
-        .pageUl {
-            display: flex;
-        }
+      .pageUl {
+        display: flex;
+      }
     </style>
-
   </head>
   <th:block layout:fragment="main">
     <!-- 내용은 여기 작성 -->
     <h1>장바구니</h1>
 
     <!-- 상품 목록 UL -->
-    
+
     <form action="/order/checkout" id="orderForm" method="post">
-      <input type="checkbox" id="checkAll">
+      <input type="checkbox" id="checkAll" />
       <button type="button" id="checkDelBtn">선택 상품 삭제</button>
       <button type="submit" id="orderBtn">선택 상품 구매</button>
       <ul id="cartUl" class="cartUl">
-          <!-- 장바구니 1개 샘플
+        <!-- 장바구니 1개 샘플
           <li>
               <input type="checkbox" name="itemStockNoList" value = "1">
               <input type="hidden" name="itemNo" value="1"> 
@@ -54,7 +53,7 @@
 
     <!-- 페이지 UL -->
     <ul id="pageUl" class="pageUl"></ul>
-    
-    <script src="/js/cart.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/cart/cart.js}"></script>
   </th:block>
 </html>
