@@ -276,7 +276,7 @@ header .userIcon:hover {
   padding: 0;
 }
 .searchbar .modal-content {
-  border-radius: 0;
+  border-radius: 3px;
   background-color: var(--primaryColor);
   height: 40px;
 }
@@ -285,6 +285,36 @@ header .userIcon:hover {
   height: 100%;
   padding: 0 5px;
   border: transparent;
+}
+/* 검색 스크롤 바 */
+.ui-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+  /* add padding to account for vertical scrollbar */
+  padding-right: 20px;
+}
+.ui-widget-content .ui-state-active {
+  background-color: var(--quaternaryColor);
+  border: var(--tetriaryColor);
+}
+.ui-autocomplete::-webkit-scrollbar {
+  background-color: transparent;
+  width: 8px;
+}
+.ui-autocomplete::-webkit-scrollbar-thumb {
+  background-color: rgb(228, 228, 224);
+  border-radius: 5px;
+}
+.ui-autocomplete::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(220, 220, 215);
+  border-radius: 5px;
+}
+.ui-autocomplete::-webkit-scrollbar-track {
+}
+.ui-autocomplete::-webkit-scrollbar-button {
+  display: none;
 }
 
 /* -------------------- 반응형 설정 -------------------- */
