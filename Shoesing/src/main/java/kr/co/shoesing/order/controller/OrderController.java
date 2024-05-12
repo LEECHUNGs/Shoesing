@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.co.shoesing.order.model.dto.Order;
+import kr.co.shoesing.order.model.dto.OrderDetail;
 import kr.co.shoesing.order.model.service.OrderService;
 import kr.co.shoesing.user.model.dto.User;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,14 @@ public class OrderController {
 	 * @return
 	 */
 	@GetMapping("info")
-	public String info() {
+	public String info(@SessionAttribute("loginUser") User loginUser,
+					   @RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
+					   Model model) {
+		
+		List<Order> orderList = service.selectAll(loginUser.getUserNo());
+		log.info("???orderList : " + orderList.toString());
+		model.addAttribute("orderList", orderList);
+		
 		return "pages/order/orderList";
 	}
 
@@ -79,5 +87,33 @@ public class OrderController {
 
 		return result;
 	}
+	
+	@ResponseBody
+	@PostMapping("detailInfo")
+	public List<OrderDetail> detailInfo(@RequestBody int orderNo) {
+		
+		return service.detailInfo(orderNo);
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

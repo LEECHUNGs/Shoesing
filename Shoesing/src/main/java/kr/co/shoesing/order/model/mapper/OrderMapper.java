@@ -32,4 +32,21 @@ public interface OrderMapper {
 	int insertOrderDetail(@Param("itemStockNoList") List<OrderDetail> itemStockNoList,
 						  @Param("orderNo") int orderNo);
 
+	/** 관리자용 모든 주문목록 생성
+	 * @return
+	 */
+	List<Order> selectOrder();
+
+	/** 회원용 주문목록 생성
+	 * @param userNo
+	 * @return
+	 */
+	List<Order> selectUserOrder(int userNo);
+
+	/** 세부 주문목록 생성
+	 * @param orderNo
+	 * @return
+	 */
+	List<OrderDetail> detailInfo(int orderNo);
+
 }

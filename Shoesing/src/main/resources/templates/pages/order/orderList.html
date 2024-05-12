@@ -7,12 +7,52 @@
 >
   <head>
     <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
+
+    <style>
+      li {
+        display: flex;
+      }
+    </style>
   </head>
   <th:block layout:fragment="main">
     <!-- 내용은 여기 작성 -->
 
     <h1>주문목록 페이지</h1>
 
-    
+    <table width="800px">
+
+      <thead>
+        <tr>
+          <th>주문 번호</th>
+          <th>주문 일자</th>
+          <th>주문 회원 번호</th>
+          <th>배송지</th>
+          <th>총 금액</th>
+          <th>처리 상태 변경</th>
+          <th>세부 목록</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <th:block th:each="i : ${orderList}">
+          <tr th:onclick="|orderDetailFnc(this, ${i.orderNo})|">
+            <td name="orderNo" th:text="*{i.orderNo}"></td>
+            <td th:text="*{i.orderDate}"></td>
+            <td th:text="*{i.userNo}"></td>
+            <td th:text="*{i.orderAddress}"></td>
+            <td th:text="*{i.orderPrice}"></td>
+            <td><button type="button" th:text="*{i.orderConfirm}"></button></td>
+            <td><button type="button">펼침</button></td>
+          </tr>
+        </th:block>
+      </tbody>
+
+    </table>
+
+    <ul>
+      <th:block></th:block>
+    </ul>
+
+    <script src="/js/order/orderList.js"></script>
   </th:block>
 </html>

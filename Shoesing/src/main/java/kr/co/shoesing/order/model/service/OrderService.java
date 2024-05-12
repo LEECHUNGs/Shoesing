@@ -21,4 +21,16 @@ public interface OrderService {
 	 */
 	int insert(Order order);
 
+	/** 주문 리스트를 모두 불러옴
+	 * @param userNo 
+	 * @return
+	 */
+	List<Order> selectAll(int userNo);
+
+	/** 주문 세부 리스트를 불러옴
+	 * @param orderNo
+	 * @return
+	 */
+	List<OrderDetail> detailInfo(int orderNo);
+
 }
