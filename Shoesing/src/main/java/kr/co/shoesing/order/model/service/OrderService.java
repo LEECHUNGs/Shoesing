@@ -41,4 +41,10 @@ public interface OrderService {
 	 */
 	int update(int orderNo);
 
+	/** 주문 성공한 주문 불러오기
+	 * @param orderNo
+	 * @return
+	 */
+	Order selectOne(int orderNo);
+
 }

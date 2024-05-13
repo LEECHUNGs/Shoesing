@@ -29,7 +29,7 @@
         </tr>
 
         <tr>
-          <th>휴대폰 번호</th>
+          <th rowspan="2">휴대폰 번호</th>
           <td th:text="*{userTel}"></td>
         </tr>
       </table>
@@ -37,21 +37,96 @@
       <!-- 비회원일 경우 -->
       <table th:unless="${session.loginUser}">
         <tr>
-          <th>이름</th>
+          <th rowspan="2">이름</th>
           <td><input type="text" id="userName" name="userName" required /></td>
         </tr>
 
         <tr>
-          <th>이메일</th>
+          <td id="nameMessage"></td>
+        </tr>
+
+        <tr>
+          <!-- 이메일 입력 -->
+          <form action="/email/signup" method="POST">
+            <th rowspan="2">이메일</th>
+
+            <td class="signup-input-area">
+              <!-- form 전달용 input -->
+              <input type="hidden" name="userEmail" id="inputEmail" />
+
+              <input type="text" class="domain" id="userEmail" /> @
+              <input type="text" name="inputDomain" id="inputDomain" />
+              <select title="이메일 도메인 선택" id="domainList">
+                <option selected disabled>선택</option>
+
+                <option value="naver.com">네이버</option>
+                <option value="gmail.com">구글</option>
+                <option value="daum.net">다음</option>
+                <option value="kh.co.kr">KH</option>
+                <option value="apple.com">애플</option>
+                <option value="kakao.com">카카오</option>
+                <option value="">직접입력</option>
+              </select>
+              <button id="sendAuthKeyBtn" type="button">인증번호 요청</button>
+            </td>
+
+            
+          </form>
+        </tr>
+
+        <tr>
           <td>
-            <input type="text" id="userEmail" name="userEmail" required />
+            <span class="signup-message" id="emailMessage"
+              >메일을 받을 수 있는 이메일을 입력해주세요.</span
+            >
           </td>
         </tr>
 
         <tr>
-          <th>휴대폰 번호</th>
+          <!-- 인증번호 입력 -->
+          <form action="/email/checkAuthKey" method="POST">
+            <th>인증번호</th>
+
+            <td class="signup-input-area">
+              <input
+                type="text"
+                name="authKey"
+                id="authKey"
+                placeholder="인증번호 입력"
+                maxlength="6"
+                autocomplete="off"
+              />
+              <button id="checkAuthKeyBtn" type="button">인증하기</button>
+            </ㅅ>
+
+            <span class="signup-message" id="authKeyMessage"></span>
+          </form>
+        </tr>
+
+        <tr>
+          <th rowspan="2">휴대폰 번호</th>
           <td><input type="text" id="userTel" name="userTel" required /></td>
         </tr>
+        
+        <tr>
+          <td id="telMessage"></td>
+        </tr>
+
+        <tr>
+          <th>비밀번호</th>
+          <td><input type="password" name="userPw" id="userPw"></td>
+        </tr>
+
+        <tr>
+          <th rowspan="2">비밀번호 확인</th>
+          <td><input type="password" name="userPwConfirm" id="userPwConfirm"></td>
+        </tr>
+
+        <tr>
+          <td id="pwMessage"></td>
+        </tr>
+
+
       </table>
     </div>
 
@@ -143,6 +218,10 @@
     </div>
 
     <button type="button" id="orderBtn">주문하기</button>
+
+    <form action="/order/orderSuccess" method="post" id="orderSubmit">
+      <input type="hidden" name="orderNo">
+    </form>
 
     <script th:inline="javascript">
       const order = /*[[${order}]]*/ '주문내역';

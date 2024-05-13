@@ -117,4 +117,10 @@ public class OrderServiceImpl implements OrderService{
 	public int update(int orderNo) {
 		return mapper.update(orderNo);
 	}
+
+	@Override
+	public Order selectOne(int orderNo) {
+		
+		return mapper.selectOne(orderNo);
+	}
 }

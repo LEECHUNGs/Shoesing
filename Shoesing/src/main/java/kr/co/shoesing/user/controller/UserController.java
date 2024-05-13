@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("user")
-@SessionAttributes({ "loginUser" })
+@SessionAttributes({ "loginUser", "userNo" })
 public class UserController {
 
 	private final UserService service;
@@ -471,4 +471,41 @@ public class UserController {
 //		return "redirect:" + request.getHeader("REFERER");
 //	}
 	
+	/**
+	 * 비회원 주문목록 조회용 로그인
+	 * 
+	 * @param inputUser
+	 * @param model
+	 * @param ra
+	 */
+	@PostMapping("loginAnon")
+	public String loginAnon(User inputAnonUser, RedirectAttributes ra,
+							HttpServletRequest request, Model model) {
+			
+		// 비회원용 로그인
+		User loginAnonUser = service.login(inputAnonUser);
+
+		if (loginAnonUser != null) {
+
+			if (service.checkDel(inputAnonUser.getUserId()) == 1) { // 탈퇴한 회원이 아닐 경우
+
+				ra.addFlashAttribute("message", "성공!");
+				
+				model.addAttribute("userNo", loginAnonUser.getUserNo());
+				
+			} else if (service.checkDel(inputAnonUser.getUserId()) == 0) { // 탈퇴한 회원일 경우
+				ra.addFlashAttribute("message", "만료된 주문번호 입니다");
+
+			}
+
+		} else {
+			ra.addFlashAttribute("message", "실패!");
+		}
+
+		if (request.getRequestURI().equals("/user/login")) {
+			return "redirect:/";
+		}
+
+		return "redirect:/order/info";
+	}
 }
