@@ -22,6 +22,11 @@ document.getElementById('wishListBtn').addEventListener('click', () => {
 
 // 비동기로 장바구니에 상품 추가
 document.getElementById('cartBtn').addEventListener('click', () => {
+  if (document.querySelector('[name=inputSize]:checked') == null) {
+    alert('사이즈를 먼저 선택해주세요.');
+    return;
+  }
+
   const sizeNo = document.querySelector('[name=inputSize]:checked').value;
   const cartItemCount = document.getElementById('itemCount').value;
 
