@@ -1,3 +1,36 @@
+//---------------------주소 다음 api ==> 수정 필요---------------------
+function execDaumPostCode() {
+  new daum.Postcode({
+    oncomplete: function (data) {
+      // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+      // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+      // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+      var addr = ''; // 주소 변수
+      var extraAddr = ''; // 참고항목 변수
+
+      //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+      if (data.userSelectedType === 'R') {
+        // 사용자가 도로명 주소를 선택했을 경우
+        addr = data.roadAddress;
+      } else {
+        // 사용자가 지번 주소를 선택했을 경우(J)
+        addr = data.jibunAddress;
+      }
+      // 우편번호와 주소 정보를 해당 필드에 넣는다.
+      document.getElementById('postcode').value = data.zonecode;
+      document.getElementById('address').value = addr;
+      // 커서를 상세주소 필드로 이동한다.
+      document.getElementById('detailAddress').focus();
+    },
+  }).open();
+}
+
+// 주소 검색 버튼 클릭 시
+document
+  .querySelector('#searchAddress')
+  .addEventListener('click', execDaumPostCode);
+
 //회원가입 유효성 검사
 
 //필수 항목 유효성 검사를 체크하기 위한 객체
@@ -78,7 +111,7 @@ userName.addEventListener('input', (e) => {
     return;
   }
 
-  nameMessage.innerText='유효한 이름형식입니다';
+  nameMessage.innerText = '유효한 이름형식입니다';
 
   return inputName.value;
 });
@@ -113,7 +146,6 @@ userNickname.addEventListener('input', (e) => {
 
   const inputNickname = e.target.value;
 
-
   fetch('/user/checkNickname', {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
@@ -121,7 +153,6 @@ userNickname.addEventListener('input', (e) => {
   })
     .then((resp) => resp.text())
     .then((result) => {
-
       if (result == 1) {
         nicknameMessage.innerText = '이미 사용중인 닉네임 입니다';
         nicknameMessage.classList.add('error');
@@ -205,7 +236,6 @@ const domainList = document.querySelector('#domainList');
 
 // 이메일 입력
 userEmail.addEventListener('input', (e) => {
-
   if (
     e.target.value.trim().length == 0 ||
     inputDomain.value.trim().length == 0
@@ -214,14 +244,13 @@ userEmail.addEventListener('input', (e) => {
     return;
   }
 
-  checkObj.emailVal= true;
+  checkObj.emailVal = true;
 
   emailMessage.innerText = '이메일을 입력 성공';
 });
 
 // 이메일 도메인 입력
 inputDomain.addEventListener('input', (e) => {
-
   if (e.target.value.trim().length == 0 || userEmail.value.trim().length == 0) {
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
@@ -233,7 +262,6 @@ inputDomain.addEventListener('input', (e) => {
 
 // 도메인 리스트
 domainList.addEventListener('change', (e) => {
-
   const optionsValue = e.target.options[e.target.selectedIndex].value;
   inputDomain.value = optionsValue;
 
@@ -244,11 +272,9 @@ domainList.addEventListener('change', (e) => {
   }
 
   if (e.target.value.trim().length == 0 || userEmail.value.trim().length == 0) {
-
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
-
 
   checkObj.emailVal = true;
 
@@ -262,7 +288,7 @@ const sendAuthKeyBtn = document.querySelector('#sendAuthKeyBtn');
 const authKey = document.querySelector('#authKey');
 const checkAuthKeyBtn = document.querySelector('#checkAuthKeyBtn');
 const authKeyMessage = document.querySelector('#authKeyMessage');
-const emailVal= userEmail.value + '@' + inputDomain.value;
+const emailVal = userEmail.value + '@' + inputDomain.value;
 let authTimer;
 const initMin = 4;
 const initSec = 59;
@@ -271,27 +297,21 @@ const initTime = '05:00';
 let min = initMin;
 let sec = initSec;
 
-
 sendAuthKeyBtn.addEventListener('click', () => {
   checkObj.authKey = false;
-
 
   authKeyMessage.innerText = '';
   const emailVal = userEmail.value + '@' + inputDomain.value;
 
   if (!checkObj.emailVal) {
-
-
     alert('유효한 이메일 작성 후 클릭해 주세요');
     return;
-    
   }
 
   min = initMin;
   sec = initSec;
 
   clearInterval(authTimer);
-
 
   console.log(emailVal);
 
@@ -310,11 +330,8 @@ sendAuthKeyBtn.addEventListener('click', () => {
       } else {
         console.log('인증 번호 발송 실패');
         emailMessage.innerText = '인증번호 발송에 실패했습니다';
-
-
       }
-      
-  });
+    });
 
   authKeyMessage.innerText = initTime;
   authKeyMessage.classList.remove('confirm', 'error');
@@ -324,10 +341,10 @@ sendAuthKeyBtn.addEventListener('click', () => {
   authTimer = setInterval(() => {
     authKeyMessage.innerText = `${addZero(min)}:${addZero(sec)}`;
     if (min == 0 && sec == 0) {
-        checkObj.authKey = false;
-        clearInterval(authTimer);
-        authKeyMessage.classList.add('error');
-        authKeyMessage.classList.remove('confirm');
+      checkObj.authKey = false;
+      clearInterval(authTimer);
+      authKeyMessage.classList.add('error');
+      authKeyMessage.classList.remove('confirm');
       return;
     }
     if (sec == 0) {
@@ -338,8 +355,8 @@ sendAuthKeyBtn.addEventListener('click', () => {
   }, 1000);
 });
 function addZero(number) {
-  if (number < 10) return "0" + number;
-  else            return number;
+  if (number < 10) return '0' + number;
+  else return number;
 }
 
 // form 전달용 input
@@ -355,11 +372,9 @@ checkAuthKeyBtn.addEventListener('click', () => {
     return;
   }
   const obj = {
-
     email: userEmail.value + '@' + inputDomain.value,
     authKey: authKey.value,
   };
-
 
   fetch('/email/checkAuthKey', {
     method: 'POST',
@@ -374,8 +389,8 @@ checkAuthKeyBtn.addEventListener('click', () => {
         return;
       }
       clearInterval(authTimer);
-      authKeyMessage.innerText = '인증 되었습니다.'; 
-      alert('인증이 완료되었습니다') // 5.8 자습때 이 내용 추가했음!
+      authKeyMessage.innerText = '인증 되었습니다.';
+      alert('인증이 완료되었습니다'); // 5.8 자습때 이 내용 추가했음!
       authKeyMessage.classList.remove('error');
       authKeyMessage.classList.add('confirm');
       inputEmail.value = userEmail.value + '@' + inputDomain.value;
@@ -388,7 +403,6 @@ const userTel = document.querySelector('#userTel');
 const telMessage = document.querySelector('#telMessage');
 
 userTel.addEventListener('input', (e) => {
-
   const regExp = /^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
   const inputTel = e.target.value;
 
@@ -400,9 +414,7 @@ userTel.addEventListener('input', (e) => {
     return;
   }
 
-
   if (inputTel.trim().length < 9) {
-
     telMessage.innerText = '유효한 전화번호 형식이 아닙니다';
     telMessage.classList.add('error');
     telMessage.classList.remove('confirm');
@@ -410,57 +422,10 @@ userTel.addEventListener('input', (e) => {
     return;
   }
 
-
   telMessage.innerText = '유효한 전화번호 형식입니다.';
   telMessage.classList.add('confirm');
   telMessage.classList.remove('error');
-
 });
-
-//---------------------주소 다음 api ==> 수정 필요---------------------
-
-function execDaumPostcode() {
-  new daum.Postcode({
-    oncomplete: function (data) {
-      var roadAddr = data.roadAddress;
-      var extraRoadAddr = '';
-
-      if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-        extraRoadAddr += data.bname;
-      }
-      if (data.buildingName !== '' && data.apartment === 'Y') {
-        extraRoadAddr +=
-          extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName;
-      }
-      if (extraRoadAddr !== '') {
-        extraRoadAddr = ' (' + extraRoadAddr + ')';
-      }
-      document.getElementById('postcode').value = data.zonecode;
-      document.getElementById('roadAddress').value = roadAddr;
-      document.getElementById('jibunAddress').value = data.jibunAddress;
-
-      if (roadAddr !== '') {
-        document.getElementById('extraAddress').value = extraRoadAddr;
-      } else {
-        document.getElementById('extraAddress').value = '';
-      }
-      var guideTextBox = document.getElementById('guide');
-
-      if (data.autoRoadAddress) {
-        var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-        guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-        guideTextBox.style.display = 'block';
-      } else if (data.autoJibunAddress) {
-        var expJibunAddr = data.autoJibunAddress;
-        guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-        guideTextBox.style.display = 'block';
-      } else {
-        guideTextBox.innerHTML = '';
-        guideTextBox.style.display = 'none';
-      }
-    },
-  }).open();
-}
 
 // 회원가입 버튼 클릭시 전체 유효성 검사 여부 확인
 const signupForm = document.querySelector('#signupForm');
@@ -497,5 +462,4 @@ submitBtn.addEventListener('click', (e) => {
     }
   }
   signupForm.submit();
-  
 });

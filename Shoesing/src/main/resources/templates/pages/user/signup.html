@@ -112,37 +112,34 @@
 
       <br />
       <!-- 이메일 입력 -->
-      <form action="/email/signup" method="POST">
-        <label for="userEmail"> <span class="required">*</span>이메일 </label>
+      <label for="userEmail"> <span class="required">*</span>이메일 </label>
 
-        <div class="signup-input-area">
-          <!-- form 전달용 input -->
-          <input type="hidden" name="userEmail" id="inputEmail" />
+      <div class="signup-input-area">
+        <!-- form 전달용 input -->
+        <input type="hidden" name="userEmail" id="inputEmail" />
 
-          <input type="text" class="domain" id="userEmail" /> @
-          <input type="text" name="inputDomain" id="inputDomain" />
-          <select title="이메일 도메인 선택" id="domainList">
-            <option selected disabled>선택</option>
+        <input type="text" class="domain" id="userEmail" /> @
+        <input type="text" name="inputDomain" id="inputDomain" />
+        <select title="이메일 도메인 선택" id="domainList">
+          <option selected disabled>선택</option>
 
-            <option value="naver.com">네이버</option>
-            <option value="gmail.com">구글</option>
-            <option value="daum.net">다음</option>
-            <option value="kh.co.kr">KH</option>
-            <option value="apple.com">애플</option>
-            <option value="kakao.com">카카오</option>
-            <option value="">직접입력</option>
-          </select>
-          <button id="sendAuthKeyBtn" type="button">인증번호 요청</button>
-        </div>
+          <option value="naver.com">네이버</option>
+          <option value="gmail.com">구글</option>
+          <option value="daum.net">다음</option>
+          <option value="kh.co.kr">KH</option>
+          <option value="apple.com">애플</option>
+          <option value="kakao.com">카카오</option>
+          <option value="">직접입력</option>
+        </select>
+        <button id="sendAuthKeyBtn" type="button">인증번호 요청</button>
+      </div>
 
-        <span class="signup-message" id="emailMessage"
-          >메일을 받을 수 있는 이메일을 입력해주세요.</span
-        >
-      </form>
+      <span class="signup-message" id="emailMessage"
+        >메일을 받을 수 있는 이메일을 입력해주세요.</span
+      >
 
       <br />
       <!-- 인증번호 입력 -->
-      <form action="/email/checkAuthKey" method="POST">
         <label for="emailCheck">
           <span class="required">*</span> 인증번호
         </label>
@@ -160,22 +157,38 @@
         </div>
 
         <span class="signup-message" id="authKeyMessage"></span>
-      </form>
+     
       <br />
       <!-- 주소 입력 -->
       <label for="userAddress"><span class="required">주소</span></label>
       <div class="signup-input-area">
-        <input type="text" id="postcode" placeholder="우편번호" readonly />
-        <input
-          type="button"
-          onclick="execDaumPostcode()"
-          value="우편번호 찾기"
-        /><br />
-        <input type="text" id="roadAddress" placeholder="도로명주소" readonly />
-        <input type="text" id="jibunAddress" placeholder="지번주소" readonly />
-        <span id="guide" style="color: #999; display: none"></span>
-        <input type="text" id="detailAddress" placeholder="상세주소" />
-        <input type="text" id="extraAddress" placeholder="참고항목" />
+        <label for="userAddress">주소</label>
+        <div class="signUp-input-area">
+          <input
+            type="text"
+            name="userAddress"
+            placeholder="우편번호"
+            maxlength="6"
+            id="postcode"
+          />
+          <button type="button" id="searchAddress">검색</button>
+        </div>
+        <div class="signUp-input-area">
+          <input
+            type="text"
+            name="userAddress"
+            placeholder="도로명/지번 주소"
+            id="address"
+          />
+        </div>
+        <div class="signUp-input-area">
+          <input
+            type="text"
+            name="userAddress"
+            placeholder="상세 주소"
+            id="detailAddress"
+          />
+        </div>
       </div>
 
       <button>취소</button>

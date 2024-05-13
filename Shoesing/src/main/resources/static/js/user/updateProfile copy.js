@@ -369,79 +369,110 @@ e.preventDefault();
 
 //====================================================================
 //비밀번호 변경 
-const newPw = document.querySelector("#newPw");
-const newPwConfirm = document.querySelector("#newPwConfirm");
-const updatePwMessage = document.querySelector("#updatePwMessage");
-const currentPw = document.querySelector("#currentPw");
+// const newPw = document.querySelector("#newPw");
+// const newPwConfirm = document.querySelector("#newPwConfirm");
+// const updatePwMessage = document.querySelector("#updatePwMessage");
+// const currentPw = document.querySelector("#currentPw");
 
-const checkUpdatePw = () => {
-  if (newPw.value == newPwConfirm.value) {
-    updatePwMessage.innerText = '';
-    updatePwMessage.innerText='비밀번호가 일치합니다';
-    return;
-  }
-  updatePwMessage.innerText = '비밀번호가 일치하지 않습니다';
-};
+// const checkUpdatePw = () => {
+//   if (newPw.value == newPwConfirm.value) {
+//     updatePwMessage.innerText = '';
+//     updatePwMessage.innerText='비밀번호가 일치합니다';
+//     return;
+//   }
+//   updatePwMessage.innerText = '비밀번호가 일치하지 않습니다';
+// };
 
-newPw.addEventListener('input', (e) => {
-  const inputNewPw = e.target.value;
+// newPw.addEventListener('input', (e) => {
+//   const inputNewPw = e.target.value;
 
-  if (inputNewPw.trim().length == 0) {
-    updatePwMessage.innerText ='비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.';
-    newPw.value = '';
-    return;
-  }
+//   if (inputNewPw.trim().length == 0) {
+//     updatePwMessage.innerText ='비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.';
+//     newPw.value = '';
+//     return;
+//   }
 
-  if(newPwConfirm.trim().length == 0){
-    updatePwMessage.innerText = '변경할 비밀번호를 한번 더 입력해주세요'
-    return;
-  }
-  const regExp = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{6,16}$/;
+//   if(newPwConfirm.trim().length == 0){
+//     updatePwMessage.innerText = '변경할 비밀번호를 한번 더 입력해주세요'
+//     return;
+//   }
+//   const regExp = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{6,16}$/;
 
-  if (!regExp.test(inputNewPw)) {
-    updatePwMessage.innerText = '비밀번호가 유효하지 않습니다.';
+//   if (!regExp.test(inputNewPw)) {
+//     updatePwMessage.innerText = '비밀번호가 유효하지 않습니다.';
 
-    return;
-  }
+//     return;
+//   }
 
-  updatePwMessage.innerText = '유효한 비밀번호 형식입니다';
-  if (newPwConfirm.value.length > 0) {
-    checkUpdatePw();
-  }
-});
+//   updatePwMessage.innerText = '유효한 비밀번호 형식입니다';
+//   if (newPwConfirm.value.length > 0) {
+//     checkUpdatePw();
+//   }
+// });
 
-newPwConfirm.addEventListener('input', () => {
-  if (newPw.value.length !== 0) {
-    checkUpdatePw();
-    return;
-  }
-});
+// newPwConfirm.addEventListener('input', () => {
+//   if (newPw.value.length !== 0) {
+//     checkUpdatePw();
+//     return;
+//   }
+// });
+
+
+
+
 
 // 비밀번호 변경 ajax
 const updatePwForm = document.querySelector('#updatePwForm');
+if(updatePwForm != null){
 
-updatePwForm.addEventListener("submit", e=>{
-  e.preventDefault();
-  if(currentPw.value.trim() == 0){
-    alert('현재 비밀번호를 입력해 주세요.');
-    e.preventDefault();
-    return;
-  }
-  fetch("/user/changePw", {
-    method : 'POST',
-    headers : { 'Content-Type': 'application/json; charset=utf-8'},
-    body : JSON.stringify({
+  updatePwForm.addEventListener("submit", e=>{
+    
+    const newPw = document.querySelector("#newPw");
+    const newPwConfirm = document.querySelector("#newPwConfirm");
+    const updatePwMessage = document.querySelector("#updatePwMessage");
+    const currentPw = document.querySelector("#currentPw");
+
+    let str;
+    if(currentPw.value.trim().length == 0) str = "현재 비밀번호를 입력해주세요";
+    else if(newPw.value.trim().length == 0) str = "새 비밀번호를 입력해주세요";
+    else if(newPwConfirm.value().length ==0) str = "새 비밀번호 확인을 입력해주세요";
+
+    if(str != undefined){
+      alert(str);
+      e.preventDefault();
+      return;
+    }
+
+    //정규식
+    const regExp = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{6,16}$/;
+
+    if(!regExp.test(newPw.value)){
+      alert("새 비밀번호가 유효하지 않습니다");
+      e.preventDefault();
+      return;
+    }
+
+    if(newPw.value != newPwConfirm.value){
+      alert("새 비밀번호가 일치하지 않습니다");
+      e.preventDefault();
+      return;
+    }
+
+    fetch("/user/changePw", {
+      method : 'POST',
+      headers : { 'Content-Type': 'application/json'},
+      body : JSON.stringify({
         'currentPw' : currentPw.value,
         'newPw' : newPw.value
+      })
     })
-})
-  .then(resp => resp.json())
-  .then(result => {
+    .then(resp => resp.json())
+    .then(result => {
       if(result == 0){
         console.log(result);
-          alert('현재 비밀번호가 일치하지 않습니다.');
-          e.preventDefault();
-          return;
+        alert('현재 비밀번호가 일치하지 않습니다.');
+        e.preventDefault();
+        return;
       } 
       if(result == 2){
         alert('현재 비밀번호와 변경된 비밀번호가 일치합니다.');
@@ -449,13 +480,14 @@ updatePwForm.addEventListener("submit", e=>{
         return;
       }
       if(result == 1){
-          alert('비밀번호가 변경되었습니다.');
-          window.location.href="/user/myPage";
+        alert('비밀번호가 변경되었습니다.');
+        window.location.href="/user/myPage";
       }
+    })
   })
-})
-
-
+  
+}  
+  
 //=========================================================================
 // 회원 탈퇴 (성공!)
 
