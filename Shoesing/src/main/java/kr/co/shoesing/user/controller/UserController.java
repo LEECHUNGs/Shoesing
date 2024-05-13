@@ -1,5 +1,6 @@
 package kr.co.shoesing.user.controller;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -124,24 +125,34 @@ public class UserController {
 	 * @param ra
 	 */
 	@PostMapping("signup")
-	public String signup(User inputUser,@RequestParam("userAddress") String[] userAddress,RedirectAttributes ra) {
+	public String signup(User inputUser, @RequestParam("userAddress") String[] userAddress, RedirectAttributes ra) {
 
-		int result = service.signup(inputUser, userAddress);
-		
-		String path = null;
-		String message = null;
-		
-		if (result > 0) {
-			message = inputUser.getUserNickname() + " 님 환영합니다";
-			path ="/";
-			
-		} else {
-			message = " 회원가입에 실패했습니다";
-			path = "signup";
-		}
-	
-		ra.addFlashAttribute("message",message);
-		return "redirect:"+path;
+		String address = String.join("^^^", userAddress);
+
+		return "redirect:/" + address;
+//		service.signup(inputUser, address);
+
+	}
+
+	/// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	@ResponseBody
+	@PostMapping("signups")
+	public String signups(@RequestParam("userAddress") String[] userAddress, RedirectAttributes ra) {
+		String userAddressString = Arrays.toString(userAddress);
+
+		String address = String.join("^^^", userAddress);
+
+//		return "redirect:" + path;
+		return address;
+
+	}
+
+	/// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	@GetMapping("signups")
+	public String signups() {
+
+//		return "redirect:" + path;
+		return "pages/user/signups";
 
 	}
 
@@ -316,54 +327,55 @@ public class UserController {
 		return 2; // 회원이 존재하지않으면 2 반환
 	}
 
-	/** 입력한 비밀번호가 현재 비밀번호와 같은지 체크
-	 * (마이페이지에서  내 정보 수정 들어갈때)
+	/**
+	 * 입력한 비밀번호가 현재 비밀번호와 같은지 체크 (마이페이지에서 내 정보 수정 들어갈때)
+	 * 
 	 * @param userId
 	 * @param inputPw
 	 * @return result
 	 */
 	@ResponseBody
-	@PostMapping(value="checkCurrentPw", produces = "application/json; charset=UTF-8")
-	public int checkCurrentPw(HttpServletRequest request, @RequestBody Map<String, Object> reqMap){
-		
+	@PostMapping(value = "checkCurrentPw", produces = "application/json; charset=UTF-8")
+	public int checkCurrentPw(HttpServletRequest request, @RequestBody Map<String, Object> reqMap) {
+
 		HttpSession session = request.getSession();
 		User loginUser = (User) session.getAttribute("loginUser");
 		String userId = loginUser.getUserId();
 		String inputPw = (String) reqMap.get("inputPw");
 
-		int result = service.checkCurrentPw(userId,inputPw);
-		
+		int result = service.checkCurrentPw(userId, inputPw);
+
 		return result;
 	}
 
-	/** 비밀번호 변경
+	/**
+	 * 비밀번호 변경
+	 * 
 	 * @param request
 	 * @param paramMap
 	 * @return
 	 */
 	@ResponseBody
-	@PostMapping(value="changePw", produces = "application/json; charset=UTF-8")
-	public int changePw(HttpServletRequest request,
-						@RequestBody Map<String, Object> paramMap) {
+	@PostMapping(value = "changePw", produces = "application/json; charset=UTF-8")
+	public int changePw(HttpServletRequest request, @RequestBody Map<String, Object> paramMap) {
 
 		HttpSession session = request.getSession();
-		
-		User loginUser = (User)session.getAttribute("loginUser");
-		
+
+		User loginUser = (User) session.getAttribute("loginUser");
+
 		String userId = loginUser.getUserId();
 		String currentPw = (String) paramMap.get("currentPw");
 		String newPw = (String) paramMap.get("newPw");
 
 		// 현재 비밀번호가 일치하는지 확인
-		int result = service.checkCurrentPw(userId,currentPw);
+		int result = service.checkCurrentPw(userId, currentPw);
 		int result2 = 0;
 
 		// 현재 비밀번호가 입력한 비밀번호와 일치하는 경우
-		if(result != 0) {
+		if (result != 0) {
 			result2 = service.changePw(loginUser, newPw);
 		}
-		
-		
+
 		return result2;
 
 	}
@@ -374,101 +386,53 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("updateProfile")
-	public String updateProfile(@SessionAttribute("loginUser") User loginUser,
-			RedirectAttributes ra, @RequestParam ("userAddress") String[] userAddress,
-			User inputUser) {
+	public String updateProfile(@SessionAttribute("loginUser") User loginUser, RedirectAttributes ra,
+			@RequestParam("userAddress") String[] userAddress, User inputUser) {
 
 		String userId = loginUser.getUserId();
 		inputUser.setUserId(userId);
-		
-		
-		int result = service.updateProfile(inputUser,userAddress);
-		
+
+		int result = service.updateProfile(inputUser, userAddress);
+
 		String message = null;
-		
+
 		if (result > 0) {
 			message = loginUser.getUserNickname() + "님의 정보가 수정되었습니다";
-			
+
 			loginUser.setUserName(inputUser.getUserName());
 			loginUser.setUserNickname(inputUser.getUserNickname());
 			loginUser.setUserTel(inputUser.getUserTel());
 			loginUser.setUserAddress(inputUser.getUserAddress());
 			loginUser.setUserEmail(inputUser.getUserEmail());
-			
+
 		} else {
-			message = loginUser.getUserNickname() +"님의 정보 수정에 실패했습니다";
-			
+			message = loginUser.getUserNickname() + "님의 정보 수정에 실패했습니다";
+
 		}
-		ra.addFlashAttribute("message",message);
-		
+		ra.addFlashAttribute("message", message);
+
 		return "redirect:/";
-		
+
 	}
 
-	/** 회원 탈퇴 시 입력한 값과 현재 비밀번호 일치하는지 체크 
+	/**
+	 * 회원 탈퇴 시 입력한 값과 현재 비밀번호 일치하는지 체크
+	 * 
 	 * @param userId
 	 * @param inputPw
 	 * @return result
 	 */
 	@ResponseBody
 	@PostMapping("checkPw")
-	public int checkPw(HttpServletRequest request,
-						@RequestBody String inputPw){
-		
+	public int checkPw(HttpServletRequest request, @RequestBody String inputPw) {
+
 		HttpSession session = request.getSession();
-		User loginUser = (User)session.getAttribute("loginUser");
-		String  userId = loginUser.getUserId();
-		
-		int result = service.checkCurrentPw(userId,inputPw);
-		
+		User loginUser = (User) session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
+
+		int result = service.checkCurrentPw(userId, inputPw);
+
 		return result;
 	}
-	
-//	@PostMapping("updateProfile")
-//	public String updateProfile(@SessionAttribute("loginUser") User loginUser,
-//			Model model,
-//			RedirectAttributes ra,HttpSession session,
-//			User inputUser) {
-//		
-//		String userId = loginUser.getUserId();
-//		inputUser.setUserId(userId);
-//		
-//		
-//		int result = service.updateProfile(inputUser);
-//		
-//		String message = "";
-//		String path = "";
-//		
-//		if (result > 0) {
-//			message = "회원 정보 수정 성공!";
-//			path = "/pages/user/updateProfile";
-//			
-//		} else {
-//			message = "회원 정보 수정 실패";
-//			path = "/pages/user/updateProfile";
-//		}
-//		model.addAttribute("message", "회원가입 실패");
-//		return "redirect:/user/updateProfile";
-//	}
-	
-//	@PostMapping("updateProfile")
-//	public String updateProfile(Map<String , Object> paramMap,RedirectAttributes ra, HttpServletRequest request) {
-//		
-//		HttpSession session = request.getSession();
-//		
-//		User loginUser = (User)session.getAttribute("loginUser");
-//		
-//		
-//
-//		
-//		int result = service.updateProfile(paramMap);
-//		
-//		if (result > 0) {
-//			ra.addFlashAttribute("message", "성공!");
-//		} else {
-//			ra.addFlashAttribute("message", "실패!");
-//		}
-//		return "redirect:" + request.getHeader("REFERER");
-//	}
-	
+
 }

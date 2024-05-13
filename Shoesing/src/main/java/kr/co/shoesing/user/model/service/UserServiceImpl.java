@@ -6,12 +6,7 @@ import java.util.Map;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import kr.co.shoesing.user.model.dto.User;
 import kr.co.shoesing.user.model.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -58,20 +53,14 @@ public class UserServiceImpl implements UserService {
 	 * 
 	 * @param inputUser
 	 */
-	public int signup(User inputUser, String[] userAddress) {
+	public int signup(User inputUser, String userAddress) {
+
+		inputUser.setUserAddress(userAddress);
+
 		// 비밀번호 암호화
-		if(!inputUser.getUserAddress().equals(",,")) {
-			
-			String address = String.join("^^^" , userAddress);
-			inputUser.setUserAddress(address);
-	
-		}else {
-			inputUser.setUserAddress(null);
-		}
-			// 비밀번호 암호화
-		String encPw = passwordEncoder.encode(inputUser.getUserPw()); 
+		String encPw = passwordEncoder.encode(inputUser.getUserPw());
 		inputUser.setUserPw(encPw);
-		
+
 		return mapper.signup(inputUser);
 	}
 
@@ -126,25 +115,6 @@ public class UserServiceImpl implements UserService {
 		return mapper.checkDel(inputId);
 	}
 
-	/** 회원 탈퇴 시 입력한 값과 현재 비밀번호 일치하는지 체크 
-	 * @param userId
-	 * @param inputPw
-	 * @return result
-	 */
-//	@ResponseBody
-//	@PostMapping("checkPw")
-//	public int checkPw(HttpServletRequest request,
-//						@RequestBody String inputPw){
-//		
-//		HttpSession session = request.getSession();
-//		User loginUser = (User)session.getAttribute("loginUser");
-//		String  userId = loginUser.getUserId();
-//		
-//		int result = service.checkCurrentPw(userId,inputPw);
-//		
-//		return result;
-//	}
-
 	/**
 	 * 회원 정보 수정 (관리자)
 	 */
@@ -179,21 +149,21 @@ public class UserServiceImpl implements UserService {
 	public int changePw(User loginUser, String inputPw) {
 
 		// 현재 비밀번호가 같은지 보기
-				String currentPw = mapper.checkCurrentPw(loginUser.getUserId());
+		String currentPw = mapper.checkCurrentPw(loginUser.getUserId());
 
-				if (passwordEncoder.matches(inputPw, currentPw)) {
-					return 2;
-				}
+		if (passwordEncoder.matches(inputPw, currentPw)) {
+			return 2;
+		}
 
-				// 변경한 비밀번호 암호화 처리해주기
-				loginUser.setUserPw(passwordEncoder.encode(inputPw));
+		// 변경한 비밀번호 암호화 처리해주기
+		loginUser.setUserPw(passwordEncoder.encode(inputPw));
 
-				User user = new User();
+		User user = new User();
 
-				user.setUserId(loginUser.getUserId());
-				user.setUserPw(loginUser.getUserPw());
+		user.setUserId(loginUser.getUserId());
+		user.setUserPw(loginUser.getUserPw());
 
-				return mapper.changePw(user);
+		return mapper.changePw(user);
 
 	}
 
@@ -203,21 +173,21 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updateProfile(User inputUser, String[] userAddress) {
 
-		if(!inputUser.getUserAddress().equals(",,")) {
+		if (!inputUser.getUserAddress().equals(",,")) {
 			inputUser.setUserAddress(null);
-		}else {
-			String address = String.join("^^^" , userAddress);
-			
+		} else {
+			String address = String.join("^^^", userAddress);
+
 			inputUser.setUserAddress(address);
 		}
-		
+
 		return mapper.updateProfile(inputUser);
 	}
 
-	//비밀번호 맞는지 확인
+	// 비밀번호 맞는지 확인
 	@Override
 	public int checkCurrentPw(String userId, String inputPw) {
-		
+
 		String currentPw = mapper.checkCurrentPw(userId);
 
 		if (!passwordEncoder.matches(inputPw, currentPw)) {
@@ -225,7 +195,5 @@ public class UserServiceImpl implements UserService {
 		}
 		return 1;
 	}
-
-	
 
 }
