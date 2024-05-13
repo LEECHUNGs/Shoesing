@@ -1,6 +1,7 @@
 package kr.co.shoesing.order.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.shoesing.order.model.dto.Order;
 import kr.co.shoesing.order.model.dto.OrderDetail;
@@ -23,14 +24,21 @@ public interface OrderService {
 
 	/** 주문 리스트를 모두 불러옴
 	 * @param userNo 
+	 * @param cp 
 	 * @return
 	 */
-	List<Order> selectAll(int userNo);
+	Map<String, Object> selectAll(int userNo, int cp);
 
 	/** 주문 세부 리스트를 불러옴
 	 * @param orderNo
 	 * @return
 	 */
 	List<OrderDetail> detailInfo(int orderNo);
+
+	/** 처리 상태 변경
+	 * @param orderNo
+	 * @return
+	 */
+	int update(int orderNo);
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 import kr.co.shoesing.order.model.dto.Order;
 import kr.co.shoesing.order.model.dto.OrderDetail;
@@ -33,20 +34,39 @@ public interface OrderMapper {
 						  @Param("orderNo") int orderNo);
 
 	/** 관리자용 모든 주문목록 생성
+	 * @param rowBounds 
 	 * @return
 	 */
-	List<Order> selectOrder();
+	List<Order> selectOrder(RowBounds rowBounds);
 
 	/** 회원용 주문목록 생성
 	 * @param userNo
+	 * @param rowBounds 
 	 * @return
 	 */
-	List<Order> selectUserOrder(int userNo);
+	List<Order> selectUserOrder(int userNo, RowBounds rowBounds);
 
 	/** 세부 주문목록 생성
 	 * @param orderNo
 	 * @return
 	 */
 	List<OrderDetail> detailInfo(int orderNo);
+
+	/** 사용자의 모든 주문목록 개수
+	 * @param userNo
+	 * @return
+	 */
+	int getUserListCount(int userNo);
+
+	/** 관리자용 전체 주문목록 개수
+	 * @return
+	 */
+	int getAllListCount();
+
+	/** 처리 상태 변경
+	 * @param orderNo
+	 * @return
+	 */
+	int update(int orderNo);
 
 }

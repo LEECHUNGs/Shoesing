@@ -1,6 +1,7 @@
 package kr.co.shoesing.order.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,13 +35,23 @@ public class OrderController {
 	 * @return
 	 */
 	@GetMapping("info")
-	public String info(@SessionAttribute("loginUser") User loginUser,
+	public String info(@SessionAttribute(value = "loginUser", required = false) User loginUser,
 					   @RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
 					   Model model) {
+				
 		
-		List<Order> orderList = service.selectAll(loginUser.getUserNo());
-		log.info("???orderList : " + orderList.toString());
-		model.addAttribute("orderList", orderList);
+		Map<String, Object> map = null;
+		
+		// 비회원일 경우
+		if(loginUser == null) {
+			
+			
+		}
+		
+		map = service.selectAll(loginUser.getUserNo(), cp);
+		
+		model.addAttribute("orderList", map.get("orderList"));
+		model.addAttribute("pagination", map.get("pagination"));
 		
 		return "pages/order/orderList";
 	}
@@ -88,13 +99,36 @@ public class OrderController {
 		return result;
 	}
 	
+	/** 세부 주문목록 불러오기
+	 * @param orderNo
+	 * @return
+	 */
 	@ResponseBody
 	@PostMapping("detailInfo")
 	public List<OrderDetail> detailInfo(@RequestBody int orderNo) {
 		
 		return service.detailInfo(orderNo);
 	}
-
+	
+	/** 주문 성공 창
+	 * @param param
+	 * @return
+	 */
+	@GetMapping("orderSuccess")
+	public String orderSuccess() {
+		return "pages/order/orderSuccess";
+	}
+	
+	/** 처리 상태 변경
+	 * @param orderNo
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("manage")
+	public int update(@RequestParam("orderNo") int orderNo) {
+		return service.update(orderNo);
+	}
+	
 }
 
 

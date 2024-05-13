@@ -76,6 +76,24 @@
 		WHERE ORDER_NO = ${orderNo}
 	</select>
 	
+	<select id="getUserListCount">
+		SELECT COUNT(*)
+		FROM "USER_ORDER"
+		WHERE USER_NO = ${userNo}
+	</select>
+	
+	<select id="getAllListCount">
+		SELECT COUNT(*)
+		FROM "USER_ORDER"
+	</select>
+	
+	<!-- 처리 상태 변경 -->
+	<update id="update">
+		UPDATE "USER_ORDER" SET
+			ORDER_CONFIRM = DECODE(ORDER_CONFIRM, 'N', 'Y', 'N')
+		WHERE ORDER_NO = ${orderNo}
+	</update>
+	
 </mapper>
 
 
