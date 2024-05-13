@@ -1,3 +1,8 @@
+///필수 항목 
+const checkObj ={
+  updateNickname : false,
+  updateEmail : false,
+};
 
 //프로필 사진 변경
 const userIcon = document.querySelectorAll(".userIcon");
@@ -89,157 +94,59 @@ updateTel.addEventListener("input",(e)=>{
 
 
 // 주소 수정
-function execDaumPostcode() {
-    new daum.Postcode({
-      oncomplete: function (data) {
-        var roadAddr = data.roadAddress;
-        var extraRoadAddr = '';
-  
-        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-          extraRoadAddr += data.bname;
-        }
-        if (data.buildingName !== '' && data.apartment === 'Y') {
-          extraRoadAddr +=
-            extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName;
-        }
-        if (extraRoadAddr !== '') {
-          extraRoadAddr = ' (' + extraRoadAddr + ')';
-        }
-        document.getElementById('postcode').value = data.zonecode;
-        document.getElementById('roadAddress').value = roadAddr;
-        document.getElementById('jibunAddress').value = data.jibunAddress;
-  
-        if (roadAddr !== '') {
-          document.getElementById('extraAddress').value = extraRoadAddr;
-        } else {
-          document.getElementById('extraAddress').value = '';
-        }
-        var guideTextBox = document.getElementById('guide');
-  
-        if (data.autoRoadAddress) {
-          var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-          guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-          guideTextBox.style.display = 'block';
-        } else if (data.autoJibunAddress) {
-          var expJibunAddr = data.autoJibunAddress;
-          guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-          guideTextBox.style.display = 'block';
-        } else {
-          guideTextBox.innerHTML = '';
-          guideTextBox.style.display = 'none';
-        }
-      },
-    }).open();
-  }
+const postcode = document.getElementById('postcode').value;
+const address = document.getElementById('address').value;
+const detailAddress = document.getElementById('detailAddress').value;
 
+function  execDaumPostCode() {
+  new daum.Postcode({
+      oncomplete: function(data) {
+          // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-//==========================================================================
-//비밀번호가 현재 입력한 값과 같은지 조회
-const updatePwBtn = document.querySelector("#updatePwBtn");
-const currentPw = document.querySelector("#currentPw");
-const updatePwDiv = document.querySelector("#updatePwDiv");
-updatePwBtn.addEventListener("click",()=>{
-  if(currentPw.value.trim().length ==0){
-  alert('현재 비밀번호를 입력해주시기 바랍니다');
-  checkObj.currentPw=false;
-  return;
-  }
-  const inputPw = currentPw.value ;
-  console.log(inputPw);
-  fetch("/user/checkPw",{
-      method : 'POST',
-      headers : { 'Content-Type': 'application/json' },
-      body : inputPw,
-    })
-  .then(resp => resp.text())
-  .then(result => {
-    if(result == 0){
-      console.log(result);
-      console.log("비밀번호 불일치");
-      alert("비밀번호가 일치하지 않습니다")
-      currentPw.value = '';
-      checkObj.currentPw=false;
-      return;
-    }
-      document.getElementById('updatePwDiv').setAttribute("style","visibility:visible");  
-      console.log("비밀번호 일치");
-      checkObj.currentPw=true;     
-    
-  }) 
-});
+          // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+          // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+          var addr = ''; // 주소 변수
+          var extraAddr = ''; // 참고항목 변수
 
-//비밀번호 변경 
-const updatePw = document.querySelector("#updatePw");
-const updatePwConfirm = document.querySelector("#updatePwConfirm");
-const updatePwMessage = document.querySelector("#updatePwMessage");
+          //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+          if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+              addr = data.roadAddress;
+          } else { // 사용자가 지번 주소를 선택했을 경우(J)
+              addr = data.jibunAddress;
+          }
+          // 우편번호와 주소 정보를 해당 필드에 넣는다.
+          postcode.value = data.zonecode;
+          address.value = addr;
+          // 커서를 상세주소 필드로 이동한다.
+          detailAddress.focus();
+      }
+  }).open();
+}
 
-const checkUpdatePw = () => {
-  if (updatePw.value == updatePwConfirm.value) {
-    updatePwMessage.innerText = '';
-    alert("비밀번호 일치")
+// 주소 검색 버튼 클릭 시 나타나게 하기
+document.querySelector("#searchAddress").addEventListener("click", execDaumPostCode);
 
-    checkObj.updatePw = true;
-    return;
-  }
-  updatePwMessage.innerText = '비밀번호가 일치하지 않습니다';
-
-  checkObj.updatePw = false; 
-};
-
-updatePw.addEventListener('input', (e) => {
-  const inputUpdatePw = e.target.value;
-
-  if (inputUpdatePw.trim().length === 0) {
-    updatePwMessage.innerText ='비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.';
-    updatePw.value = '';
-    checkObj.updatePw = false; 
-    return;
-  }
-
-  const regExp = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{6,16}$/;
-
-  if (!regExp.test(inputUpdatePw)) {
-    updatePwMessage.innerText = '비밀번호가 유효하지 않습니다.';
-
-    return;
-  }
-
-  if(currentPw.value == updatePw.value){
-    updatePwMessage.innerText='현재 비밀번호와 일치합니다';
-    constObj.currentPw = true; 
-    return;
-  }
-
-  updatePwMessage.innerText = '유효한 비밀번호 형식입니다';
-  if (updatePwConfirm.value.length > 0) {
-    checkUpdatePw();
-  }
-});
-
-updatePwConfirm.addEventListener('input', () => {
-  if (updatePw.value.length !== 0) {
-    checkUpdatePw();
-    return;
-  }
-});
-
-// 이메일 수정
+// 이메일 수정 (완벽한데 마지막 부분만 인증하기 되었을 때 창닫힐 수 있도록 설정하기만 추가!)
 const updateEmailBtn = document.querySelector("#updateEmailBtn");
 const emailDiv = document.querySelector("#emailDiv");
+const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn");
 updateEmailBtn.addEventListener("click",e =>{
   emailDiv.setAttribute("style","pointer-events:auto"); 
  
-  sendAuthKeyBtn.setAttribute("style","visibility:visible");
+  sendAuthKeyBtn.setAttribute("style","display:block");
+  updateEmailBtn.setAttribute("style","display : none");
+  ;
 })
- 
+
+
 const updateEmail = document.querySelector("#updateEmail");
-const inputDomain = document.querySelector("#inputDomain");
+const updateDomain = document.querySelector("#updateDomain");
 const domainList = document.querySelector("#domainList");
 const emailMessage = document.querySelector("#emailMessage");
 updateEmail.addEventListener('input', (e) => {
   if (
     e.target.value.trim().length == 0 ||
-    inputDomain.value.trim().length == 0
+    updateDomain.value.trim().length == 0
   ) {
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
@@ -249,7 +156,7 @@ updateEmail.addEventListener('input', (e) => {
   
 });
 
-inputDomain.addEventListener('input', (e) => {
+updateDomain.addEventListener('input', (e) => {
 
   if (e.target.value.trim().length == 0 || updateEmail.value.trim().length == 0) {
     emailMessage.innerText = '이메일을 입력해주세요';
@@ -263,28 +170,27 @@ inputDomain.addEventListener('input', (e) => {
 
 domainList.addEventListener('change', (e) => {
   const optionsValue = e.target.options[e.target.selectedIndex].value;
-  inputDomain.value = optionsValue;
+  updateDomain.value = optionsValue;
 
   if (!optionsValue == '') {
-    inputDomain.readOnly = true;
+    updateDomain.readOnly = true;
   } else {
-    inputDomain.readOnly = false;
+    updateDomain.readOnly = false;
   }
   if (e.target.value.trim().length == 0 || updateEmail.value.trim().length == 0) {
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
   emailMessage.innerText = '이메일 입력 성공';
-  const emailVal = userEmail.value + '@' + inputDomain.value;
-  console.log(emailVal);
+  const updateEmail = updateEmail.value + '@' + updateDomain.value;
+  console.log(updateEmail);
 });
 
 // 이메일 인증번호 입력
-const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn");
 const authKey = document.querySelector("#authKey");
 const checkAuthKeyBtn = document.querySelector("#checkAuthKeyBtn");
 const authKeyMessage = document.querySelector("#authKeyMessage");
-const authKeyDiv = document.querySelector("#authKeyDiv");
+//const authKeyDiv = document.querySelector("#authKeyDiv");
 
 
 let authTimer;
@@ -298,13 +204,13 @@ let sec = initSec;
 sendAuthKeyBtn.addEventListener('click', () => {
   checkObj.updateEmail=false;
   authKeyMessage.innerText = '';
-  const emailVal = updateEmail.value + '@' + inputDomain.value;
+  const emailVal = updateEmail.value + '@' + updateDomain.value;
  
-  if (updateEmail.value.length == 0 || inputDomain.value.length == 0) {
+  if (updateEmail.value.length == 0 || updateDomain.value.length == 0) {
     alert('이메일 작성 후 클릭해 주세요');
     return;  
   }
-  authKeyDiv.setAttribute("style","visibility:visible");  
+  //authKeyDiv.setAttribute("style","visibility:visible");  
   min = initMin;
   sec = initSec;
 
@@ -355,7 +261,7 @@ function addZero(number) {
 }
 
 // form 전달용 input
-const inputEmail = document.querySelector('#inputEmail');
+const updateInputEmail = document.querySelector('#updateInputEmail');
 
 checkAuthKeyBtn.addEventListener('click', () => {
   if (min == 0 && sec == 0) {
@@ -368,7 +274,7 @@ checkAuthKeyBtn.addEventListener('click', () => {
 
   const obj = {
 
-    email: updateEmail.value + '@' + inputDomain.value,
+    email: updateEmail.value + '@' + updateDomain.value,
     authKey: authKey.value,
   };
 
@@ -389,7 +295,7 @@ checkAuthKeyBtn.addEventListener('click', () => {
       authKeyMessage.innerText = '인증 되었습니다.';
       authKeyMessage.classList.remove('error');
       authKeyMessage.classList.add('confirm');
-      inputEmail.value = userEmail.value + '@' + inputDomain.value;
+      updateInputEmail.value = updateEmail.value + '@' + updateDomain.value;
       
     });
 });
@@ -398,13 +304,7 @@ checkAuthKeyBtn.addEventListener('click', () => {
 //========================================================================
 //최종 수정하기 전 검사?! 체크?
 
-///필수 항목 
-const checkObj ={
-  updateNickname : false,
-  currentPw : false,
-  updateEmail : false,
-  updatePw : false
-};
+
 
 //필수항목 닉네임, 현재 비번(만약 변경비번 입력했을 때 변경비번 필수), 이메일(이메일 변경했을 때 인증번호 필수)
 document.querySelector('#updateProfileBtn').addEventListener("click", (e) => {
@@ -415,83 +315,7 @@ document.querySelector('#updateProfileBtn').addEventListener("click", (e) => {
     checkObj.updateNickname = false;
     return;
   }
-  if(currentPw.value.trim().length == 0){
-    alert('현재 비밀번호를 입력해주세요');
-    checkObj.currentPw = false;
-    currentPw.focus();
-    return;
-  }
-    // 만약 변경할 비밀번호를 입력하는 칸이 작성되었을 때
-    if(updatePw.value.trim().length != 0){
-
-      // 변경 비밀번호의 값과 변경 비밀번호 확인 칸이 일치하지 않으면 return 하고 alert창 띄우기
-      if(updatePw.value != updatePwConfirm.value){
-        alert('변경할 비밀번호가 일치하지 않습니다 다시 입력해주세요')
-        updatePw.value='';
-        updatePwConfirm.value='';
-        checkObj.currentPw = false;
-        updatePw.focus();
-        return;
-      }
-      // 만약 현재 비밀번호와 변경할 비밀번호가 동일한 경우에는 comfirm창을 통해서 같은 비번을 사용할것인지 새롭게 변경할것인지 물어보기
-      if(updatePw.value == currentPw.value){
-        confirm('현재 비밀번호와 변경할 비밀번호가 동일합니다. 기존 비밀번호를 계속해서 사용하시겠습니까?')
-          // 해당 창에서 확인(true)를 입력하면 새로 입력한 변경할 비번을 빈문자열로 바꿔주기
-          if(confirm.value == false){
-              updatePw.value= '';
-              updatePwConfirm = '';
-              checkObj.currentPw = false;
-              updatePw.focus();
-              return;
-          }
-            updatePw.value = '';
-            updatePwConfirm.value = '';
-            checkObj.currentPw = true;      
-            return;       
-      }
-      const inputPw = updatePw.value;
-      // 비동기 (변경한 비밀번호 비밀번호 변경하고 암호화하기)
-      fetch("/user/changePw",{
-        method : 'POST',
-        headers : {'Content-Type' : 'application/json'},
-        body :  inputPw
-      })
-      .then(resp => resp.text())
-      .then(result => {
-        if(result > 0){
-          alert("비밀번호가 변경되었습니다");
-          console.log("비밀번호 변경 성공");
-          checkObj.currentPw = true;
-        }else{
-          console.log(result);
-          alert("비밀번호 변경에 실패했습니다");
-          console.log("비밀번호 변경 실패");
-          checkObj.currentPw = false;
-        }
-      })
-    } 
-    // 위 조건을 모두 충족 시킨다면 입력한 비밀번호와 현재 사용중인 비밀번호가 같은지 확인하기
-    const inputPw = currentPw.value ;
-    console.log(inputPw);
-    fetch("/user/checkPw",{
-        method : 'POST',
-        headers : { 'Content-Type': 'application/json' },
-        body : inputPw,
-      })
-    .then(resp => resp.text())
-    .then(result => {
-      if(result == 0){
-        console.log(result);
-        console.log("비밀번호 불일치");
-        alert("비밀번호가 일치하지 않습니다")
-        currentPw.value = '';
-        checkObj.currentPw=false;
-        return;
-      }
-        console.log("비밀번호 일치");
-        checkObj.currentPw=true; 
-        
-    })  
+ 
   if(updateEmail.value.trim().length === 0){
     alert('이메일을 입력해주세요');
     checkObj.updateEmail = false;
@@ -510,9 +334,7 @@ document.querySelector('#updateProfileBtn').addEventListener("click", (e) => {
   }
 
 
-
   checkObj.updateNickname =true;
-  checkObj.currentPw =true;
   checkObj.updateEmail =true;
   const updateProfileForm= document.querySelector('#updateProfileForm');
 
@@ -545,6 +367,95 @@ document.querySelector('#updateProfileBtn').addEventListener("click", (e) => {
 //     alert("회원정보가 수정되었습니다!");
 //     return true;
 //   })
+
+//====================================================================
+//비밀번호 변경 
+const newPw = document.querySelector("#newPw");
+const newPwConfirm = document.querySelector("#newPwConfirm");
+const updatePwMessage = document.querySelector("#updatePwMessage");
+const currentPw = document.querySelector("#currentPw");
+
+const checkUpdatePw = () => {
+  if (newPw.value == newPwConfirm.value) {
+    updatePwMessage.innerText = '';
+    updatePwMessage.innerText='비밀번호가 일치합니다';
+    return;
+  }
+  updatePwMessage.innerText = '비밀번호가 일치하지 않습니다';
+};
+
+newPw.addEventListener('input', (e) => {
+  const inputNewPw = e.target.value;
+
+  if (inputNewPw.trim().length == 0) {
+    updatePwMessage.innerText ='비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.';
+    newPw.value = '';
+    return;
+  }
+
+  if(newPwConfirm.trim().length == 0){
+    updatePwMessage.innerText = '변경할 비밀번호를 한번 더 입력해주세요'
+    return;
+  }
+  const regExp = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{6,16}$/;
+
+  if (!regExp.test(inputNewPw)) {
+    updatePwMessage.innerText = '비밀번호가 유효하지 않습니다.';
+
+    return;
+  }
+
+  updatePwMessage.innerText = '유효한 비밀번호 형식입니다';
+  if (newPwConfirm.value.length > 0) {
+    checkUpdatePw();
+  }
+});
+
+newPwConfirm.addEventListener('input', () => {
+  if (newPw.value.length !== 0) {
+    checkUpdatePw();
+    return;
+  }
+});
+
+// 비밀번호 변경 ajax
+const updatePwForm = document.querySelector('#updatePwForm');
+
+updatePwForm.addEventListener("submit", e=>{
+  e.preventDefault();
+
+  if(currentPw.value.trim() == 0){
+    alert('현재 비밀번호를 입력해 주세요.');
+    e.preventDefault();
+    return;
+  }
+  fetch("/user/changePw", {
+    method : 'POST',
+    headers : { 'Content-Type': 'application/json; charset=utf-8'},
+    body : JSON.stringify({
+        'currentPw' : currentPw.value,
+        'newPw' : newPw.value
+    })
+})
+  .then(resp => resp.json())
+  .then(result => {
+      if(result == 0){
+          alert('현재 비밀번호가 일치하지 않습니다.');
+          e.preventDefault();
+          return;
+      } 
+      if(result == 2){
+        alert('현재 비밀번호와 변경된 비밀번호가 일치합니다.');
+        e.preventDefault();
+        return;
+      }
+      if(result == 1){
+          alert('비밀번호가 변경되었습니다.');
+          window.location.href="/user/myPage";
+      }
+  })
+})
+
 
 //=========================================================================
 // 회원 탈퇴 (성공!)

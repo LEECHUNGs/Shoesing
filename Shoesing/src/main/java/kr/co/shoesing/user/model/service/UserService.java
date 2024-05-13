@@ -17,9 +17,10 @@ public interface UserService {
 	 * 회원 회원가입
 	 * 
 	 * @param inputUser
+	 * @param userAddress 
 	 * @return result
 	 */
-	int signup(User inputUser);
+	int signup(User inputUser, String[] userAddress);
 
 	/**
 	 * 회원 탈퇴
@@ -84,7 +85,7 @@ public interface UserService {
 	 * @param inputPw
 	 * @return
 	 */
-	int checkPw(String userId, String inputPw);
+	int checkCurrentPw(String userId, String inputPw);
 
 	/**
 	 * 비밀번호 변경
@@ -101,6 +102,6 @@ public interface UserService {
 	 * @param inputUser
 	 * @return
 	 */
-	int updateProfile(User loginUser, String inputPw);
+	int updateProfile(User inputUser, String[] userAddress);
 
 }

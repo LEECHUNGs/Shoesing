@@ -70,7 +70,7 @@ public interface UserMapper {
 	 * @param userId
 	 * @return
 	 */
-	String checkPw(String userId);
+	String checkCurrentPw(String userId);
 
 	/**
 	 * 비밀번호 변경
@@ -111,6 +111,8 @@ public interface UserMapper {
 	 * @return
 	 */
 	int deleteAdmin(String userNo);
+
+
 
 
 
