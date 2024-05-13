@@ -24,13 +24,20 @@ document.getElementById("orderBtn").addEventListener("click", e => {
         order.orderUser = user;
     } 
 
-    console.log(order);
-
+    // 주문 요청
     fetch("/order/manage", {
         method : "post",
         headers : {"Content-type" : "application/json"},
         body : JSON.stringify(order)
     })
-    .then(resp => resp.text());
+    .then(resp => resp.text())
+    .then(result => {
+
+        // 주문이 성공하면
+        if(result > 0) {
+            location.href = "/order/orderSuccess";
+        }
+    });
+
 
 });

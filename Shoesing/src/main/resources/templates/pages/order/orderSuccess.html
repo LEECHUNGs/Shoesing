@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{fragments/layouts/main}"
+>
+  <head>
+    <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
+  </head>
+  <th:block layout:fragment="main">
+    <!-- 내용은 여기 작성 -->
+    <h1>주문 성공</h1>
+
+    <div>
+        <p>주문/결제가 정상적으로 완료되었습니다.</p>
+        <p>저희 Shooesing을 이용해 주셔서 감사합니다.</p>
+    </div>
+
+    <div>
+        <p>
+            <strong th:if="${session.loginUser}" th:text="|${session.loginUser.userName} 회원님의 주문내역|"></strong>
+            <strong></strong>
+        </p>
+
+        <p>주문내역 확인은 [마이페이지 > 주문 조회] 에서 하실 수 있습니다.</p>
+    </div>
+
+  </th:block>
+</html>

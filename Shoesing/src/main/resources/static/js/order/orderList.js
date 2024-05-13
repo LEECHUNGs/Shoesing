@@ -1,4 +1,21 @@
-const orderDetailFnc = (tr, orderNo) => {
+
+const orderDetailFnc = (td, orderNo) => {
+
+    const tr = td.parentNode;
+
+    const detailTr = document.querySelector("#detailTr");
+
+    // 이전 세부 주문목록 삭제
+    if(detailTr != null) {
+
+        // 한번 누른 상품일 경우 삭제 (= 접기 기능)
+        if(detailTr.previousElementSibling === tr) {
+            detailTr.remove();
+            return;  
+        } 
+
+        detailTr.remove();
+    }
 
     fetch("/order/detailInfo", {
         method : "post",
@@ -8,11 +25,9 @@ const orderDetailFnc = (tr, orderNo) => {
     .then(resp => resp.json())
     .then(list => {
 
-        const detailTr = document.querySelector("#detailTr");
+        const pageUl = document.getElementById("pageUl");
 
-        if(detailTr != null) {
-            detailTr.remove();
-        }
+        console.log(pageUl);
 
         const td1 = document.createElement("td");
         const td2 = document.createElement("td");
@@ -38,7 +53,7 @@ const orderDetailFnc = (tr, orderNo) => {
             const name = document.createElement("div"); // 이름
             const price = document.createElement("div"); // 가격
             const size = document.createElement("div"); // 사이즈
-            const count = document.createElement("div"); // 주문 수량
+            const count = document.createElement("div"); // 주문 수량  
 
             // 상품 이미지 (추가 예정)
             img.src = "/img/cat1.jpg";
@@ -58,4 +73,22 @@ const orderDetailFnc = (tr, orderNo) => {
 
         td2.append(orderDetailUl);
     });
+};
+
+const confirmBtn = (orderNo) => {
+
+    if(!confirm("상품 처리 상태를 변경하시겠습니까?")) {
+        return;
+    }
+
+    fetch("/order/manage?orderNo=" + orderNo)
+    .then(resp => resp.text())
+    .then(result => {
+        
+        if(result > 0) {
+            alert("변경 되었습니다.");
+            location.href = `/order/info?cp=${cp}`;
+        }
+    });
+
 };
