@@ -48,6 +48,17 @@ public class ItemController {
 	}
 
 	/**
+	 * 상품 전체 목록 불러오기(검색용)
+	 * 
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("itemListNo")
+	public List<Item> itemListNo() {
+		return service.selectAllNo();
+	}
+
+	/**
 	 * 최신 상품 목록 불러오기
 	 * 
 	 * @param sortNo

@@ -44,4 +44,69 @@
 		
 	</insert>
 	
+	<!-- 관리자용 주문목록 -->
+	<select id="selectOrder">
+		SELECT ORDER_NO, ORDER_DATE, ORDER_ADDRESS, USER_NO, ORDER_PRICE, ORDER_CONFIRM		FROM "USER_ORDER"
+		FROM "USER_ORDER"
+		ORDER BY ORDER_DATE
+	</select>
+	
+	<!-- 회원용 주문목록 -->
+	<select id="selectUserOrder">
+		SELECT ORDER_NO, ORDER_DATE, ORDER_ADDRESS, USER_NO,
+			   (SELECT SUM(ITEM_PRICE * ORDER_ITEM_COUNT)
+			    FROM "ORDER_DETAIL" B
+			    JOIN STOCK USING(ITEM_STOCK_NO)
+			    JOIN ITEM USING(ITEM_NO)
+			    GROUP BY ORDER_NO
+			    HAVING B.ORDER_NO = A.ORDER_NO
+			   ) AS ORDER_PRICE, 
+			   ORDER_CONFIRM
+		FROM "USER_ORDER" A
+		WHERE USER_NO = #{userNo}
+		ORDER BY ORDER_DATE
+	</select>
+	
+	<select id="detailInfo">
+		SELECT ORDER_DETAIL_NO, ITEM_STOCK_NO, ITEM_NAME, SIZE_VAL, ITEM_PRICE, ORDER_ITEM_COUNT
+		FROM "ORDER_DETAIL"
+		JOIN "STOCK" USING(ITEM_STOCK_NO)
+		JOIN "ITEM" USING(ITEM_NO)
+		JOIN "SIZE" USING(SIZE_NO)
+		WHERE ORDER_NO = ${orderNo}
+	</select>
+	
+	<select id="getUserListCount">
+		SELECT COUNT(*)
+		FROM "USER_ORDER"
+		WHERE USER_NO = ${userNo}
+	</select>
+	
+	<select id="getAllListCount">
+		SELECT COUNT(*)
+		FROM "USER_ORDER"
+	</select>
+	
+	<!-- 처리 상태 변경 -->
+	<update id="update">
+		UPDATE "USER_ORDER" SET
+			ORDER_CONFIRM = DECODE(ORDER_CONFIRM, 'N', 'Y', 'N')
+		WHERE ORDER_NO = ${orderNo}
+	</update>
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
