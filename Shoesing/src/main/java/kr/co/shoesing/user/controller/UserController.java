@@ -1,6 +1,5 @@
 package kr.co.shoesing.user.controller;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -130,29 +129,6 @@ public class UserController {
 		String address = String.join("^^^", userAddress);
 
 		return "redirect:/" + address;
-//		service.signup(inputUser, address);
-
-	}
-
-	/// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	@ResponseBody
-	@PostMapping("signups")
-	public String signups(@RequestParam("userAddress") String[] userAddress, RedirectAttributes ra) {
-		String userAddressString = Arrays.toString(userAddress);
-
-		String address = String.join("^^^", userAddress);
-
-//		return "redirect:" + path;
-		return address;
-
-	}
-
-	/// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	@GetMapping("signups")
-	public String signups() {
-
-//		return "redirect:" + path;
-		return "pages/user/signups";
 
 	}
 
