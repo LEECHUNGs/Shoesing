@@ -24,7 +24,7 @@
       <ul th:object="${order}">
         <th:block th:each="i : *{itemStockNoList}">
           <li>
-            <img src="/img/cat1.jpg">
+            <img th:src="${i.thumbnail}">
             <div>
               <div>상품명 : [[${i.itemName}]]</div>
               <div>상품 가격 : [[${i.itemPrice}]]</div>

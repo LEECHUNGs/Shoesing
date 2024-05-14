@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.shoesing.cart.model.mapper.CartMapper">
+
+	<resultMap type="Item" id="item_rm">
+		
+		<id property="itemNo" column="ITEM_NO"/>
+		
+		<collection property="imageList"
+					select = "selectImageList"
+					column = "ITEM_NO"
+					javaType = "java.util.ArrayList"
+					ofType = "ItemImg"
+		/>
+	</resultMap>
 	
 	<select id="check">
 		SELECT COUNT(*)
@@ -22,13 +34,18 @@
 	
 	<!-- 해당 회원의 장바구니 리스트를 한페이지 만큼 탐색 -->
 	<select id="selectAll">
-		SELECT CART_NO, ITEM_STOCK_NO, ITEM_NAME, ITEM_PRICE, ITEM_BRAND, 
-			   ITEM_IMG_PATH, CART_ITEM_COUNT, SIZE_VAL
+		SELECT ITEM_NO, CART_NO, ITEM_STOCK_NO, ITEM_NAME, ITEM_PRICE, ITEM_BRAND, 
+			   ITEM_IMG_PATH, CART_ITEM_COUNT, SIZE_VAL, (IMG_PATH || IMG_RENAME) THUMBNAIL
 		FROM "CART"
 		JOIN "STOCK" USING(ITEM_STOCK_NO)
 		JOIN "ITEM" USING(ITEM_NO)
 		JOIN "SIZE" USING(SIZE_NO)
+		JOIN "ITEM_IMG" USING(ITEM_NO)
 		WHERE USER_NO = ${userNo}
+		AND (
+			IMG_ORDER = 0
+			OR IMG_ORDER IS NULL
+		)
 		ORDER BY CART_ITEM_UPLOAD_DATE
 	</select>
 	
@@ -67,11 +84,17 @@
 	
 	<!-- 비회원용 상품 1개를 검색 -->
 	<select id="selectCart">
-		SELECT ITEM_STOCK_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_BRAND, SIZE_NO, SIZE_VAL
+		SELECT ITEM_STOCK_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_BRAND, SIZE_NO, SIZE_VAL,
+				(IMG_PATH || IMG_RENAME) THUMBNAIL
 		FROM "STOCK"
 		JOIN "ITEM" USING(ITEM_NO)
 		JOIN "SIZE" USING(SIZE_NO) 
+		JOIN "ITEM_IMG" USING(ITEM_NO)
 		WHERE ITEM_STOCK_NO = ${itemStockNo}
+		AND (
+			IMG_ORDER = 0
+			OR IMG_ORDER IS NULL
+		)
 	</select>
 	
 	<update id="update">

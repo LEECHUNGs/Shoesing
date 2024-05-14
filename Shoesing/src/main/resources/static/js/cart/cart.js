@@ -69,7 +69,7 @@ const selectCart = (cp) => {
             itemCount.value = cartList[i].cartItemCount; // 상품 재고 수로 초기화
 
             // 상품 이미지 세팅 (추가 예정)
-            img.src = "/img/cat1.jpg";
+            img.src = cartList[i].thumbnail;
 
             // 상품 정보 세팅
             name.innerText = cartList[i].itemName;

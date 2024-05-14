@@ -47,9 +47,6 @@ public class OrderController {
 		Map<String, Object> map = null;
 		int userNo = 0;
 		
-		log.info("loginUser : " + loginUser);
-		log.info("anonUserNo : " + anonUserNo);
-		
 		// 비회원일 경우
 		if(loginUser == null) {
 			

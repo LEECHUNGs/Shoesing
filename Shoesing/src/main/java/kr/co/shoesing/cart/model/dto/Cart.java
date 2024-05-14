@@ -1,5 +1,8 @@
 package kr.co.shoesing.cart.model.dto;
 
+import java.util.List;
+
+import kr.co.shoesing.item.model.dto.ItemImg;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,7 +29,9 @@ public class Cart {
 	private String itemName;		// 상품 이름
 	private int itemPrice;			// 상품 가격
 	private String itemBrand;		// 상품 브랜드
-	private String itemImgPath;		// 상품 이미지 경로
+	
+	private String thumbnail;		// 상품 썸네일
+	private List<ItemImg> imageList; // 상품 이미지
 
 	@Override
 	public boolean equals(Object obj) {
