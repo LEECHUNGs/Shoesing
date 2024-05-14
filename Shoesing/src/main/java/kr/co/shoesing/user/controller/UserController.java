@@ -457,11 +457,12 @@ public class UserController {
 	 * @param ra
 	 */
 	@PostMapping("loginAnon")
-	public String loginAnon(User inputAnonUser, RedirectAttributes ra, HttpServletRequest request, Model model) {
-
+	public String loginAnon(User inputAnonUser, RedirectAttributes ra,
+							HttpServletRequest request, Model model) {
+				
 		// 비회원용 로그인
-		User loginAnonUser = service.login(inputAnonUser);
-
+		User loginAnonUser = service.loginAnon(inputAnonUser);
+		
 		if (loginAnonUser != null) {
 
 			if (service.checkDel(inputAnonUser.getUserId()) == 1) { // 탈퇴한 회원이 아닐 경우

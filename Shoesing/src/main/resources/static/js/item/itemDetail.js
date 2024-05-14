@@ -22,18 +22,17 @@ document.getElementById('wishlistBtn').addEventListener('click', () => {
 
 // 비동기로 장바구니에 상품 추가
 document.getElementById('cartBtn').addEventListener('click', () => {
-  if (document.querySelector('[name=inputSize]:checked') == null) {
+  if (document.querySelector('[name=itemStockNoList]:checked') == null) {
     alert('사이즈를 먼저 선택해주세요.');
     return;
   }
-
-  const sizeNo = document.querySelector('[name=inputSize]:checked').value;
-  const cartItemCount = document.getElementById('itemCount').value;
+  
+  const itemStockNo = document.querySelector('[name=itemStockNoList]:checked').value;
+  const cartItemCount = document.getElementById('itemCount');
 
   const obj = {
-    itemNo: item.itemNo,
-    sizeNo: sizeNo,
-    cartItemCount: cartItemCount,
+    "itemStockNo": itemStockNo,
+    "cartItemCount": cartItemCount.value
   };
 
   fetch('/cart/manage', {
@@ -49,4 +48,16 @@ document.getElementById('cartBtn').addEventListener('click', () => {
         alert('상품을 장바구니에 넣을 수 없습니다.');
       }
     });
+});
+
+// 사이즈 미선택 시 submit retun;
+const orderForm = document.getElementById('orderForm');
+orderForm.addEventListener("submit", e => {
+
+  if (document.querySelector('[name=itemStockNoList]:checked') == null) {
+    alert('사이즈를 먼저 선택해주세요.');
+    e.preventDefault();
+    return;
+  }
+
 });

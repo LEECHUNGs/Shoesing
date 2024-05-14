@@ -109,11 +109,8 @@
               role="tabpanel"
               aria-labelledby="nav-contact-tab"
             >
-              <form
-                action="/user/loginAnon"
-                method="POST"
-                class="checkOrderForm"
-              >
+              <!-- 비회원 로그인 -->
+              <form action="/user/loginAnon" method="post" class="checkOrderForm">
                 <div class="form-floating loginInput">
                   <input
                     type="text"
@@ -136,15 +133,15 @@
                   <label for="floatingPassword">비밀번호</label>
                 </div>
                 <div class="loginInput">
-                  <button class="loginBtn">주문 조회</button>
+                  <button type="submit" class="loginBtn">주문 조회</button>
                 </div>
                 <div class="loginInput">
                   <b class="loginLink"
                     >아직 회원이 아니신가요?
                     <a class="signupLink" href="/user/agreements"
                       >회원가입</a
-                    ></b
-                  >
+                    >
+                  </b>
                 </div>
               </form>
             </div>

@@ -235,7 +235,7 @@ public class AdminController {
 		int result = 0;
 
 		for (int i = 1; i <= 9; i++) {
-			Stock stock = new Stock(i, itemNo, 0, 0);
+			Stock stock = new Stock(0, i, itemNo, 0, 0);
 			itemService.updateStock(stock);
 			result += itemService.updateStock(stock);
 		}
@@ -262,7 +262,7 @@ public class AdminController {
 			@RequestParam("sizeList") List<Integer> sizeList, HttpServletRequest request) {
 
 		for (int i = 1; i <= 9; i++) {
-			Stock stock = new Stock(i, itemNo, 0, sizeList.get(i - 1));
+			Stock stock = new Stock(0, i, itemNo, 0, sizeList.get(i - 1));
 
 			itemService.updateStock(stock);
 		}
