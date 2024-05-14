@@ -55,7 +55,7 @@ const selectWishlist = (cp) => {
             checkbox.value = wishlist[i].itemNo;
 
             // 상품 이미지 세팅 (추가 예정)
-            img.src = "/img/cat1.jpg";
+            img.src = wishlist[i].thumbnail;
 
             // 상품 정보 세팅
             name.innerText = wishlist[i].itemName;

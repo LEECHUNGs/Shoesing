@@ -23,4 +23,6 @@ public class Wishlist {
 	private String itemName;
 	private int itemPrice;
 	private String itemBrand;
+	
+	private String thumbnail;
 }
