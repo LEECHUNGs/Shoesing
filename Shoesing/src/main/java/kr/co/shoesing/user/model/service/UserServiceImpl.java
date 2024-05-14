@@ -240,18 +240,23 @@ public class UserServiceImpl implements UserService {
 
 		// 비회원용 로그인
 		User loginUser = mapper.loginAnon(userId);
+		log.info("loginUser" + loginUser);
 		
 		if (loginUser == null) { // Mapper 확인 안되는 경우
 			return null; // 실패
 
 		}
 
+		log.info("loginUser" + loginUser);
+		
 		// 비밀번호 검사
 		if (passwordEncoder.matches(inputAnonUser.getUserPw(), loginUser.getUserPw())) {
 			return loginUser; // 성공
 
 		}
 
+		log.info("loginUser" + loginUser);
+		
 		return null; // 실패
 	}
 }

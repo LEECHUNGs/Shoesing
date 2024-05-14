@@ -463,6 +463,8 @@ public class UserController {
 		// 비회원용 로그인
 		User loginAnonUser = service.loginAnon(inputAnonUser);
 		
+		log.info("login : " + loginAnonUser);
+		
 		if (loginAnonUser != null) {
 
 			if (service.checkDel(inputAnonUser.getUserId()) == 1) { // 탈퇴한 회원이 아닐 경우
@@ -478,13 +480,16 @@ public class UserController {
 
 		} else {
 			ra.addFlashAttribute("message", "실패!");
+			
+			return "redirect:" + request.getHeader("REFERER");
 		}
 
-		if (request.getRequestURI().equals("/user/login")) {
-			return "redirect:/";
+		if (!request.getRequestURI().equals("/user/login")) {
+			log.info("주문목록");
+			return "redirect:/order/info";
 		}
 
-		return "redirect:/order/info";
+		return "redirect:" + request.getHeader("REFERER");
 	}
 	
 	   @GetMapping("findId")
