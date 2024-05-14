@@ -245,7 +245,7 @@ const update = (item, val) => {
 // 선택 상품 구매 버튼을 눌렀을 때
 document.getElementById("orderForm").addEventListener("submit", e => {
 
-    const checkAll = document.querySelectorAll("[name=itemStockNoList]");
+    const checkAll = document.querySelectorAll("[name=itemStockNoList]:checked");
 
     // 선택 항목이 없을 때
     if(checkAll.length == 0) {
