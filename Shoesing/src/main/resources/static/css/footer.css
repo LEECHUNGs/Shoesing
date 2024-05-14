@@ -12,4 +12,46 @@ footer * {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  width: 100%;
+}
+.footer-content {
+  display: flex;
+  width: 100%;
+  max-width: 1300px;
+  padding: 12px 20px;
+  justify-content: space-between;
+}
+
+.info p {
+  margin: 0;
+  font-size: 14px;
+}
+.siteMap a,
+.siteMap p {
+  font-weight: 600;
+  margin: 1px;
+  font-size: 15px;
+}
+
+.spacer {
+  width: 0;
+}
+
+.title {
+  font-family: var(--title-font-family);
+  font-size: 20px;
+  margin: 12px;
+}
+
+/* md --- Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .spacer {
+    width: 22%;
+  }
+}
+/* lg --- Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .spacer {
+    width: 42%;
+  }
 }

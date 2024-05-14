@@ -13,7 +13,7 @@
 }
 .itemBox > a {
   width: 100%;
-  height: calc(90cqw);
+  height: 90cqw;
   align-items: center;
   overflow-y: hidden;
   display: flex;
@@ -46,7 +46,7 @@
 /* 상품 썸네일 */
 .itemThumbnail {
   width: 92%;
-  height: 100%;
+  height: 72%;
   position: relative;
 }
 .itemThumbnail img {
