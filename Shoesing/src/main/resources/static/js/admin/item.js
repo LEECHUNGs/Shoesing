@@ -29,11 +29,6 @@ const itemList = (sortNo) => {
               재고 초기화
             </button>
           </td>
-          <td>
-            <button value="${itemList[i].itemNo}" id="deleteItem">
-              삭제
-            </button>
-          </td>
         `;
 
         itemBody.appendChild(item);
