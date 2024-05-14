@@ -125,27 +125,24 @@ public class UserController {
 	@PostMapping("signup")
 	public String signup(User inputUser, @RequestParam("userAddress") String[] userAddress, RedirectAttributes ra) {
 
-		
 		int result = service.signup(inputUser, userAddress);
-		
+
 		String path = null;
 		String message = null;
-		
+
 		if (result > 0) {
 			message = inputUser.getUserNickname() + " 님 환영합니다";
-			path ="/";
-			
+			path = "/";
+
 		} else {
 			message = " 회원가입에 실패했습니다";
 			path = "signup";
 		}
-	
-		ra.addFlashAttribute("message",message);
-		return "redirect:"+path;
 
+		ra.addFlashAttribute("message", message);
+		return "redirect:" + path;
 
 	}
-
 
 	/**
 	 * 마이페이지 페이지
@@ -157,7 +154,6 @@ public class UserController {
 		return "pages/user/myPage";
 	}
 
-	
 	/**
 	 * 회원 탈퇴
 	 * 
@@ -360,44 +356,41 @@ public class UserController {
 		return result2;
 
 	}
-	
+
 	@GetMapping("updateProfile")
 	public String setAddress(@SessionAttribute("loginUser") User loginUser, Model model) {
-		
+
 		// 주소만 꺼내옴
 		String userAddress = loginUser.getUserAddress();
-		
+
 		// 주소가 있을 경우에만 동작
-		if(userAddress != null) {
-			
+		if (userAddress != null) {
+
 			String[] arr = null;
 			log.info(userAddress);
-			if(userAddress.equals("^^^^^^") ) {
-				arr= new String[3];
+			if (userAddress.equals("^^^^^^")) {
+				arr = new String[3];
 				arr[0] = "";
 				arr[1] = "";
 				arr[2] = "";
-				
-			}else {
-				
-				arr = userAddress.split("\\^\\^\\^"); // regEx : 정규표현식 
+
+			} else {
+
+				arr = userAddress.split("\\^\\^\\^"); // regEx : 정규표현식
 			}
-			
+
 			log.info(Arrays.toString(arr));
-			
-			
-			
+
 			model.addAttribute("postcode", arr[0]);
 			model.addAttribute("address", arr[1]);
 			model.addAttribute("detailAddress", arr[2]);
-			
+
 		}
-		
-		// /templates/myPage/myPage-info.html로  forward
+
+		// /templates/myPage/myPage-info.html로 forward
 		return "pages/user/updateProfile";
 	}
-	
-	
+
 	/**
 	 * 내정보 수정
 	 * 
@@ -405,19 +398,15 @@ public class UserController {
 	 */
 	@PostMapping("updateProfile")
 
-	public String updateProfile(User inputUser, 
-			@SessionAttribute("loginUser") User loginUser,
-			@RequestParam("userAddress") String[] userAddress,
-			RedirectAttributes ra) {
+	public String updateProfile(User inputUser, @SessionAttribute("loginUser") User loginUser,
+			@RequestParam("userAddress") String[] userAddress, RedirectAttributes ra) {
 
-		log.info("inputUser {}" , inputUser);
-		log.info("userAddress {}" , userAddress[0]);
+		log.info("inputUser {}", inputUser);
+		log.info("userAddress {}", userAddress[0]);
 		String userId = loginUser.getUserId();
 		inputUser.setUserId(userId);
-		
 
 		int result = service.updateProfile(inputUser, userAddress);
-
 
 		String message = null;
 
@@ -436,13 +425,9 @@ public class UserController {
 		ra.addFlashAttribute("message", message);
 
 		return "redirect:updateProfile";
-	
 
 	}
 
-	
-	
-	
 	/**
 	 * 회원 탈퇴 시 입력한 값과 현재 비밀번호 일치하는지 체크
 	 * 
@@ -464,7 +449,6 @@ public class UserController {
 
 	}
 
-	
 	/**
 	 * 비회원 주문목록 조회용 로그인
 	 * 
@@ -484,9 +468,9 @@ public class UserController {
 			if (service.checkDel(inputAnonUser.getUserId()) == 1) { // 탈퇴한 회원이 아닐 경우
 
 				ra.addFlashAttribute("message", "성공!");
-				
+
 				model.addAttribute("anonUserNo", loginAnonUser.getUserNo());
-				
+
 			} else if (service.checkDel(inputAnonUser.getUserId()) == 0) { // 탈퇴한 회원일 경우
 				ra.addFlashAttribute("message", "만료된 주문번호 입니다");
 
@@ -503,7 +487,3 @@ public class UserController {
 		return "redirect:/order/info";
 	}
 }
-
-
-
-
