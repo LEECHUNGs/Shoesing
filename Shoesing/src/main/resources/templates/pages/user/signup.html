@@ -165,17 +165,33 @@
       <!-- 주소 입력 -->
       <label for="userAddress"><span class="required">주소</span></label>
       <div class="signup-input-area">
-        <input type="text" id="postcode" placeholder="우편번호" readonly />
-        <input
-          type="button"
-          onclick="execDaumPostcode()"
-          value="우편번호 찾기"
-        /><br />
-        <input type="text" id="roadAddress" placeholder="도로명주소" readonly />
-        <input type="text" id="jibunAddress" placeholder="지번주소" readonly />
-        <span id="guide" style="color: #999; display: none"></span>
-        <input type="text" id="detailAddress" placeholder="상세주소" />
-        <input type="text" id="extraAddress" placeholder="참고항목" />
+        <label for="userAddress">주소</label>
+        <div class="signUp-input-area">
+          <input
+            type="text"
+            name="userAddress"
+            placeholder="우편번호"
+            maxlength="6"
+            id="postcode"
+          />
+          <button type="button" id="searchAddress">검색</button>
+        </div>
+        <div class="signUp-input-area">
+          <input
+            type="text"
+            name="userAddress"
+            placeholder="도로명/지번 주소"
+            id="address"
+          />
+        </div>
+        <div class="signUp-input-area">
+          <input
+            type="text"
+            name="userAddress"
+            placeholder="상세 주소"
+            id="detailAddress"
+          />
+        </div>
       </div>
 
       <button>취소</button>

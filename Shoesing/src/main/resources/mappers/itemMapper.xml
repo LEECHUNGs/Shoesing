@@ -162,6 +162,18 @@
 		ORDER BY ITEM_NO DESC
 		FETCH FIRST 10 ROW ONLY
 	</select>
+	
+	<insert id="insertStock">
+		INSERT INTO "STOCK"
+		<foreach collection="list" item="i" open="(" close=")" separator=" UNION ">
+			SELECT
+			NEXTVAL_STOCK_NO(),
+	        CURR_ITEM_NO(),
+	        #{i}, 
+	        0
+			FROM DUAL
+		</foreach>	
+	</insert>
 
 	
 	

@@ -19,6 +19,7 @@
 			USER_ICON
 		FROM "USER"
 		WHERE USER_ID = #{userId}
+		AND USER_IDENTIFY = 'N'
 	</select>
 	
 	<!-- 회원가입 -->
@@ -52,7 +53,7 @@
 				</when>
 				<!-- 유저 닉네임 -->
 				<when test='method == "userNickname"'>
-					USER_ID = #{input}
+					USER_NICKNAME = #{input}
 				</when>
 				<!-- 유저 이메일 -->
 				<when test='method == "userEmail"'>
