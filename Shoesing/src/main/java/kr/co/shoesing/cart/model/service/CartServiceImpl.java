@@ -122,12 +122,8 @@ public class CartServiceImpl implements CartService{
 	// 비회원 장바구니 상품 추가
 	@Override
 	public void insert(List<Cart> cartList, Cart cart) {
-				
-		Map<String, Integer> map = new HashMap<>();
-		map.put("itemNo", cart.getItemNo());
-		map.put("sizeNo", cart.getSizeNo());
 		
-		Cart newCart = mapper.selectCart(cart);
+		Cart newCart = mapper.selectCart(cart.getItemStockNo());
 		newCart.setCartItemCount(cart.getCartItemCount());
 				
 		// 이미 장바구니에 있을 때

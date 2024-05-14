@@ -40,7 +40,7 @@ const selectWishlist = (cp) => {
             const li = document.createElement("li"); // 위시리스트 Li
             const checkbox = document.createElement("input"); // 위시리스트 체크박스
             const img = document.createElement("img"); // 위시리스트 상품 사진
-            const infoDiv = document.createElement("div"); // 위시리스트 설명 div
+            const infoA = document.createElement("a"); // 위시리스트 설명 div
 
             // 위시리스트 설명
             const name = document.createElement("div"); // 이름
@@ -62,13 +62,14 @@ const selectWishlist = (cp) => {
             price.innerText = wishlist[i].itemPrice;
             brand.innerText = wishlist[i].itemBrand;
 
-            // infoDiv에 요소 추가
-            infoDiv.append(name, price, brand);
+            // infoA에 요소 추가
+            infoA.append(img, name, price, brand);
+            infoA.href = `/item/detail?itemNo=${wishlist[i].itemNo}`;
 
             deleteBtn.innerHTML = "&times;";
 
             // li에 요소 추가
-            li.append(checkbox, img, infoDiv, deleteBtn);
+            li.append(checkbox, infoA, deleteBtn);
             
             // wishlistUl에 모든 내용 추가
             wishlistUl.append(li);

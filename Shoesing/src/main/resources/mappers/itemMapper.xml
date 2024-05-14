@@ -92,7 +92,7 @@
 	
 	<!-- 해당 상품 사이즈별 재고 검색 -->
 	<select id="selectSizeList" resultType="Stock">
-		SELECT SIZE_NO, ITEM_NO, SIZE_VAL, SIZE_STOCK
+		SELECT ITEM_STOCK_NO, SIZE_NO, ITEM_NO, SIZE_VAL, SIZE_STOCK
 		FROM "STOCK"
 		JOIN "SIZE" USING(SIZE_NO)
 		WHERE ITEM_NO = ${itemNo}
