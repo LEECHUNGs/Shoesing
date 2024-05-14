@@ -190,7 +190,7 @@
 		SELECT USER_NO , USER_PW 
 		FROM "USER"
 		WHERE USER_ID = #{userId}
-		WHERE USER_IDENTIFY = 'Y'
+		AND USER_IDENTIFY = 'Y'
 	</select>
 	
 </mapper>

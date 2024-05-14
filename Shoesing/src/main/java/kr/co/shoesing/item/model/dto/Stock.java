@@ -15,6 +15,7 @@ import lombok.ToString;
 @ToString
 public class Stock {
 	
+	private int itemStockNo;// 재고 번호
 	private int sizeNo;		// 사이즈 번호
 	private int itemNo;		// 상품 번호
 	private int sizeVal;	// 사이즈 수치 (220, 230, 240....)

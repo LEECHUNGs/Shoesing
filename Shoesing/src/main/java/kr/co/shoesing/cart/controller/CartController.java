@@ -23,12 +23,13 @@ import kr.co.shoesing.cart.model.dto.CartVo;
 import kr.co.shoesing.cart.model.service.CartService;
 import kr.co.shoesing.user.model.dto.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @SessionAttributes({ "cartList" })
 @RequiredArgsConstructor
 @RequestMapping("cart")
 @Controller
-@lombok.extern.slf4j.Slf4j
+@Slf4j
 public class CartController {
 
 	private final CartService service;
@@ -112,6 +113,8 @@ public class CartController {
 			@SessionAttribute(value = "cartList", required = false) List<Cart> cartList,
 			@SessionAttribute(value = "loginUser", required = false) User loginUser, HttpSession session) {
 
+		log.info(cart.toString());
+		
 		// 비회원일 경우
 		if (loginUser == null) {
 

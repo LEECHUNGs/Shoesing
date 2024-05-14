@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
 	 * @return User
 	 */
 	public User login(User inputUser) {
-		System.out.println(inputUser);
 
 		String userId = inputUser.getUserId();
 
@@ -234,13 +233,14 @@ public class UserServiceImpl implements UserService {
 	 * 
 	 * @return User
 	 */
+	@Override
 	public User loginAnon(User inputAnonUser) {
 
 		String userId = inputAnonUser.getUserId();
 
 		// 비회원용 로그인
 		User loginUser = mapper.loginAnon(userId);
-
+		
 		if (loginUser == null) { // Mapper 확인 안되는 경우
 			return null; // 실패
 

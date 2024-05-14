@@ -11,7 +11,8 @@
   <th:block layout:fragment="main">
     <!-- 내용은 여기 작성 -->
 
-    <h1>주문 페이지</h1>
+    <h1 th:if="${session.loginUser}">주문 페이지</h1>
+    <h1 th:unless="${session.loginUser}">비회원 주문 페이지</h1>
 
     <!-- 주문자 정보 -->
     <div>
