@@ -401,7 +401,7 @@ newPw.addEventListener('input', (e) => {
     return;
   }
 
-  if (newPwConfirm.trim().length == 0) {
+  if (newPwConfirm.value.trim().length == 0) {
     updatePwMessage.innerText = '변경할 비밀번호를 한번 더 입력해주세요';
     return;
   }
