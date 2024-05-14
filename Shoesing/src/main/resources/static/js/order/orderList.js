@@ -56,7 +56,7 @@ const orderDetailFnc = (td, orderNo) => {
             const count = document.createElement("div"); // 주문 수량  
 
             // 상품 이미지 (추가 예정)
-            img.src = "/img/cat1.jpg";
+            img.src = e.thumbnail;
 
             // 상품 정보 세팅
             stockNo.innerText = `상품 번호 : ${e.itemStockNo}`;
