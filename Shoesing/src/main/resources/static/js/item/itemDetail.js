@@ -1,11 +1,11 @@
-// 비동기로 wishList에 상품 추가
-document.getElementById('wishListBtn').addEventListener('click', () => {
+// 비동기로 wishlist에 상품 추가
+document.getElementById('wishlistBtn').addEventListener('click', () => {
   if (loginUser == null) {
     alert('로그인 후 이용해 주세요!!');
     return;
   }
 
-  fetch('/wishList/manage', {
+  fetch('/wishlist/manage', {
     method: 'post',
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify(item),

@@ -12,17 +12,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import kr.co.shoesing.item.model.dto.Item;
 import kr.co.shoesing.user.model.dto.User;
-import kr.co.shoesing.wishList.model.service.WishListService;
+import kr.co.shoesing.wishList.model.dto.Wishlist;
+import kr.co.shoesing.wishList.model.dto.WishlistVO;
+import kr.co.shoesing.wishList.model.service.WishlistService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@RequestMapping("wishList")
+@RequestMapping("wishlist")
 @Controller
-public class WishLisController {
+public class WishlisController {
 
-	private final WishListService service;
+	private final WishlistService service;
 
 	/**
 	 * 위시리스트 페이지 뷰
@@ -31,7 +32,7 @@ public class WishLisController {
 	 */
 	@GetMapping("info")
 	public String wishListInfo() {
-		return "pages/wishList/wishList";
+		return "pages/wishlist/wishlist";
 	}
 
 	/**
@@ -56,9 +57,9 @@ public class WishLisController {
 	 */
 	@ResponseBody
 	@PostMapping("manage")
-	public int insert(@SessionAttribute("loginUser") User loginUser, @RequestBody Item item) {
+	public int insert(@SessionAttribute("loginUser") User loginUser, @RequestBody Wishlist wishlist) {
 
-		return service.insert(loginUser.getUserNo(), item.getItemNo());
+		return service.insert(loginUser.getUserNo(), wishlist.getItemNo());
 	}
 
 	/**
@@ -68,10 +69,24 @@ public class WishLisController {
 	 */
 	@ResponseBody
 	@DeleteMapping("manage")
-	public int delete(@RequestBody String itemNoString, @SessionAttribute("loginUser") User loginUser) {
-
-		String itemNoList = itemNoString.substring(itemNoString.indexOf("[") + 1, itemNoString.indexOf("]"));
-
-		return service.delete(itemNoList, loginUser.getUserNo());
+	public int delete(@RequestBody WishlistVO wishlistVO, @SessionAttribute("loginUser") User loginUser) {
+				
+		return service.delete(wishlistVO, loginUser.getUserNo());
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

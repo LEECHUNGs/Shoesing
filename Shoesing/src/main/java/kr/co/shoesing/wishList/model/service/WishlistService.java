@@ -1,9 +1,10 @@
 package kr.co.shoesing.wishList.model.service;
 
-import java.util.List;
 import java.util.Map;
 
-public interface WishListService {
+import kr.co.shoesing.wishList.model.dto.WishlistVO;
+
+public interface WishlistService {
 
 	/** 위시리스트 추가
 	 * @param userNo
@@ -20,10 +21,10 @@ public interface WishListService {
 	Map<String, Object> selectAll(int userNo, int cp);
 
 	/** 선택한 위시리스트 목록 삭제하기
-	 * @param itemNoList
+	 * @param wishlistVO
 	 * @param userNo 
 	 * @return
 	 */
-	int delete(String itemNoList, int userNo);
+	int delete(WishlistVO wishlistVO, int userNo);
 
 }

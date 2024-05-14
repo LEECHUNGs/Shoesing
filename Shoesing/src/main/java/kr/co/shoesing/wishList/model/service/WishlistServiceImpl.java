@@ -1,7 +1,6 @@
 package kr.co.shoesing.wishList.model.service;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -10,16 +9,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.shoesing.common.util.Pagination;
-import kr.co.shoesing.item.model.dto.Item;
-import kr.co.shoesing.wishList.model.mapper.WishListMapper;
+import kr.co.shoesing.wishList.model.dto.Wishlist;
+import kr.co.shoesing.wishList.model.dto.WishlistVO;
+import kr.co.shoesing.wishList.model.mapper.WishlistMapper;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class WishListServiceImpl implements WishListService{
+public class WishlistServiceImpl implements WishlistService{
 	
-	private final WishListMapper mapper;
+	private final WishlistMapper mapper;
 
 	// 페이지네이션 용 변수
 	private int limit = 10; // 한 페이지 목록에 보여질 상품 수
@@ -55,19 +55,20 @@ public class WishListServiceImpl implements WishListService{
 		int offset = (cp - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		List<Item> wishList = mapper.selectAll(userNo, rowBounds);
+		// 위시리스트 불러옴
+		List<Wishlist> wishlist = mapper.selectAll(userNo, rowBounds);
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("wishList", wishList);
+		map.put("wishlist", wishlist);
 		map.put("pagination", pagination);
 		
 		return map;
 	}
 	@Override
-	public int delete(String itemNoList, int userNo) {
+	public int delete(WishlistVO wishlistVO, int userNo) {
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("itemNoList", itemNoList);
+		map.put("wishlists", wishlistVO.getWishlists());
 		map.put("userNo", userNo);
 		
 		return mapper.delete(map);

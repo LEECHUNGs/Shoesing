@@ -99,7 +99,6 @@ public class CartServiceImpl implements CartService{
 	public void delete(List<Cart> cartList, CartVo cartVo) {
 		
 		for(Cart cart : cartVo.getCartList()) {
-			log.info(cart.toString());
 			
 			cartList.remove(cart);
 		}
@@ -116,27 +115,21 @@ public class CartServiceImpl implements CartService{
 			// 상품이 이미 장바구니에 있으면 상품의 수량 조정
 			return mapper.add(inputCart);
 		}
-		
-		log.info(inputCart.toString());
-		
+				
 		return mapper.insert(inputCart);
 	}
 
 	// 비회원 장바구니 상품 추가
 	@Override
 	public void insert(List<Cart> cartList, Cart cart) {
-		
-		log.info(cart.toString());
-		
+				
 		Map<String, Integer> map = new HashMap<>();
 		map.put("itemNo", cart.getItemNo());
 		map.put("sizeNo", cart.getSizeNo());
 		
 		Cart newCart = mapper.selectCart(cart);
 		newCart.setCartItemCount(cart.getCartItemCount());
-		
-		log.info(newCart.toString());
-		
+				
 		// 이미 장바구니에 있을 때
 		int index = cartList.indexOf(newCart);
 		

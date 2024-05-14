@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("user")
-@SessionAttributes({ "loginUser" })
+@SessionAttributes({ "loginUser", "anonUserNo" })
 public class UserController {
 
 	private final UserService service;
@@ -408,5 +408,89 @@ public class UserController {
 
 		return result;
 	}
+	
+//	@PostMapping("updateProfile")
+//	public String updateProfile(@SessionAttribute("loginUser") User loginUser,
+//			Model model,
+//			RedirectAttributes ra,HttpSession session,
+//			User inputUser) {
+//		
+//		String userId = loginUser.getUserId();
+//		inputUser.setUserId(userId);
+//		
+//		
+//		int result = service.updateProfile(inputUser);
+//		
+//		String message = "";
+//		String path = "";
+//		
+//		if (result > 0) {
+//			message = "회원 정보 수정 성공!";
+//			path = "/pages/user/updateProfile";
+//			
+//		} else {
+//			message = "회원 정보 수정 실패";
+//			path = "/pages/user/updateProfile";
+//		}
+//		model.addAttribute("message", "회원가입 실패");
+//		return "redirect:/user/updateProfile";
+//	}
+	
+//	@PostMapping("updateProfile")
+//	public String updateProfile(Map<String , Object> paramMap,RedirectAttributes ra, HttpServletRequest request) {
+//		
+//		HttpSession session = request.getSession();
+//		
+//		User loginUser = (User)session.getAttribute("loginUser");
+//		
+//		
+//
+//		
+//		int result = service.updateProfile(paramMap);
+//		
+//		if (result > 0) {
+//			ra.addFlashAttribute("message", "성공!");
+//		} else {
+//			ra.addFlashAttribute("message", "실패!");
+//		}
+//		return "redirect:" + request.getHeader("REFERER");
+//	}
+	
+	/**
+	 * 비회원 주문목록 조회용 로그인
+	 * 
+	 * @param inputUser
+	 * @param model
+	 * @param ra
+	 */
+	@PostMapping("loginAnon")
+	public String loginAnon(User inputAnonUser, RedirectAttributes ra,
+							HttpServletRequest request, Model model) {
+			
+		// 비회원용 로그인
+		User loginAnonUser = service.login(inputAnonUser);
 
+		if (loginAnonUser != null) {
+
+			if (service.checkDel(inputAnonUser.getUserId()) == 1) { // 탈퇴한 회원이 아닐 경우
+
+				ra.addFlashAttribute("message", "성공!");
+				
+				model.addAttribute("anonUserNo", loginAnonUser.getUserNo());
+				
+			} else if (service.checkDel(inputAnonUser.getUserId()) == 0) { // 탈퇴한 회원일 경우
+				ra.addFlashAttribute("message", "만료된 주문번호 입니다");
+
+			}
+
+		} else {
+			ra.addFlashAttribute("message", "실패!");
+		}
+
+		if (request.getRequestURI().equals("/user/login")) {
+			return "redirect:/";
+		}
+
+		return "redirect:/order/info";
+	}
 }

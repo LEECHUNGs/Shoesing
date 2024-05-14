@@ -159,4 +159,38 @@
 		USER_EMAIL= #{userEmail}
 		WHERE USER_ID = #{userId}
 	</update>
+	
+	<!-- 비회원용 회원가입 -->
+	<insert id="signupTemp" useGeneratedKeys="true" keyProperty="userNo" keyColumn="USER_NO">
+		INSERT INTO "USER" 
+		VALUES(
+			SEQ_USER_NO.NEXTVAL, 
+			#{userId},
+			#{userPw}, 
+			DEFAULT, 
+			#{userName}, 
+			#{userAddress}, 
+			#{userTel}, 
+			#{userEmail}, 
+			DEFAULT,
+			DEFAULT, 
+			'Y', 
+			DEFAULT
+		)
+	</insert>
+	
+	<update id="updateId">
+		UPDATE "USER" SET
+			USER_ID = ${orderNo}
+		WHERE USER_NO = ${userNo}
+	</update>
+	
+	<!-- 비회원 로그인 -->
+	<select id="loginAnon" resultType="User">
+		SELECT USER_NO , USER_PW 
+		FROM "USER"
+		WHERE USER_ID = #{userId}
+		WHERE USER_IDENTIFY = 'Y'
+	</select>
+	
 </mapper>
