@@ -17,10 +17,10 @@ public interface UserService {
 	 * 회원 회원가입
 	 * 
 	 * @param inputUser
-	 * @param userAddress 
+	 * @param userAddress
 	 * @return result
 	 */
-	int signup(User inputUser, String[] userAddress);
+	int signup(User inputUser, String userAddress);
 
 	/**
 	 * 회원 탈퇴

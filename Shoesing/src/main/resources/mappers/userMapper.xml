@@ -19,6 +19,7 @@
 			USER_ICON
 		FROM "USER"
 		WHERE USER_ID = #{userId}
+		AND USER_IDENTIFY = 'N'
 	</select>
 	
 	<!-- 회원가입 -->

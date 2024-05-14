@@ -80,4 +80,13 @@ public interface ItemMapper {
 	 */
 	List<Item> selectAllNo();
 
+	/**
+	 * 상품 수량 추가
+	 * 
+	 * @param list
+	 * 
+	 * @return
+	 */
+	int insertStock(List<Integer> list);
+
 }
