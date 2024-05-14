@@ -6,10 +6,10 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
-import kr.co.shoesing.item.model.dto.Item;
+import kr.co.shoesing.wishList.model.dto.Wishlist;
 
 @Mapper
-public interface WishListMapper {
+public interface WishlistMapper {
 
 	/** DB에 해당 위시리스트가 존재하는지 확인
 	 * @param map
@@ -34,7 +34,7 @@ public interface WishListMapper {
 	 * @param rowBounds
 	 * @return
 	 */
-	List<Item> selectAll(int userNo, RowBounds rowBounds);
+	List<Wishlist> selectAll(int userNo, RowBounds rowBounds);
 
 	/** 선택된 위시리스트 삭제
 	 * @param map

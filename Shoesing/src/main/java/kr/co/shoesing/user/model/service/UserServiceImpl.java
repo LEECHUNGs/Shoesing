@@ -56,7 +56,9 @@ public class UserServiceImpl implements UserService {
 	 * 
 	 * @param inputUser
 	 */
+
 	public int signup(User inputUser, String[] userAddress) {
+
 
 		// 비밀번호 암호화
 		if(!inputUser.getUserAddress().equals(",,")) {
@@ -185,7 +187,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updateProfile(User inputUser, String[] userAddress) {
 
+
 		if (inputUser.getUserAddress().equals(",,")) {
+
 			inputUser.setUserAddress(null);
 		} else {
 			String address = String.join("^^^", userAddress);
@@ -208,4 +212,46 @@ public class UserServiceImpl implements UserService {
 		return 1;
 	}
 
+	// 비회원 계정 생성
+	@Override
+	public int signupTemp(User orderUser) {
+		
+		// 비밀번호 암호화
+		String encPw = passwordEncoder.encode(orderUser.getUserPw()); 
+		orderUser.setUserPw(encPw);
+		
+		return mapper.signupTemp(orderUser);
+	}
+
+	@Override
+	public int updateId(int orderNo, int userNo) {
+		
+		return mapper.updateId(orderNo, userNo);
+	}
+
+	/**
+	 * 비회원 로그인
+	 * 
+	 * @return User
+	 */
+	public User loginAnon(User inputAnonUser) {
+
+		String userId = inputAnonUser.getUserId();
+
+		// 비회원용 로그인
+		User loginUser = mapper.loginAnon(userId);
+
+		if (loginUser == null) { // Mapper 확인 안되는 경우
+			return null; // 실패
+
+		}
+
+		// 비밀번호 검사
+		if (passwordEncoder.matches(inputAnonUser.getUserPw(), loginUser.getUserPw())) {
+			return loginUser; // 성공
+
+		}
+
+		return null; // 실패
+	}
 }

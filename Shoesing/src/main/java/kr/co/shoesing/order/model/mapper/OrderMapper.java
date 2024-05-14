@@ -69,4 +69,16 @@ public interface OrderMapper {
 	 */
 	int update(int orderNo);
 
+	/** 비회원용 회원 번호 수정
+	 * @param order
+	 * @return
+	 */
+	int updateUserNo(Order order);
+
+	/** 주문 성공한 주문 불러오기
+	 * @param orderNo
+	 * @return
+	 */
+	Order selectOne(int orderNo);
+
 }

@@ -32,7 +32,9 @@
           <th>주문 회원 번호</th>
           <th>배송지</th>
           <th>총 금액</th>
-          <th>처리 상태 변경</th>
+
+          <!-- 관리자 계정일 경우 처리상태 변경 버튼이 나타남 -->
+          <th th:if="${session.loginUser?.userNo == 1}">처리 상태 변경</th>
         </tr>
       </thead>
 
@@ -44,7 +46,9 @@
             <td th:text="*{i.userNo}" th:onclick="|orderDetailFnc(this, ${i.orderNo})|"></td>
             <td th:text="*{i.orderAddress}" th:onclick="|orderDetailFnc(this, ${i.orderNo})|"></td>
             <td th:text="*{i.orderPrice}" th:onclick="|orderDetailFnc(this, ${i.orderNo})|"></td>
-            <td>
+
+            <!-- 관리자 계정일 경우 처리상태 변경 버튼이 나타남 -->
+            <td th:if="${session.loginUser?.userNo == 1}">
               <button th:onclick="|confirmBtn(*{i.orderNo})|" type="button" th:if="*{#strings.equals(i.orderConfirm, 'N')}">상품 준비중</button>
               <button th:onclick="|confirmBtn(*{i.orderNo})|" type="button" th:unless="*{#strings.equals(i.orderConfirm, 'N')}">배송 완료</button>
             </td>

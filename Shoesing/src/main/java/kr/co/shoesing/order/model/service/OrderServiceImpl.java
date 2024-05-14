@@ -66,8 +66,6 @@ public class OrderServiceImpl implements OrderService{
 			mapper.insertOrder(order);
 		}
 		
-		
-		log.info(order.toString());
 				
 		// 세부 주문 목록 생성
 		int result = mapper.insertOrderDetail(order.getItemStockNoList(), order.getOrderNo());
@@ -116,5 +114,11 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public int update(int orderNo) {
 		return mapper.update(orderNo);
+	}
+
+	@Override
+	public Order selectOne(int orderNo) {
+		
+		return mapper.selectOne(orderNo);
 	}
 }

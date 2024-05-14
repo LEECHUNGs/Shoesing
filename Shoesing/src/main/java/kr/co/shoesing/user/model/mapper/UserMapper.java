@@ -112,6 +112,27 @@ public interface UserMapper {
 	 */
 	int deleteAdmin(String userNo);
 
+	/** 비회원용 회원가입
+	 * @param orderUser
+	 * @return
+	 */
+	int signupTemp(User orderUser);
+
+	/** 비회원용 아이디 초기화
+	 * @param orderNo
+	 * @param userNo 
+	 * @return
+	 */
+	int updateId(@Param("orderNo") int orderNo, @Param("userNo") int userNo);
+
+	/** 비회원용 로그인
+	 * @param userId
+	 * @return
+	 */
+	User loginAnon(String userId);
+
+
+
 
 
 

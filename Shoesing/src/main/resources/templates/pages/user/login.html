@@ -107,12 +107,13 @@
               role="tabpanel"
               aria-labelledby="nav-contact-tab"
             >
-              <form action="/user/" method="POST" class="checkOrderForm">
+              <form action="/user/loginAnon" method="POST" class="checkOrderForm">
                 <div class="form-floating loginInput">
                   <input
                     type="text"
                     class="form-control"
                     id="floatingOrderNo"
+                    name="userId"
                     placeholder="주문번호 숫자 13자리를 입력해주세요"
                   />
                   <label for="floatingOrderNo">주문번호 13자리</label>
@@ -123,6 +124,7 @@
                     type="password"
                     class="form-control"
                     id="floatingPassword"
+                    name="userPw"
                     placeholder="비밀번호"
                   />
                   <label for="floatingPassword">비밀번호</label>

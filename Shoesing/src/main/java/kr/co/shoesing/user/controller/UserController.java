@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("user")
-@SessionAttributes({ "loginUser" })
+@SessionAttributes({ "loginUser", "anonUserNo" })
 public class UserController {
 
 	private final UserService service;
@@ -79,8 +79,6 @@ public class UserController {
 				// 응답 객체 resp에 쿠키 실어 보내기
 				resp.addCookie(cookie);
 
-				ra.addFlashAttribute("message", "성공!");
-
 			} else if (service.checkDel(inputUser.getUserId()) == 0) { // 탈퇴한 회원일 경우
 				ra.addFlashAttribute("message", "탈퇴한 회원입니다");
 
@@ -126,6 +124,7 @@ public class UserController {
 	 */
 	@PostMapping("signup")
 	public String signup(User inputUser, @RequestParam("userAddress") String[] userAddress, RedirectAttributes ra) {
+
 		
 		int result = service.signup(inputUser, userAddress);
 		
@@ -143,6 +142,7 @@ public class UserController {
 	
 		ra.addFlashAttribute("message",message);
 		return "redirect:"+path;
+
 
 	}
 
@@ -357,7 +357,6 @@ public class UserController {
 		if (result != 0) {
 			result2 = service.changePw(loginUser, newPw);
 		}
-
 		return result2;
 
 	}
@@ -405,6 +404,7 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("updateProfile")
+
 	public String updateProfile(User inputUser, 
 			@SessionAttribute("loginUser") User loginUser,
 			@RequestParam("userAddress") String[] userAddress,
@@ -418,6 +418,7 @@ public class UserController {
 
 		int result = service.updateProfile(inputUser, userAddress);
 
+
 		String message = null;
 
 		if (result > 0) {
@@ -428,8 +429,6 @@ public class UserController {
 			loginUser.setUserTel(inputUser.getUserTel());
 			loginUser.setUserAddress(inputUser.getUserAddress());
 			loginUser.setUserEmail(inputUser.getUserEmail());
-
-			
 		} else {
 			message = loginUser.getUserNickname() + "님의 정보 수정에 실패했습니다";
 
@@ -462,8 +461,113 @@ public class UserController {
 		int result = service.checkCurrentPw(userId, inputPw);
 
 		return result;
+
 	}
 
+	/**
+	 * 회원 탈퇴 시 입력한 값과 현재 비밀번호 일치하는지 체크
+	 * 
+	 * @param userId
+	 * @param inputPw
+	 * @return result
+	 */
+	@ResponseBody
+	@PostMapping("checkPw")
+	public int checkPw(HttpServletRequest request, @RequestBody String inputPw) {
+
+		HttpSession session = request.getSession();
+		User loginUser = (User) session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
+
+		int result = service.checkCurrentPw(userId, inputPw);
+
+		return result;
+	}
+	
+//	@PostMapping("updateProfile")
+//	public String updateProfile(@SessionAttribute("loginUser") User loginUser,
+//			Model model,
+//			RedirectAttributes ra,HttpSession session,
+//			User inputUser) {
+//		
+//		String userId = loginUser.getUserId();
+//		inputUser.setUserId(userId);
+//		
+//		
+//		int result = service.updateProfile(inputUser);
+//		
+//		String message = "";
+//		String path = "";
+//		
+//		if (result > 0) {
+//			message = "회원 정보 수정 성공!";
+//			path = "/pages/user/updateProfile";
+//			
+//		} else {
+//			message = "회원 정보 수정 실패";
+//			path = "/pages/user/updateProfile";
+//		}
+//		model.addAttribute("message", "회원가입 실패");
+//		return "redirect:/user/updateProfile";
+//	}
+	
+//	@PostMapping("updateProfile")
+//	public String updateProfile(Map<String , Object> paramMap,RedirectAttributes ra, HttpServletRequest request) {
+//		
+//		HttpSession session = request.getSession();
+//		
+//		User loginUser = (User)session.getAttribute("loginUser");
+//		
+//		
+//
+//		
+//		int result = service.updateProfile(paramMap);
+//		
+//		if (result > 0) {
+//			ra.addFlashAttribute("message", "성공!");
+//		} else {
+//			ra.addFlashAttribute("message", "실패!");
+//		}
+//		return "redirect:" + request.getHeader("REFERER");
+//	}
+	
+	/**
+	 * 비회원 주문목록 조회용 로그인
+	 * 
+	 * @param inputUser
+	 * @param model
+	 * @param ra
+	 */
+	@PostMapping("loginAnon")
+	public String loginAnon(User inputAnonUser, RedirectAttributes ra,
+							HttpServletRequest request, Model model) {
+			
+		// 비회원용 로그인
+		User loginAnonUser = service.login(inputAnonUser);
+
+		if (loginAnonUser != null) {
+
+			if (service.checkDel(inputAnonUser.getUserId()) == 1) { // 탈퇴한 회원이 아닐 경우
+
+				ra.addFlashAttribute("message", "성공!");
+				
+				model.addAttribute("anonUserNo", loginAnonUser.getUserNo());
+				
+			} else if (service.checkDel(inputAnonUser.getUserId()) == 0) { // 탈퇴한 회원일 경우
+				ra.addFlashAttribute("message", "만료된 주문번호 입니다");
+
+			}
+
+		} else {
+			ra.addFlashAttribute("message", "실패!");
+		}
+
+		if (request.getRequestURI().equals("/user/login")) {
+			return "redirect:/";
+		}
+
+		return "redirect:/order/info";
+	}
 }
 
 

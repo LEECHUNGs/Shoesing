@@ -20,7 +20,7 @@ const itemList = (sortNo) => {
           <td>${itemList[i].categoryNo}</td>
           <td>${itemList[i].itemUploadDate}</td>
           <td>  
-            <a href="item/detail?itemNo=${itemList[i].itemNo}">
+            <a href="item/detail?itemNo=encodeURI(${itemList[i].itemNo})">
               수정
             </a>
           </td>

@@ -94,6 +94,12 @@
 		WHERE ORDER_NO = ${orderNo}
 	</update>
 	
+	<select id="selectOne">
+		SELECT ORDER_DATE, ORDER_ADDRESS, ORDER_PRICE
+		FROM "USER_ORDER"
+		WHERE ORDER_NO = ${orderNo}
+	</select>
+	
 </mapper>
 
 

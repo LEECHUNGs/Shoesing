@@ -20,6 +20,7 @@ public interface UserService {
 	 * @param userAddress
 	 * @return result
 	 */
+
 	int signup(User inputUser, String[] userAddress);
 
 	/**
@@ -104,4 +105,19 @@ public interface UserService {
 	 */
 	int updateProfile(User inputUser, String[] userAddress);
 
+	/** 비회원 계정 생성
+	 * @param orderUser
+	 * @return
+	 */
+	int signupTemp(User orderUser);
+
+	/** 비회원용 아이디 초기화
+	 * @param orderNo 
+	 * @param userNo 
+	 * @return
+	 */
+	int updateId(int orderNo, int userNo);
+
+	
+	
 }
