@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("user")
-@SessionAttributes({ "loginUser", "userNo" })
+@SessionAttributes({ "loginUser", "anonUserNo" })
 public class UserController {
 
 	private final UserService service;
@@ -491,7 +491,7 @@ public class UserController {
 
 				ra.addFlashAttribute("message", "성공!");
 				
-				model.addAttribute("userNo", loginAnonUser.getUserNo());
+				model.addAttribute("anonUserNo", loginAnonUser.getUserNo());
 				
 			} else if (service.checkDel(inputAnonUser.getUserId()) == 0) { // 탈퇴한 회원일 경우
 				ra.addFlashAttribute("message", "만료된 주문번호 입니다");

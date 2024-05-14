@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="kr.co.shoesing.wishList.model.mapper.WishListMapper">
+<mapper namespace="kr.co.shoesing.wishList.model.mapper.WishlistMapper">
 	
 	<select id="check">
 		SELECT COUNT(*)
@@ -11,7 +11,12 @@
 	
 	<insert id="insert">
 		INSERT INTO "WISHLIST"
-		VALUES(${userNo}, ${itemNo})		
+		VALUES(
+			SEQ_WISHLIST_NO.NEXTVAL,
+			${userNo},
+			${itemNo},
+			DEFAULT
+		)		
 	</insert>
 	
 	<select id="getListCount">
@@ -21,7 +26,7 @@
 	</select>
 	
 	<select id="selectAll">
-		SELECT ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_BRAND
+		SELECT WISHLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_BRAND
 		FROM "WISHLIST"
 		JOIN "ITEM" USING(ITEM_NO)
 		WHERE USER_NO = ${userNo}
@@ -30,7 +35,10 @@
 	<delete id="delete">
 		DELETE FROM "WISHLIST" 
 		WHERE USER_NO = ${userNo}
-		AND ITEM_NO IN (${itemNoList})
+		AND ITEM_NO IN 
+			<foreach collection="wishlists" item="i" open="(" close=")" separator=", ">
+				#{i.itemNo}
+			</foreach>
 	</delete>
 	
 </mapper>

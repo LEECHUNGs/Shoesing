@@ -1,28 +1,28 @@
 // 위시리스트 불러오기 함수
-const selectWishList = (cp) => {
+const selectWishlist = (cp) => {
 
 
-    fetch("/wishList/manage?cp=" + cp) // GET 방식 요청
+    fetch("/wishlist/manage?cp=" + cp) // GET 방식 요청
     .then(resp => resp.json())
     .then(obj => {
 
-        const wishList = obj.wishList; // 위시리스트
+        const wishlist = obj.wishlist; // 위시리스트
         const pagination = obj.pagination; // 페이지네이션
 
-        const wishListUl = document.getElementById("wishListUl"); // 위시리스트 ul
+        const wishlistUl = document.getElementById("wishlistUl"); // 위시리스트 ul
         const pageUl = document.getElementById("pageUl"); // 페이지네이션 ul
 
         const checkAll = document.getElementById("checkAll"); // 전체 선택 버튼
 
         // 위시리스트 비우기
-        const lis = wishListUl.querySelectorAll("li");
+        const lis = wishlistUl.querySelectorAll("li");
         if(lis.length > 0) lis.forEach(e => {e.remove()});
 
         // 페이지 번호 비우기
         pageUl.innerHTML = "";
 
         // 위시리스트 목록 생성
-        for (const i in wishList) {
+        for (const i in wishlist) {
             
             /* 
             <li>
@@ -52,15 +52,15 @@ const selectWishList = (cp) => {
             // 체크박스 설정
             checkbox.type = "checkbox";
             checkbox.name = "deleteOne";
-            checkbox.value = wishList[i].itemNo;
+            checkbox.value = wishlist[i].itemNo;
 
             // 상품 이미지 세팅 (추가 예정)
             img.src = "/img/cat1.jpg";
 
             // 상품 정보 세팅
-            name.innerText = wishList[i].itemName;
-            price.innerText = wishList[i].itemPrice;
-            brand.innerText = wishList[i].itemBrand;
+            name.innerText = wishlist[i].itemName;
+            price.innerText = wishlist[i].itemPrice;
+            brand.innerText = wishlist[i].itemBrand;
 
             // infoDiv에 요소 추가
             infoDiv.append(name, price, brand);
@@ -70,13 +70,13 @@ const selectWishList = (cp) => {
             // li에 요소 추가
             li.append(checkbox, img, infoDiv, deleteBtn);
             
-            // wishListUl에 모든 내용 추가
-            wishListUl.append(li);
+            // wishlistUl에 모든 내용 추가
+            wishlistUl.append(li);
 
             // 단일 상품 삭제 버튼을 눌렀을 때
             deleteBtn.addEventListener("click", e => {
 
-                let list = [wishList[i].itemNo];
+                let list = [wishlist[i].itemNo];
                 deleteList(list);
             });
         }
@@ -84,7 +84,7 @@ const selectWishList = (cp) => {
         // 전체 상품 선택 버튼 클릭시 전체 선택
         checkAll.addEventListener("click", e => {
                 
-            const deleteOne = wishListUl.querySelectorAll('[name=deleteOne]');
+            const deleteOne = wishlistUl.querySelectorAll('[name=deleteOne]');
             for(let i = 0; i<deleteOne.length; i++) {
                 if(e.target.checked) deleteOne[i].checked = true;
                 else deleteOne[i].checked = false;
@@ -114,7 +114,7 @@ const selectWishList = (cp) => {
             pageA.addEventListener("click", () => {
                 pageUl.innerText = "";
 
-                selectWishList(i);
+                selectWishlist(i);
             });
         }
     });
@@ -127,19 +127,25 @@ const deleteList = (list) => {
         return;
     }
 
-    const obj = list.map(Number);
+    const wishlists = {
+        "wishlists" : list
+    };
 
-    fetch("/wishList/manage", {
+    fetch("/wishlist/manage", {
         method : "DELETE",
         headers : {"Content-Type" : "application/json"},
-        body : JSON.stringify(obj)
+        body : JSON.stringify(wishlists)
     })
     .then(resp => resp.text())
     .then(result => {
 
         if(result > 0) {
             alert("삭제 되었습니다.");
-            selectWishList(1);
+
+            const checkAll = document.getElementById("checkAll");
+            checkAll.checked = false;
+
+            selectWishlist(1);
         } else {
             alert("삭제를 실패했습니다.");
             return;
@@ -149,7 +155,7 @@ const deleteList = (list) => {
 
 
 // 처음 페이지를 열었을 때 화면 목록 초기화
-selectWishList(1);
+selectWishlist(1);
 
 // 선택 상품 삭제 버튼을 눌렀을 때
 document.getElementById("checkDelBtn").addEventListener("click", e => {
@@ -165,7 +171,11 @@ document.getElementById("checkDelBtn").addEventListener("click", e => {
 
     let list = [];
     checkList.forEach(e => {
-        list.push(e.value)
+
+        const obj = {
+            "itemNo" : e.value
+        };
+        list.push(obj);
     });
 
     deleteList(list);

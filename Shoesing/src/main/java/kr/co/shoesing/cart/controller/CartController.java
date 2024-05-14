@@ -82,15 +82,11 @@ public class CartController {
 			@SessionAttribute(value = "cartList", required = false) List<Cart> cartList,
 			@SessionAttribute(value = "loginUser", required = false) User loginUser, Model model) {
 
-		// log.info("cartList {}", cartList);
-
 		// 비회원일 경우
 		if (loginUser == null) {
 
 			// 선택된 상품 삭제
 			service.delete(cartList, cartVo);
-
-			// log.info("cartList {}", cartList);
 
 			// 갱신 목록 세션에 올림
 			model.addAttribute("cartList", cartList);

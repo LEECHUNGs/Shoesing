@@ -9,11 +9,11 @@
     <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
 
     <style>
-      .wishListUl > li {
+      .wishlistUl > li {
         display: flex;
       }
 
-      .wishListUl img {
+      .wishlistUl img {
         width: 150px;
         height: 150px;
       }
@@ -28,7 +28,7 @@
     <h1>위시리스트</h1>
 
     <!-- 상품 목록 UL -->
-    <ul id="wishListUl" class="wishListUl">
+    <ul id="wishlistUl" class="wishlistUl">
       <input type="checkbox" id="checkAll" name="deleteAll" value="" />
       <button type="button" id="checkDelBtn">선택 상품 삭제</button>
       <!-- 위시리스트 1개 샘플
@@ -50,7 +50,7 @@
 
     <script
       type="text/javascript"
-      th:src="@{/js/wishList/wishList.js}"
+      th:src="@{/js/wishlist/wishlist.js}"
     ></script>
   </th:block>
 </html>

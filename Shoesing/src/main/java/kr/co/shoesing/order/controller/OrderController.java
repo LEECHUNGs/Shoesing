@@ -37,7 +37,7 @@ public class OrderController {
 	 * @return
 	 */
 	@GetMapping("info")
-	public String info(@SessionAttribute(value = "userNo", required = false) int anonUserNo,
+	public String info(@SessionAttribute(value = "anonUserNo", required = false) int anonUserNo,
 					   @SessionAttribute(value = "loginUser", required = false) User loginUser,
 					   @RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
 					   Model model) {
@@ -45,6 +45,9 @@ public class OrderController {
 		
 		Map<String, Object> map = null;
 		int userNo = 0;
+		
+		log.info("loginUser : " + loginUser);
+		log.info("anonUserNo : " + anonUserNo);
 		
 		// 비회원일 경우
 		if(loginUser == null) {
@@ -76,8 +79,6 @@ public class OrderController {
 			@RequestParam("itemStockNoList") List<Integer> itemStockNoList,
 			@RequestParam("itemCountList") List<Integer> itemCountList, Model model) {
 
-		log.info(itemStockNoList.toString());
-
 		Order order = service.selectDetailList(itemStockNoList, itemCountList);
 
 		model.addAttribute("order", order);
@@ -97,9 +98,7 @@ public class OrderController {
 	public Map<String, Object> insert(@RequestBody Order order,
 			@SessionAttribute(value = "loginUser", required = false) User loginUser,
 			Model model) {
-		
-		log.info(order.toString());
-		
+				
 		Map<String, Object> map = new HashMap<>();
 
 		// 회원일 때 Order 객체의 userNo 값을 회원 번호로 초기화
@@ -172,9 +171,7 @@ public class OrderController {
 		
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("order", order);
-		
-		log.info("order " + order);
-		
+				
 		return "pages/order/orderSuccess";
 	}
 	
