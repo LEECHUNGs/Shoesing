@@ -163,6 +163,7 @@
 		FETCH FIRST 10 ROW ONLY
 	</select>
 	
+	<!-- 상품 번호 -->
 	<insert id="insertStock">
 		INSERT INTO "STOCK"
 		<foreach collection="list" item="i" open="(" close=")" separator=" UNION ">
