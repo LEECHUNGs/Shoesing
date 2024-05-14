@@ -157,16 +157,7 @@ public class UserController {
 		return "pages/user/myPage";
 	}
 
-	/**
-	 * 내정보 수정 페이지
-	 * 
-	 * @return
-	 */
-	@GetMapping("updateProfile")
-	public String updateProfile() {
-		return "pages/user/updateProfile";
-	}
-
+	
 	/**
 	 * 회원 탈퇴
 	 * 
@@ -371,81 +362,59 @@ public class UserController {
 
 	}
 	
+	@GetMapping("updateProfile")
+	public String setAddress(@SessionAttribute("loginUser") User loginUser, Model model) {
+		
+		// 주소만 꺼내옴
+		String userAddress = loginUser.getUserAddress();
+		
+		// 주소가 있을 경우에만 동작
+		if(userAddress != null) {
+			
+			String[] arr = null;
+			log.info(userAddress);
+			if(userAddress.equals("^^^^^^") ) {
+				arr= new String[3];
+				arr[0] = "";
+				arr[1] = "";
+				arr[2] = "";
+				
+			}else {
+				
+				arr = userAddress.split("\\^\\^\\^"); // regEx : 정규표현식 
+			}
+			
+			log.info(Arrays.toString(arr));
+			
+			
+			
+			model.addAttribute("postcode", arr[0]);
+			model.addAttribute("address", arr[1]);
+			model.addAttribute("detailAddress", arr[2]);
+			
+		}
+		
+		// /templates/myPage/myPage-info.html로  forward
+		return "pages/user/updateProfile";
+	}
 	
 	
-//	@ResponseBody
-//	@PostMapping("changePw")
-//	public int changePw(HttpServletRequest request, @RequestParam Map<String, Object> paramMap) {
-//
-//		HttpSession session = request.getSession();
-//
-//		User loginUser = (User) session.getAttribute("loginUser");
-//
-//		String userId = loginUser.getUserId();
-//		String currentPw = (String) paramMap.get("currentPw");
-//		String newPw = (String) paramMap.get("newPw");
-//
-//		// 현재 비밀번호가 일치하는지 확인
-//		int result = service.checkCurrentPw(userId, currentPw);
-//		int result2 = 0;
-//
-//		// 현재 비밀번호가 입력한 비밀번호와 일치하는 경우
-//		if (result != 0) {
-//			result2 = service.changePw(loginUser, newPw);
-//		}
-//
-//		return result2;
-//
-//	}
-
 	/**
 	 * 내정보 수정
 	 * 
 	 * @return
 	 */
-//	@PostMapping("updateProfile")
-//	public String updateProfile(@SessionAttribute("loginUser") User loginUser, RedirectAttributes ra,
-//			@RequestParam("userAddress") String[] userAddress, User inputUser) {
-//
-//		String userId = loginUser.getUserId();
-//		inputUser.setUserId(userId);
-//
-//		int result = service.updateProfile(inputUser, userAddress);
-//
-//		String message = null;
-//
-//		if (result > 0) {
-//			message = loginUser.getUserNickname() + "님의 정보가 수정되었습니다";
-//
-//			loginUser.setUserName(inputUser.getUserName());
-//			loginUser.setUserNickname(inputUser.getUserNickname());
-//			loginUser.setUserTel(inputUser.getUserTel());
-//			loginUser.setUserAddress(inputUser.getUserAddress());
-//			loginUser.setUserEmail(inputUser.getUserEmail());
-//
-//			
-//		} else {
-//			message = loginUser.getUserNickname() + "님의 정보 수정에 실패했습니다";
-//
-//		}
-//		ra.addFlashAttribute("message", message);
-//
-//		return "redirect:/";
-//
-//	}
-//	
-	
-	
 	@PostMapping("updateProfile")
 	public String updateProfile(User inputUser, 
 			@SessionAttribute("loginUser") User loginUser,
 			@RequestParam("userAddress") String[] userAddress,
 			RedirectAttributes ra) {
 
+		log.info("inputUser {}" , inputUser);
+		log.info("userAddress {}" , userAddress[0]);
 		String userId = loginUser.getUserId();
 		inputUser.setUserId(userId);
 		
-		inputUser.setUserId(userId);
 
 		int result = service.updateProfile(inputUser, userAddress);
 
@@ -474,7 +443,7 @@ public class UserController {
 
 	
 	
-
+	
 	/**
 	 * 회원 탈퇴 시 입력한 값과 현재 비밀번호 일치하는지 체크
 	 * 
@@ -496,3 +465,7 @@ public class UserController {
 	}
 
 }
+
+
+
+

@@ -31,8 +31,8 @@ profileIcon.forEach( (i) => {
 /// 회원 정보 수정 페이지
 //필수 항목 => 닉네임,이메일(이메일 변경했을 때 인증번호 필수)
 const checkObj ={
-  updateNickname : false,
-  updateEmail : false,
+  updateNickname : true,
+  updateEmail : true,
 };
 
 // 이름 수정
@@ -135,7 +135,7 @@ document
 
 // 주소 유효성
 
-// const userAddress = document.querySelectorAll(input[name:"userAddress"])
+// // const userAddress = document.querySelectorAll(input[name:"userAddress"])
 
 
 
@@ -163,6 +163,8 @@ const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn");
 
 // 이메일 변경 버튼 눌렀을 때 인증번호 버튼 나타나게하기
 updateEmailBtn.addEventListener("click",e =>{
+
+  console.log(updateEmailBtn);
   emailDiv.setAttribute("style","pointer-events:auto"); 
  
   sendAuthKeyBtn.setAttribute("style","display:block");
@@ -218,7 +220,7 @@ domainList.addEventListener('change', (e) => {
     return;
   }
   emailMessage.innerText = '이메일 입력 성공';
-  updateEmail = updateEmail.value + '@' + updateDomain.value;
+  inputEmail.value = updateEmail.value + '@' + updateDomain.value;
   console.log(updateEmail);
 });
 
@@ -297,7 +299,6 @@ function addZero(number) {
   else            return number;
 }
 
-//
 const inputEmail = document.querySelector('#inputEmail');
 
 checkAuthKeyBtn.addEventListener('click', () => {
@@ -333,37 +334,33 @@ checkAuthKeyBtn.addEventListener('click', () => {
 
 const updateProfileBtn = document.querySelector("#updateProfileBtn");
 updateProfileBtn.addEventListener("click", (e) => { 
-
-e.preventDefault();
-    // 닉네임이 입력되지 않았을때
-    if(!checkObj.updateNickname){
-      alert('닉네임 에러');
-      updateNickname.focus();
-      checkObj.updateNickname = false;
+  inputEmail.value = updateEmail.value + '@' + updateDomain.value;
+  console.log(updateEmail);
+  // 닉네임이 입력되지 않았을때
+  if(!checkObj.updateNickname){
+    alert('닉네임 에러');
+    updateNickname.focus();
+    checkObj.updateNickname = false;
+    e.preventDefault();
+    return;
+  }
+  //이메일이 입력되지 않았을때
+  if(!checkObj.updateEmail){
+    //인증번호 요청 버튼이 클릭되는 경우에
+    if(sendAuthKeyBtn.clicked){
+      alert('인증번호에러')
+      checkObj.updateEmail = false;
       e.preventDefault();
       return;
     }
-    //이메일이 입력되지 않았을때
-    if(!checkObj.updateEmail){
-      alert('이메일에러');
-      checkObj.updateEmail = false;
-      updateEmail.focus();
-        
-      //인증번호 요청 버튼이 클릭되는 경우에
-      if(sendAuthKeyBtn.clicked){
-        alert('인증번호에러')
-        checkObj.updateEmail = false;
-        e.preventDefault();
-        return;
-      }
-    } 
-    updateProfileForm.submit();
-  })
+    alert('이메일에러');
+    checkObj.updateEmail = false;
+    updateEmail.focus();
 
-
-
-
-
+    return;
+  } 
+  updateProfileForm.submit();
+})
 
 
 

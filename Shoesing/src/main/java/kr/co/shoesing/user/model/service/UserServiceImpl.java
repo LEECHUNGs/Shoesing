@@ -178,32 +178,6 @@ public class UserServiceImpl implements UserService {
 		
 	}
 	
-	@GetMapping("updateProfile") // /myPage/info (GET)
-	public String updateProfile(@SessionAttribute("loginUser") User loginUser,Model model) {
-		
-		// 주소만 꺼내옴
-		String userAddress = loginUser.getUserAddress();
-		
-		// 주소가 있을 경우에만 동작
-		if(userAddress != null) {
-			
-			// 구분자 "^^^"를 기준으로
-			// memberAddress 값을 쪼개어 String[]로 반환
-			String[] arr = userAddress.split("\\^\\^\\^"); // regEx : 정규표현식 
-			
-			// "04540^^^서울 중구 남대문로 120^^^ 3층 E 강의장"
-			// --> ["04540","서울 중구 남대문로 120", "3층 E 강의장"]
-			model.addAttribute("postcode", arr[0]); // request scope
-			model.addAttribute("address", arr[1]);
-			model.addAttribute("detailAddress", arr[2]);
-			
-		}
-		
-		// /templates/myPage/myPage-info.html로  forward
-		return "user/updateProile";
-	}
-	
-	
 
 	/**
 	 * 내 정보 수정
@@ -211,7 +185,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updateProfile(User inputUser, String[] userAddress) {
 
-		if (!inputUser.getUserAddress().equals(",,")) {
+		if (inputUser.getUserAddress().equals(",,")) {
 			inputUser.setUserAddress(null);
 		} else {
 			String address = String.join("^^^", userAddress);
