@@ -1,3 +1,39 @@
+//필수 항목 유효성 검사를 체크하기 위한 객체
+const checkObj = {
+  userId: false,
+  userNickname: false,
+  userPw: false,
+  userPwConfirm: false,
+  emailVal: false,
+  authKey: false,
+};
+
+// // 이용약관 전체 동의 눌렀을 때 체크
+// function selectAll(selectAll)  {
+//   const agreeAll 
+//        = document.getElementsByName('agree');
+  
+//   agreeAll.forEach((checkbox) => {
+//     checkbox.checked = selectAll.checked;
+//     checkObj.agreement = true;
+//   })
+// }
+// let agreeAll 
+//        = document.getElementsByName('agree');
+// // //전체 동의 누르면 모든 값 체크 되게 하기
+// agreeAll.addEventListener('change', (e) => {
+//   // let agreeChk = document.querySelectorAll('input[name=agree]');
+//   for(let i = 0; i < agreeAll.length; i++){
+//     if(!agreeAll.checked){ 
+//       checkObj.agreement = false;
+//     }else {
+//       checkObj.agreement = true;
+//     }
+//   }
+// });
+
+
+
 //---------------------주소 다음 api ==> 수정 필요---------------------
 function execDaumPostCode() {
   new daum.Postcode({
@@ -30,18 +66,6 @@ function execDaumPostCode() {
 document
   .querySelector('#searchAddress')
   .addEventListener('click', execDaumPostCode);
-
-//회원가입 유효성 검사
-
-//필수 항목 유효성 검사를 체크하기 위한 객체
-const checkObj = {
-  userId: false,
-  userNickname: false,
-  userPw: false,
-  userPwConfirm: false,
-  emailVal: false,
-  authKey: false,
-};
 
 // Id 유효성 검사
 const userId = document.querySelector('#userId');
@@ -455,6 +479,7 @@ submitBtn.addEventListener('click', (e) => {
           str = '인증번호를 입력하지 않았습니다';
           break;
       }
+
       alert(str);
       document.getElementById(key).focus(); //초점이동
       e.preventDefault(); // form 태그 기본 이벤트(제출) 막기

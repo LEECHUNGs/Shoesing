@@ -486,4 +486,19 @@ public class UserController {
 
 		return "redirect:/order/info";
 	}
+	
+	   @GetMapping("findId")
+	   public String findId() {
+	      return "pages/user/findId";
+	   }
+
+	   @GetMapping("findPw")
+	   public String findPw() {
+	      return "pages/user/findPw";
+	   }
+	   
+	   @GetMapping("agreement")
+	   public String agreement() {
+	      return "pages/user/agreement";
+	   }
 }
