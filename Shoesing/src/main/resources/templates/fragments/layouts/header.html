@@ -14,7 +14,8 @@
           <div>
             <a href="/admin">관리자페이지</a>
             <a href="/user/restoration">회원복구</a>
-            <a href="">주문조회</a>
+            <a th:if="${session.loginUser}" href="/order/info">주문조회</a>
+            <a th:unless="${session.loginUser}" href="/user/login">주문조회</a>
             <a href="/user/signup">회원가입</a>
             <th:block th:if="${session.loginUser == null}">
               <a href="/user/login">로그인</a>
@@ -151,7 +152,9 @@
       aria-labelledby="mobile-navigation"
     >
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="navigation">Navigation</h5>
+        <h5 class="offcanvas-title" id="navigation" style="font-weight: 900">
+          네비게이션
+        </h5>
         <button
           type="button"
           class="btn-close text-reset"
@@ -171,9 +174,9 @@
             BRAND
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="/item/info">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="/item/info">상품 목록</a></li>
+            <li><a class="dropdown-item" href="#">준비중..</a></li>
+            <li><a class="dropdown-item" href="#">준비중..</a></li>
           </ul>
         </div>
         <div class="dropdown">
@@ -183,12 +186,25 @@
             id="dropdownMenuButton"
             data-bs-toggle="dropdown"
           >
+            MAN
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="#">상품 목록</a></li>
+            <li><a class="dropdown-item" href="#">준비중..</a></li>
+            <li><a class="dropdown-item" href="#">준비중..</a></li>
+          </ul>
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+          >
             WOMAN
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="#">상품 목록</a></li>
+            <li><a class="dropdown-item" href="#">준비중..</a></li>
+            <li><a class="dropdown-item" href="#">준비중..</a></li>
           </ul>
         </div>
       </div>

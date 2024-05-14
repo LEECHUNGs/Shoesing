@@ -118,6 +118,13 @@ public interface UserService {
 	 */
 	int updateId(int orderNo, int userNo);
 
+	/**
+	 * 비회원 로그인
+	 * 
+	 * @return User
+	 */
+	User loginAnon(User inputAnonUser);
+
 	
 	
 }

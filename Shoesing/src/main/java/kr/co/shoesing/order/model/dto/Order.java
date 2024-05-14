@@ -22,6 +22,7 @@ public class Order {
 	private char orderConfirm;		// 주문 확정
 	private int userNo;				// 주문한 회원 번호
 	private User orderUser;			// 주문한 회원 정보를 저장한 객체
+	private int sizeNo;				// 사이즈 번호
 	
 	private int orderPrice;			// 총 주문 금액
 	
@@ -108,6 +109,14 @@ public class Order {
 
 	public void setOrderUser(User orderUser) {
 		this.orderUser = orderUser;
+	}
+
+	public int getSizeNo() {
+		return sizeNo;
+	}
+
+	public void setSizeNo(int sizeNo) {
+		this.sizeNo = sizeNo;
 	}
 	
 	

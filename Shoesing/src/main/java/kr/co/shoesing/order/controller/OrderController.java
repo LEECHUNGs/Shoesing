@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import kr.co.shoesing.item.model.dto.Item;
 import kr.co.shoesing.order.model.dto.Order;
 import kr.co.shoesing.order.model.dto.OrderDetail;
 import kr.co.shoesing.order.model.service.OrderService;
@@ -37,8 +38,8 @@ public class OrderController {
 	 * @return
 	 */
 	@GetMapping("info")
-	public String info(@SessionAttribute(value = "anonUserNo", required = false) int anonUserNo,
-					   @SessionAttribute(value = "loginUser", required = false) User loginUser,
+	public String info(@SessionAttribute(value = "loginUser", required = false) User loginUser,
+					   @SessionAttribute(value = "anonUserNo", required = false) int anonUserNo,
 					   @RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
 					   Model model) {
 				
@@ -78,7 +79,7 @@ public class OrderController {
 	public String checkout(@SessionAttribute(value = "loginUser", required = false) User loginUser,
 			@RequestParam("itemStockNoList") List<Integer> itemStockNoList,
 			@RequestParam("itemCountList") List<Integer> itemCountList, Model model) {
-
+		
 		Order order = service.selectDetailList(itemStockNoList, itemCountList);
 
 		model.addAttribute("order", order);
@@ -98,8 +99,9 @@ public class OrderController {
 	public Map<String, Object> insert(@RequestBody Order order,
 			@SessionAttribute(value = "loginUser", required = false) User loginUser,
 			Model model) {
-				
+
 		Map<String, Object> map = new HashMap<>();
+		
 
 		// 회원일 때 Order 객체의 userNo 값을 회원 번호로 초기화
 		if (loginUser != null) {

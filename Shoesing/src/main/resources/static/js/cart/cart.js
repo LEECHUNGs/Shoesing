@@ -42,7 +42,7 @@ const selectCart = (cp) => {
             const itemCount = document.createElement("input"); // 상품 수량용 hidden input
 
             const img = document.createElement("img"); // 장바구니 상품 사진
-            const infoDiv = document.createElement("div"); // 장바구니 설명 div
+            const infoA = document.createElement("a"); // 장바구니 설명 div
 
             // 장바구니 설명
             const name = document.createElement("div"); // 이름
@@ -87,14 +87,15 @@ const selectCart = (cp) => {
             amountSpan.innerText = cartList[i].cartItemCount;
             amountDiv.append(minusBtn, amountSpan, plusBtn);
 
-            // infoDiv에 요소 추가
-            infoDiv.append(name, price, brand, size, amountDiv);
+            // infoA에 요소 추가
+            infoA.append(img, name, price, brand, size);
+            infoA.href = `/item/detail?itemNo=${cartList[i].itemNo}`;
 
             deleteBtn.type = "button";
             deleteBtn.innerHTML = "&times;";
 
             // li에 요소 추가
-            li.append(checkbox, itemCount, img, infoDiv, deleteBtn);
+            li.append(checkbox, itemCount, infoA, amountDiv, deleteBtn);
             
             // cartUl에 모든 내용 추가
             cartUl.append(li);

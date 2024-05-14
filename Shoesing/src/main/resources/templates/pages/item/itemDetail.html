@@ -52,15 +52,15 @@
 
           <!-- 상품 사이즈 input 박스 -->
           <div class="itemOrderDiv">
-            <form action="#" method="post" class="itemOrder">
+            <form action="/order/checkout" method="post" class="itemOrder" id="orderForm">
               <div class="itemSize">
                 <div th:each="size : ${item.stockList}" style="width: 20%">
                   <th:block th:if="*{size.sizeStock} > 0" style="width: 100%">
                     <div class="itemSizeEach">
                       <input
                         type="radio"
-                        name="inputSize"
-                        th:value="*{size.sizeNo}"
+                        name="itemStockNoList"
+                        th:value="*{size.itemStockNo}"
                         class="btn-check"
                         th:id="*{size.sizeNo}"
                       />
@@ -96,6 +96,8 @@
                 주문 수량:
                 <input
                   type="number"
+                  id="itemCount"
+                  name="itemCountList"
                   class="form-control itemAmount"
                   value="1"
                   min="1"
@@ -124,9 +126,13 @@
               >
                 장바구니
               </button>
+
+              <!-- 상품 번호 전송용 hidden input -->
+              <input type="hidden" name="itemNo" th:value="${item.itemNo}">
+
               <!-- 상품 구매 submit -->
               <button
-                id=""
+                type="submit"
                 th:text="|${#numbers.formatInteger(item.itemPrice, 3, 'COMMA')}원 바로 결제하기|
              "
                 class="btn btn-shoesing"

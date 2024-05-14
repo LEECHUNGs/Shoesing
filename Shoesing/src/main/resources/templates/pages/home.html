@@ -12,13 +12,9 @@
     <!-- Spline 컴포넌트 (3D 모델) -->
     <div class="spline-component">
       <div class="spline-text">
-        <h2>
-          <a href="/user/restoration">
-            <form action="/user/delete" method="post">
-              <button>하하하</button>
-            </form>
-          </a>
-        </h2>
+        <div class="splineBtn">
+          <a href="/item/info"> 모든 상품 보러가기 </a>
+        </div>
       </div>
       <script
         type="module"
@@ -61,13 +57,13 @@
       <!-- 카로우셀 내용 -->
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="/img/haha.jpg" class="d-block" alt="..." />
+          <img th:src="@{/img/commercial/w1.png}" class="d-block" alt="..." />
         </div>
         <div class="carousel-item">
-          <img src="/img/cat2.jpg" class="d-block" alt="..." />
+          <img th:src="@{/img/commercial/w2.png}" class="d-block" alt="..." />
         </div>
         <div class="carousel-item">
-          <img src="/img/cat3.jpg" class="d-block" alt="..." />
+          <img th:src="@{/img/commercial/w3.png}" class="d-block" alt="..." />
         </div>
       </div>
       <button
@@ -101,13 +97,13 @@
       <div>다양한 이벤트!</div>
       <ul class="listUl adBanner">
         <a href="#">
-          <img th:src="@{/img/commercial/1.jpg}" alt="" />
+          <img th:src="@{/img/commercial/v1.jpg}" alt="" />
         </a>
         <a href="#">
-          <img th:src="@{/img/commercial/2.jpg}" alt="" />
+          <img th:src="@{/img/commercial/v2.jpg}" alt="" />
         </a>
         <a href="#">
-          <img th:src="@{/img/commercial/3.jpg}" alt="" />
+          <img th:src="@{/img/commercial/v3.jpg}" alt="" />
         </a>
       </ul>
     </div>

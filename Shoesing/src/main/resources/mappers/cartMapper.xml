@@ -9,8 +9,7 @@
 		AND ITEM_STOCK_NO = (
 			SELECT ITEM_STOCK_NO 
 			FROM "STOCK" 
-			WHERE ITEM_NO = #{itemNo}
-			AND SIZE_NO = #{sizeNo}
+			WHERE ITEM_STOCK_NO = #{itemStockNo}
 		)
 	</select>
 	
@@ -50,8 +49,7 @@
 		AND ITEM_STOCK_NO = (
 			SELECT ITEM_STOCK_NO 
 			FROM "STOCK" 
-			WHERE ITEM_NO = #{itemNo}
-			AND SIZE_NO = #{sizeNo}
+			WHERE ITEM_STOCK_NO = #{itemStockNo}
 		)
 	</update>
 	
@@ -61,12 +59,7 @@
 		VALUES(
 			NEXT_CART_NO(), 
 			#{userNo},
-			(
-				SELECT ITEM_STOCK_NO 
-				FROM STOCK
-				WHERE ITEM_NO = #{itemNo}
-				AND SIZE_NO = #{sizeNo}
-			),
+			#{itemStockNo},
 			#{cartItemCount},
 			DEFAULT
 		)
@@ -78,8 +71,7 @@
 		FROM "STOCK"
 		JOIN "ITEM" USING(ITEM_NO)
 		JOIN "SIZE" USING(SIZE_NO) 
-		WHERE SIZE_NO = #{sizeNo}
-		AND ITEM_NO = #{itemNo}
+		WHERE ITEM_STOCK_NO = ${itemStockNo}
 	</select>
 	
 	<update id="update">

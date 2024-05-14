@@ -55,10 +55,10 @@ public interface CartMapper {
 	Cart selectOne(int i);
 	
 	/** 장바구니 상세내용 입력용 조회
-	 * @param cart
+	 * @param i
 	 * @return
 	 */
-	Cart selectCart(Cart cart);
+	Cart selectCart(int i);
 
 	/** 장바구니 상품 수량 조절
 	 * @param cart
