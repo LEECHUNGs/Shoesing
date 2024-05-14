@@ -199,6 +199,13 @@ iframe {
   margin: 2px 0;
 }
 
+/* -------------------- 광고 배너 -------------------- */
+.adBanner {
+}
+.adBanner img {
+  height: 400px;
+}
+
 /* ------------------------- 반응형 설정 ------------------------- */
 
 /* sm --- Small devices (landscape phones, 576px and up) */

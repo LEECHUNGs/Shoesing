@@ -78,8 +78,6 @@ public class UserController {
 				// 응답 객체 resp에 쿠키 실어 보내기
 				resp.addCookie(cookie);
 
-				ra.addFlashAttribute("message", "성공!");
-
 			} else if (service.checkDel(inputUser.getUserId()) == 0) { // 탈퇴한 회원일 경우
 				ra.addFlashAttribute("message", "탈퇴한 회원입니다");
 

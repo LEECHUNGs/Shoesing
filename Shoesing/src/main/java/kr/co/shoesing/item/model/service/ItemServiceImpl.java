@@ -1,5 +1,6 @@
 package kr.co.shoesing.item.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +71,17 @@ public class ItemServiceImpl implements ItemService {
 	 */
 	@Override
 	public int insertItem(Map<String, Integer> map) {
-		return mapper.insertItem(map);
+
+		int result = mapper.insertItem(map);
+
+		List<Integer> list = new ArrayList<>();
+		for (int i = 1; i <= 9; i++) {
+			list.add(i);
+		}
+
+		mapper.insertStock(list);
+
+		return result;
 	}
 
 	/**
