@@ -459,11 +459,13 @@ public class UserController {
 	@PostMapping("loginAnon")
 	public String loginAnon(User inputAnonUser, RedirectAttributes ra,
 							HttpServletRequest request, Model model) {
+		
+		log.info("login1 : " + inputAnonUser);
 				
 		// 비회원용 로그인
 		User loginAnonUser = service.loginAnon(inputAnonUser);
 		
-		log.info("login : " + loginAnonUser);
+		log.info("login2 : " + loginAnonUser);
 		
 		if (loginAnonUser != null) {
 

@@ -372,11 +372,11 @@ document.getElementById("orderBtn").addEventListener("click", e => {
         const userPw = document.getElementById("userPw");
 
         const user = {
-            "userName" : "이충섭",
-            "userEmail" : "khnet@naver.com",
-            "userTel" : "01012341234",
-            "userAddress" : "서울 서대문",
-            "userPw" : "asdf1234!"
+            "userName" : userName.value,
+            "userEmail" : userEmail.value,
+            "userTel" : userTel.value,
+            "userAddress" : userAddress.value,
+            "userPw" : userPw.value
 
         };
 
