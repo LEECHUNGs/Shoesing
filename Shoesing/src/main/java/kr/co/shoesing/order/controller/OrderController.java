@@ -39,7 +39,7 @@ public class OrderController {
 	 */
 	@GetMapping("info")
 	public String info(@SessionAttribute(value = "loginUser", required = false) User loginUser,
-					   @SessionAttribute(value = "anonUserNo", required = false) int anonUserNo,
+					   @SessionAttribute(value = "anonUserNo", required = false) Integer anonUserNo,
 					   @RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
 					   Model model) {
 				
@@ -65,6 +65,8 @@ public class OrderController {
 		
 		return "pages/order/orderList";
 	}
+	
+	
 
 	/**
 	 * 주문 페이지
