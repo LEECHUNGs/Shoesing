@@ -6,6 +6,9 @@ import java.util.Map;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.co.shoesing.user.model.dto.User;
 import kr.co.shoesing.user.model.mapper.UserMapper;
@@ -53,14 +56,23 @@ public class UserServiceImpl implements UserService {
 	 * 
 	 * @param inputUser
 	 */
-	public int signup(User inputUser, String userAddress) {
 
-		inputUser.setUserAddress(userAddress);
+	public int signup(User inputUser, String[] userAddress) {
+
 
 		// 비밀번호 암호화
-		String encPw = passwordEncoder.encode(inputUser.getUserPw());
+		if(!inputUser.getUserAddress().equals(",,")) {
+			
+			String address = String.join("^^^" , userAddress);
+			inputUser.setUserAddress(address);
+	
+		}else {
+			inputUser.setUserAddress(null);
+		}
+			// 비밀번호 암호화
+		String encPw = passwordEncoder.encode(inputUser.getUserPw()); 
 		inputUser.setUserPw(encPw);
-
+		
 		return mapper.signup(inputUser);
 	}
 
@@ -154,6 +166,7 @@ public class UserServiceImpl implements UserService {
 		if (passwordEncoder.matches(inputPw, currentPw)) {
 			return 2;
 		}
+		
 
 		// 변경한 비밀번호 암호화 처리해주기
 		loginUser.setUserPw(passwordEncoder.encode(inputPw));
@@ -162,10 +175,11 @@ public class UserServiceImpl implements UserService {
 
 		user.setUserId(loginUser.getUserId());
 		user.setUserPw(loginUser.getUserPw());
-
+		
 		return mapper.changePw(user);
-
+		
 	}
+	
 
 	/**
 	 * 내 정보 수정
@@ -173,7 +187,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updateProfile(User inputUser, String[] userAddress) {
 
-		if (!inputUser.getUserAddress().equals(",,")) {
+
+		if (inputUser.getUserAddress().equals(",,")) {
+
 			inputUser.setUserAddress(null);
 		} else {
 			String address = String.join("^^^", userAddress);
