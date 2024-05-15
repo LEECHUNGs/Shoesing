@@ -7,30 +7,19 @@
 >
   <head>
     <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
-
-    <style>
-      .wishlistUl > li {
-        display: flex;
-      }
-
-      .wishlistUl img {
-        width: 150px;
-        height: 150px;
-      }
-
-      .pageUl {
-        display: flex;
-      }
-    </style>
+    <link th:href="@{/css/pages/common/page.css}" rel="stylesheet" />
+    <link th:href="@{/css/pages/wishList.css}" rel="stylesheet" />
   </head>
   <th:block layout:fragment="main">
     <!-- 내용은 여기 작성 -->
     <h1>위시리스트</h1>
 
     <!-- 상품 목록 UL -->
-    <ul id="wishlistUl" class="wishlistUl">
-      <input type="checkbox" id="checkAll" name="deleteAll" value="" />
+    <div class="btnDiv">
+      <input type="checkbox" id="checkAll"/>
       <button type="button" id="checkDelBtn">선택 상품 삭제</button>
+    </div>
+    <ul id="wishlistUl" class="wishlistUl">
       <!-- 위시리스트 1개 샘플
         <li>
             <input type="checkbox" name="deleteOne" value="1">
@@ -50,7 +39,7 @@
 
     <script
       type="text/javascript"
-      th:src="@{/js/wishlist/wishlist.js}"
+      th:src="@{/js/wishList/wishList.js}"
     ></script>
   </th:block>
 </html>

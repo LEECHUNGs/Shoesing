@@ -98,7 +98,7 @@ public class OrderController {
 	public Map<String, Object> insert(@RequestBody Order order,
 			@SessionAttribute(value = "loginUser", required = false) User loginUser,
 			Model model) {
-
+		
 		Map<String, Object> map = new HashMap<>();
 		
 

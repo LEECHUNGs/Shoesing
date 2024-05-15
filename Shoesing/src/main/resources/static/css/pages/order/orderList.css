@@ -1,0 +1,47 @@
+/* 주문 상품 목록 UL */
+.orderListUl {
+    margin-left: 10%;
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+/* 각 상품 요소 */
+
+/* li */
+.orderListLi {
+    width: 100%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border: 2px solid rgba(225, 225, 225, 0.566);
+    display: flex;
+    align-items: center;
+    aspect-ratio: 3 / 1;
+}
+
+.imgDiv {
+    margin-left: 3%;
+
+    width: 27%;
+    position: relative;
+    border: 2px solid rgba(225, 225, 225, 0.566);
+    align-items: center;
+    overflow-y: hidden;
+    display: flex;
+    aspect-ratio: 1 / 1;
+}
+
+.itemImg {
+    object-fit: cover;
+    bottom: 0;
+    position: absolute;
+}
+
+.infoDiv {
+    padding-left: 2%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
