@@ -35,13 +35,13 @@ public class LoggedInFilter implements Filter {
 		User loginUser = (User) session.getAttribute("loginUser");
 
 		// 로그인한 회원 정보를 얻어옴
-		if (session.getAttribute("loginUser") == null) { // 로그인 회원 존재하지 않으면
+		if (session.getAttribute("loginUser") == null || loginUser.getUserId().equals("admin")) { // 로그인 회원 존재하지 않으면
 
 			// 다음 필터로 요청, 응답 객체 전달
 			chain.doFilter(request, response);
 			return;
 
-		} else if (session.getAttribute("loginUser") != null && !loginUser.getUserId().equals("admin")) { // 로그인 회원
+		} else { // 로그인 회원
 			// 존재하면
 
 			// 로그인 에러

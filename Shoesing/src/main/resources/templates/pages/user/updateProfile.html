@@ -50,8 +50,6 @@
           <input
             type="text"
             class="form-control"
-            id="updateName"
-            name="userName"
             placeholder="수정할 이름을 입력해주세요"
             th:value="${session.loginUser.userId}"
             readonly
@@ -73,8 +71,8 @@
           />
           <label for="loginPagePw">수정할 이름을 입력해주세요</label>
         </div>
-        <span id="updateNameMessage"></span>
       </div>
+      <span id="updateNameMessage"></span>
 
       <!-- 닉네임 수정-->
       <div class="update-input-area">

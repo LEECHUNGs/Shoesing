@@ -10,6 +10,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import kr.co.shoesing.user.model.dto.User;
 
 public class LoggedOutFilter implements Filter {
 	/**
@@ -27,6 +28,8 @@ public class LoggedOutFilter implements Filter {
 
 		// Session 얻어오기
 		HttpSession session = req.getSession();
+
+		User loginUser = (User) session.getAttribute("loginUser");
 
 		// 로그인한 회원 정보를 얻어옴
 		if (session.getAttribute("loginUser") != null) { // 로그인 회원 존재하면
