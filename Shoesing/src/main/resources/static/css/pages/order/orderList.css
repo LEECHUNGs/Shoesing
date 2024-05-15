@@ -34,6 +34,7 @@
 }
 
 .itemImg {
+    width: 100%;
     object-fit: cover;
     bottom: 0;
     position: absolute;
