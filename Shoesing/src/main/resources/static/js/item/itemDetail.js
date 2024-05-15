@@ -26,13 +26,15 @@ document.getElementById('cartBtn').addEventListener('click', () => {
     alert('사이즈를 먼저 선택해주세요.');
     return;
   }
-  
-  const itemStockNo = document.querySelector('[name=itemStockNoList]:checked').value;
+
+  const itemStockNo = document.querySelector(
+    '[name=itemStockNoList]:checked'
+  ).value;
   const cartItemCount = document.getElementById('itemCount');
 
   const obj = {
-    "itemStockNo": itemStockNo,
-    "cartItemCount": cartItemCount.value
+    itemStockNo: itemStockNo,
+    cartItemCount: cartItemCount.value,
   };
 
   fetch('/cart/manage', {
@@ -52,12 +54,10 @@ document.getElementById('cartBtn').addEventListener('click', () => {
 
 // 사이즈 미선택 시 submit retun;
 const orderForm = document.getElementById('orderForm');
-orderForm.addEventListener("submit", e => {
-
+orderForm.addEventListener('submit', (e) => {
   if (document.querySelector('[name=itemStockNoList]:checked') == null) {
     alert('사이즈를 먼저 선택해주세요.');
     e.preventDefault();
     return;
   }
-
 });

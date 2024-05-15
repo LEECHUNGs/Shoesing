@@ -88,6 +88,7 @@
                       <label
                         class="btn btn-shoesing-secondary"
                         th:for="*{size.sizeNo}"
+                        style="opacity: 0.2"
                       >
                         [[*{size.sizeVal}]]
                       </label>
@@ -138,7 +139,7 @@
               <!-- 상품 구매 submit -->
               <button
                 type="submit"
-                th:text="|${#numbers.formatInteger(item.itemPrice, 3, 'COMMA')}원 바로 결제하기|"
+                th:text="|바로 결제하기|"
                 class="btn btn-shoesing"
               >
                 바로 구매

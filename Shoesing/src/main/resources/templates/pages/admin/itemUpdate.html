@@ -19,6 +19,7 @@
       action="/file/uploadMulti"
       method="post"
       enctype="multipart/form-data"
+      id="uploadImg"
     >
       <th:block th:if="${#lists.size(item.imageList) > 1}">
         <th:block
@@ -36,14 +37,21 @@
         </th:block>
         <br />
       </th:block>
-      <label>썸네일<input type="file" accept="image/*" name="images" /></label>
+      <label
+        >썸네일(1개)<input
+          type="file"
+          accept="image/*"
+          name="images"
+          id="inputThumbnail"
+      /></label>
       <br />
       <label
-        >표본사진<input
+        >표본사진(5개)<input
           type="file"
           multiple="multiple"
           accept="image/*"
           name="images"
+          id="inputFiles"
       /></label>
       <br />
       <input type="hidden" th:value="${item.itemNo}" name="itemNo" />
@@ -87,5 +95,7 @@
       <input type="hidden" th:value="${item.itemNo}" name="itemNo" />
       <button>재고 수정</button>
     </form>
+
+    <script type="text/javascript" th:src="@{/js/admin/itemUpdate.js}"></script>
   </th:block>
 </html>

@@ -56,4 +56,15 @@ public class MainController {
 		return "redirect:/";
 	}
 
+	/**
+	 * 고객센터
+	 * 
+	 * @return
+	 */
+	@GetMapping("customerService")
+	public String customerService() {
+
+		return "pages/customerService";
+	}
+
 }

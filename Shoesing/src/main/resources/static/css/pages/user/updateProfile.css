@@ -1,0 +1,21 @@
+.profileIcon {
+  border: none;
+}
+.updateIconDiv {
+  display: flex;
+  justify-content: space-around;
+}
+.myIcon {
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+.userIconUpdate {
+  transition: 0.2s;
+  width: 100px;
+  height: 100px;
+}
+.userIconUpdate:hover {
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.2);
+}
