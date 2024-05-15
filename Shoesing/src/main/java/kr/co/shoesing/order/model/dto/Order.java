@@ -18,7 +18,10 @@ public class Order {
 	
 	private int orderNo;			// 주문 번호
 	private String orderDate;		// 주문 날짜
+	
 	private String orderAddress;	// 배송지
+	private String[] orderAddressList; // 배송지 전체 주소
+	
 	private char orderConfirm;		// 주문 확정
 	private int userNo;				// 주문한 회원 번호
 	private User orderUser;			// 주문한 회원 정보를 저장한 객체
@@ -117,6 +120,14 @@ public class Order {
 
 	public void setSizeNo(int sizeNo) {
 		this.sizeNo = sizeNo;
+	}
+
+	public String[] getOrderAddressList() {
+		return orderAddressList;
+	}
+
+	public void setOrderAddressList(String[] orderAddressList) {
+		this.orderAddressList = orderAddressList;
 	}
 	
 	

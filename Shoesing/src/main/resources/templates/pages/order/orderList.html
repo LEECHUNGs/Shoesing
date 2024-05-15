@@ -7,16 +7,8 @@
 >
   <head>
     <!-- 페이지별 CSS 작성 <link th:href="@{/css/pages/*.css}" rel="stylesheet" /> -->
-
-    <style>
-      li {
-        display: flex;
-      }
-
-      .orderListTr:hover {
-        cursor: pointer;
-      }
-    </style>
+    <link th:href="@{/css/pages/common/page.css}" rel="stylesheet" />
+    <link th:href="@{/css/pages/order/orderList.css}" rel="stylesheet" />
   </head>
   <th:block layout:fragment="main">
     <!-- 내용은 여기 작성 -->

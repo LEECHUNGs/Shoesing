@@ -1,0 +1,107 @@
+/* 주문자 정보 테이블 */
+.userInfoDiv {
+    margin-bottom: 20px;
+    width: inherit;
+}
+
+.userInfoTb {
+    border: 2px solid rgba(225, 225, 225, 0.566);
+    width: inherit;
+}
+
+.userInfoTb tr {
+    height: max-content;
+}
+.userInfoTb td {
+    padding-left: 1%;
+    height: 5cqw;
+}
+
+.userInfoTb th {
+    width: 10cqw;
+    min-width: 80px;
+    padding-right: 1%;
+    border-bottom: 1px solid rgba(225, 225, 225, 0.566);
+    background-color: rgba(225, 225, 225, 0.566);
+    text-align: right;
+}
+
+.userInfoTb tr > td:last-child {
+    border-bottom: solid rgba(225, 225, 225, 0.566);
+}
+
+
+/* 배송지 주소 테이블 */
+.addressDiv {
+    margin-bottom: 20px;
+    width: inherit;
+}
+
+.addressTb {
+    border: 2px solid rgba(225, 225, 225, 0.566);
+    width: inherit;
+}
+
+.addressTb tr {
+    height: max-content;
+}
+.addressTb td {
+    padding-left: 1%;
+    height: 5cqw;
+}
+
+.addressTb tr > td:last-child {
+    border-bottom: solid rgba(225, 225, 225, 0.566);
+}
+
+.addressTb th {
+    width: 10cqw;
+    min-width: 80px;
+    padding-right: 1%;
+    border-bottom: 1px solid rgba(225, 225, 225, 0.566);
+    background-color: rgba(225, 225, 225, 0.566);
+    text-align: right;
+}
+
+
+/* 주문한 상품 목록 UL */
+.orderListDiv {
+    margin-bottom: 20px;
+    width: inherit;
+}
+
+.orderListUl {
+    
+}
+
+/* 총 결제 정보 */
+.orderDiv {
+    margin-bottom: 20px;
+    width: inherit;
+}
+
+.orderTb {
+    border: 2px solid rgba(225, 225, 225, 0.566);
+    width: inherit;
+}
+
+.orderTb tr {
+    height: max-content;
+}
+.orderTb td {
+    padding-left: 1%;
+    height: 5cqw;
+}
+
+.orderTb tr > td:last-child {
+    border-bottom: solid rgba(225, 225, 225, 0.566);
+}
+
+.orderTb th {
+    width: 10cqw;
+    min-width: 80px;
+    padding-right: 1%;
+    border-bottom: 1px solid rgba(225, 225, 225, 0.566);
+    background-color: rgba(225, 225, 225, 0.566);
+    text-align: right;
+}
