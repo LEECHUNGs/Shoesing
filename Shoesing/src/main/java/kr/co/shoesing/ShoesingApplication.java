@@ -10,4 +10,5 @@ public class ShoesingApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ShoesingApplication.class, args);
 	}
+
 }

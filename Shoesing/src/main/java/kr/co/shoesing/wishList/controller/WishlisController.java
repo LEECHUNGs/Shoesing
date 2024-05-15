@@ -70,23 +70,7 @@ public class WishlisController {
 	@ResponseBody
 	@DeleteMapping("manage")
 	public int delete(@RequestBody WishlistVO wishlistVO, @SessionAttribute("loginUser") User loginUser) {
-				
+
 		return service.delete(wishlistVO, loginUser.getUserNo());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

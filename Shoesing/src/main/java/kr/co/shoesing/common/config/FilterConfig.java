@@ -24,7 +24,7 @@ public class FilterConfig {
 
 		filter.setFilter(new LoggedInFilter());
 
-		String[] filteringURL = { "/user/signup", "/user/login", "/user/restoration" };
+		String[] filteringURL = { "/user/signup", "/user/login", "/user/restoration", "/admin/*" };
 
 		// Array.asList(filteringURL) == filteringURL을 List로
 		filter.setUrlPatterns(Arrays.asList(filteringURL));
@@ -50,7 +50,7 @@ public class FilterConfig {
 
 		filter.setFilter(new LoggedOutFilter());
 
-		String[] filteringURL = { "/user/myPage", "/user/delete", "/wishList/info" };
+		String[] filteringURL = { "/user/myPage", "/user/delete", "/wishList/info", "/admin/*" };
 
 		// Array.asList(filteringURL) == filteringURL을 List로
 		filter.setUrlPatterns(Arrays.asList(filteringURL));

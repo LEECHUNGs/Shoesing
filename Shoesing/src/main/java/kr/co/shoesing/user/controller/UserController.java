@@ -63,7 +63,7 @@ public class UserController {
 			if (service.checkDel(inputUser.getUserId()) == 1) { // 탈퇴한 회원이 아닐 경우
 				model.addAttribute("loginUser", loginUser);
 
-				ra.addFlashAttribute("message", "성공!");
+//				ra.addFlashAttribute("message", "성공!");
 				// 쿠키 설정
 				Cookie cookie = new Cookie("saveId", loginUser.getUserId());
 
@@ -457,16 +457,15 @@ public class UserController {
 	 * @param ra
 	 */
 	@PostMapping("loginAnon")
-	public String loginAnon(User inputAnonUser, RedirectAttributes ra,
-							HttpServletRequest request, Model model) {
-		
+	public String loginAnon(User inputAnonUser, RedirectAttributes ra, HttpServletRequest request, Model model) {
+
 		log.info("login1 : " + inputAnonUser);
-				
+
 		// 비회원용 로그인
 		User loginAnonUser = service.loginAnon(inputAnonUser);
-		
+
 		log.info("login2 : " + loginAnonUser);
-		
+
 		if (loginAnonUser != null) {
 
 			if (service.checkDel(inputAnonUser.getUserId()) == 1) { // 탈퇴한 회원이 아닐 경우
@@ -482,7 +481,7 @@ public class UserController {
 
 		} else {
 			ra.addFlashAttribute("message", "실패!");
-			
+
 			return "redirect:" + request.getHeader("REFERER");
 		}
 
@@ -493,19 +492,19 @@ public class UserController {
 
 		return "redirect:" + request.getHeader("REFERER");
 	}
-	
-	   @GetMapping("findId")
-	   public String findId() {
-	      return "pages/user/findId";
-	   }
 
-	   @GetMapping("findPw")
-	   public String findPw() {
-	      return "pages/user/findPw";
-	   }
-	   
-	   @GetMapping("agreement")
-	   public String agreement() {
-	      return "pages/user/agreement";
-	   }
+	@GetMapping("findId")
+	public String findId() {
+		return "pages/user/findId";
+	}
+
+	@GetMapping("findPw")
+	public String findPw() {
+		return "pages/user/findPw";
+	}
+
+	@GetMapping("agreement")
+	public String agreement() {
+		return "pages/user/agreement";
+	}
 }

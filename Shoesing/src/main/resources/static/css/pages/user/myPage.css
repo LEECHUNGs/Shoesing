@@ -18,15 +18,48 @@
 }
 
 /* 유저 정보 */
-.myPage-wrap {
-  display: flex;
-  flex-direction: row;
+.userIconMyPage {
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
 }
 
-.userDetail {
-  width: 70%;
+.myPage-wrap {
+  display: flex;
+}
+
+.myPageBox1 {
+  display: flex;
+  flex-direction: column;
 }
 
 .userInfo {
-  width: 30%;
+  display: none;
+  flex-direction: column;
+}
+
+.myPageBox1 .btnInfo {
+  margin: 5px;
+}
+
+.myPageBox2 .btnInfo {
+  width: 33%;
+}
+
+/* lg --- Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .myPageBox2 {
+    display: none;
+  }
+
+  .userDetail {
+    width: 65%;
+  }
+
+  .userInfo {
+    display: flex;
+    width: 35%;
+  }
 }

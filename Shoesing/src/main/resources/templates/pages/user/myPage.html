@@ -23,61 +23,118 @@
         <div class="myPage-content userDetail">
           <div class="simpleBox">
             <img
-              class="userIcon"
+              class="userIcon userIconMyPage"
               th:src="@{/img/userIcon/} + ${session.loginUser.userIcon} + |.png|"
               alt="userIcon"
             />
             <div>
+              아이디:
               <th:block th:text="${session.loginUser.userId}"></th:block>
             </div>
             <div>
+              닉네임:
               <th:block th:text="${session.loginUser.userName}"></th:block>
             </div>
           </div>
         </div>
         <div class="myPage-content userInfo">
-          <div class="simpleBox">hello</div>
-        </div>
-      </div>
-
-      <div class="myPage-wrap">
-        <div class="myPage-content">
-          <div class="simpleBox">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"id="updateProfile">
-              내정보 수정</button>
-            <a href="/wishlist/info">위시리스트</a>
-            <a href="">내가 작성한 게시글</a>
-            <a href="/order/info">주문 조회</a>
+          <div class="simpleBox myPageBox1">
+            <button
+              type="button"
+              class="btn btn-shoesing btnInfo"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+              id="updateProfile"
+            >
+              내정보 수정
+            </button>
+            <a href="/wishlist/info" class="btn btn-shoesing btnInfo"
+              >위시리스트</a
+            >
+            <!-- <a href="">내가 작성한 게시글</a> -->
+            <a href="/order/info" class="btn btn-shoesing btnInfo">주문 조회</a>
           </div>
         </div>
       </div>
     </div>
 
+    <div class="myPage-wrap">
+      <div class="myPage-content">
+        <div class="simpleBox myPageBox2">
+          <button
+            type="button"
+            class="btn btn-shoesing btnInfo"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+            id="updateProfile"
+          >
+            내정보 수정
+          </button>
+          <a href="/wishlist/info" class="btn btn-shoesing btnInfo"
+            >위시리스트</a
+          >
+          <!-- <a href="">내가 작성한 게시글</a> -->
+          <a href="/order/info" class="btn btn-shoesing btnInfo">주문 조회</a>
+        </div>
+      </div>
+    </div>
 
-      <form action="/user/checkCurrentPw" method="post" name="checkPwForm" id="checkPwForm">
-        <!-- 비밀번호 입력 모달창 -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">비밀번호 입력</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <form
+      action="/user/checkCurrentPw"
+      method="post"
+      name="checkPwForm"
+      id="checkPwForm"
+    >
+      <!-- 비밀번호 입력 모달창 -->
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">
+                비밀번호 입력
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <!-- 현재 비밀번호 입력-->
+              <div class="update-input-area">
+                현재 비밀번호
+                <input
+                  type="password"
+                  placeholder="비밀번호를 입력해주세요"
+                  id="inputPw"
+                  name="inputPw"
+                />
               </div>
-              <div class="modal-body">
-                <!-- 현재 비밀번호 입력-->
-                <div class="update-input-area">
-                  현재 비밀번호 <input type="password" placeholder="비밀번호를 입력해주세요" id="inputPw" name="inputPw"/> 
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                <button class="btn btn-primary">확인</button>
-              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                취소
+              </button>
+              <button class="btn btn-primary">확인</button>
             </div>
           </div>
         </div>
-      </form> 
+      </div>
+    </form>
 
-      <script type="text/javascript" th:src="@{/js/user/mypage.js}"></script>
+    <script type="text/javascript" th:src="@{/js/user/mypage.js}"></script>
   </th:block>
 </html>
