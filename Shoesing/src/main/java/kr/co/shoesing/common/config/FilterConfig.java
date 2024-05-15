@@ -50,7 +50,7 @@ public class FilterConfig {
 
 		filter.setFilter(new LoggedOutFilter());
 
-		String[] filteringURL = { "/user/myPage", "/user/delete", "/wishList/info", "/admin/*" };
+		String[] filteringURL = { "/user/myPage", "/user/delete", "/wishlist/info", "/admin/*" };
 
 		// Array.asList(filteringURL) == filteringURL을 List로
 		filter.setUrlPatterns(Arrays.asList(filteringURL));
