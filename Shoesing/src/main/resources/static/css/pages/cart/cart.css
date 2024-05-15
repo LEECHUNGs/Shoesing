@@ -1,0 +1,118 @@
+/* 상단 버튼, 체크박스 div */
+.btnDiv {
+    margin-left: 10%;
+}
+
+/* 상품 감싸는 ul */
+/* ul */
+.cartUl {
+    margin-left: 10%;
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+  
+/* 상품 각각 요소 */
+
+/* li */
+.cartBox {
+    width: 100%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border: 2px solid rgba(225, 225, 225, 0.566);
+    display: flex;
+    align-items: center;
+    aspect-ratio: 3 / 1;
+}
+
+/* input checkbox */
+.checkboxDiv {
+    padding-top: 2%;
+    height: 100%;
+}
+.checkbox {
+    width: 30px;
+}
+
+/* a */
+.infoA {
+    width: 27%;
+    /* height: 30px; */
+    position: relative;
+    border: 2px solid rgba(225, 225, 225, 0.566);
+    align-items: center;
+    overflow-y: hidden;
+    display: flex;
+    aspect-ratio: 1 / 1;
+    transition: 0.2s;
+}
+.infoA:hover {
+    transform: scale(1.03);
+}
+
+.infoA img {
+    object-fit: cover;
+    bottom: 0;
+    position: absolute;
+}
+
+/* infoDiv : 상품 설명 */
+.infoDiv {
+    padding-left: 2%;
+    flex-grow: 3;
+    display: flex;
+    flex-direction: column;
+}
+.infoDiv > span {
+    font-size: 18px;
+    font-weight: 800;
+}
+.infoDiv > .brand {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* 수량 변경 버튼 */
+.amountDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    flex-grow: 2;
+}
+/* 수량 추가, 감소 버튼 */
+.amountDiv > *:nth-child(1), .amountDiv > *:nth-child(3) {
+    border: none;
+    font-size: 30px;
+    /* width: 20%; */
+    text-align: center;
+    line-height: 100%;
+}
+.amountDiv > *:nth-child(2) {
+    font-size: 22px;
+    width: 10%;
+    text-align: center;
+}
+
+/* 삭제 버튼 */
+.deleteDiv {
+    height: 100%;
+    margin-right: 2%;
+    padding-top: 2%;
+}
+
+.deleteBtn {
+    border: none;
+    font-size: 22px;
+}
+
+/* 페이지 UL */
+.pageUl {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin-left: 25%;
+}
+

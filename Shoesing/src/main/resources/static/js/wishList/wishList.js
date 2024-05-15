@@ -38,38 +38,61 @@ const selectWishlist = (cp) => {
             */
 
             const li = document.createElement("li"); // 위시리스트 Li
+            const checkboxDiv = document.createElement("div");
             const checkbox = document.createElement("input"); // 위시리스트 체크박스
+
+            const wishlistThumbnail = document.createElement("div");
             const img = document.createElement("img"); // 위시리스트 상품 사진
             const infoA = document.createElement("a"); // 위시리스트 설명 div
 
-            // 위시리스트 설명
-            const name = document.createElement("div"); // 이름
-            const price = document.createElement("div"); // 가격
-            const brand = document.createElement("div"); // 브랜드
+            li.classList.add("wishlistbox");
 
+            // 위시리스트 설명
+            const infoDiv = document.createElement("div"); // 설명용 박스
+            const name = document.createElement("span"); // 이름
+            const price = document.createElement("span"); // 가격
+            const brand = document.createElement("span"); // 브랜드
+
+            const deleteDiv = document.createElement("div");
             const deleteBtn = document.createElement("button"); // 삭제 버튼
 
             // 체크박스 설정
             checkbox.type = "checkbox";
             checkbox.name = "deleteOne";
             checkbox.value = wishlist[i].itemNo;
+            checkboxDiv.append(checkbox);
+            checkboxDiv.classList.add("checkboxDiv");
 
             // 상품 이미지 세팅 (추가 예정)
             img.src = wishlist[i].thumbnail;
+            wishlistThumbnail.append(img);
+            wishlistThumbnail.classList.add("wishlistThumbnail");
 
             // 상품 정보 세팅
-            name.innerText = wishlist[i].itemName;
-            price.innerText = wishlist[i].itemPrice;
             brand.innerText = wishlist[i].itemBrand;
+            brand.classList.add("brand");
+
+            price.innerText = `${wishlist[i].itemPrice} 원`;
+            price.classList.add("price");
+
+            name.innerText = wishlist[i].itemName;
+            name.classList.add("name");
+
+            infoDiv.append(price, name, brand);
+            infoDiv.classList.add("infoDiv");
 
             // infoA에 요소 추가
-            infoA.append(img, name, price, brand);
+            infoA.append(wishlistThumbnail);
             infoA.href = `/item/detail?itemNo=${wishlist[i].itemNo}`;
+            infoA.classList.add("infoA");
 
             deleteBtn.innerHTML = "&times;";
+            deleteBtn.classList.add("deleteBtn");
+            deleteDiv.append(deleteBtn);
+            deleteDiv.classList.add("deleteDiv");
 
             // li에 요소 추가
-            li.append(checkbox, infoA, deleteBtn);
+            li.append(checkboxDiv, infoA, infoDiv, deleteDiv);
             
             // wishlistUl에 모든 내용 추가
             wishlistUl.append(li);

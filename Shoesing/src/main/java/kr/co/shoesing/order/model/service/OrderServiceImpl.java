@@ -53,10 +53,12 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public int insert(Order order) {
 		
+		// 주소 형식 변경
+		String address = String.join("^^^" , order.getOrderAddressList());
+		order.setOrderAddress(address);
+		
 		// 비회원일 경우
 		if(order.getOrderUser() != null) {
-			
-			
 			
 			// 비회원용 주문 목록 생성
 			mapper.insertOrder(order);

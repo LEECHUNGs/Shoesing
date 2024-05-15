@@ -38,17 +38,22 @@ const selectCart = (cp) => {
             */
 
             const li = document.createElement("li"); // 장바구니 Li
+            const checkboxDiv = document.createElement("div");
             const checkbox = document.createElement("input"); // 장바구니 체크박스
             const itemCount = document.createElement("input"); // 상품 수량용 hidden input
 
+            const cartThumbnail = document.createElement("div");
             const img = document.createElement("img"); // 장바구니 상품 사진
             const infoA = document.createElement("a"); // 장바구니 설명 div
 
+            li.classList.add("cartBox");
+
             // 장바구니 설명
-            const name = document.createElement("div"); // 이름
-            const price = document.createElement("div"); // 가격
-            const brand = document.createElement("div"); // 브랜드
-            const size = document.createElement("div"); // 사이즈
+            const infoDiv = document.createElement("div"); // 설명용 박스
+            const name = document.createElement("span"); // 이름
+            const price = document.createElement("span"); // 가격
+            const brand = document.createElement("span"); // 브랜드
+            const size = document.createElement("span"); // 사이즈
 
             // 수량 추가 감소 수량 뷰
             const amountDiv = document.createElement("div");
@@ -56,12 +61,16 @@ const selectCart = (cp) => {
             const minusBtn = document.createElement("button");
             const amountSpan = document.createElement("span");
 
+            const deleteDiv = document.createElement("div");
             const deleteBtn = document.createElement("button"); // 삭제 버튼
 
             // 체크박스 설정
             checkbox.type = "checkbox";
             checkbox.name = "itemStockNoList";
             checkbox.value = cartList[i].itemStockNo; // 상품 재고 번호로 초기화
+            checkbox.classList.add("checkbox");
+            checkboxDiv.append(checkbox);
+            checkboxDiv.classList.add("checkboxDiv");
 
             // 상품 수량용 hidden input
             itemCount.type = "hidden";
@@ -70,12 +79,24 @@ const selectCart = (cp) => {
 
             // 상품 이미지 세팅 (추가 예정)
             img.src = cartList[i].thumbnail;
+            cartThumbnail.append(img);
+            cartThumbnail.classList.add("cartThumbnail");
 
             // 상품 정보 세팅
-            name.innerText = cartList[i].itemName;
-            price.innerText = cartList[i].itemPrice;
             brand.innerText = cartList[i].itemBrand;
-            size.innerText = cartList[i].sizeVal;
+            brand.classList.add("brand");
+
+            price.innerText = `${cartList[i].itemPrice} 원`;
+            price.classList.add("price");
+
+            name.innerText = cartList[i].itemName;
+            name.classList.add("name");
+
+            size.innerText = `사이즈 ${cartList[i].sizeVal} mm`;
+            size.classList.add("size");
+
+            infoDiv.append(price, name, brand, size);
+            infoDiv.classList.add("infoDiv");
 
             // 상품 수량 뷰 및 수량 추가 감소 버튼
             plusBtn.innerHTML = "+";
@@ -86,16 +107,21 @@ const selectCart = (cp) => {
             
             amountSpan.innerText = cartList[i].cartItemCount;
             amountDiv.append(minusBtn, amountSpan, plusBtn);
+            amountDiv.classList.add("amountDiv");
 
             // infoA에 요소 추가
-            infoA.append(img, name, price, brand, size);
+            infoA.append(cartThumbnail);
             infoA.href = `/item/detail?itemNo=${cartList[i].itemNo}`;
+            infoA.classList.add("infoA");
 
             deleteBtn.type = "button";
             deleteBtn.innerHTML = "&times;";
+            deleteBtn.classList.add("deleteBtn");
+            deleteDiv.append(deleteBtn);
+            deleteDiv.classList.add("deleteDiv");
 
             // li에 요소 추가
-            li.append(checkbox, itemCount, infoA, amountDiv, deleteBtn);
+            li.append(checkboxDiv, itemCount, infoA, infoDiv, amountDiv, deleteDiv);
             
             // cartUl에 모든 내용 추가
             cartUl.append(li);
