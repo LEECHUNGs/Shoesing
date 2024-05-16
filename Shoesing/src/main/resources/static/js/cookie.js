@@ -26,11 +26,11 @@ if (loginId != null) {
   // 쿠키 중에 key 값이 saveId 인 value 를 얻어온다
   const saveId2 = getCookie('saveId2'); // undefined 혹은 email
 
-  if (saveId != undefined) {
+  if (saveId2 != undefined) {
     loginId.setAttribute('value', saveId2);
 
     document
-      .querySelector("input[name='saveId']")
+      .querySelector("input[name='saveId2']")
       .setAttribute('checked', true);
 
     // 로그인 페이지인 경우
@@ -38,7 +38,7 @@ if (loginId != null) {
       loginPageId.setAttribute('value', saveId2);
 
       document
-        .querySelector("input[name='savePageId']")
+        .querySelector("input[name='savePageId2']")
         .setAttribute('checked', true);
     }
   }
