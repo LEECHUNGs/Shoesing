@@ -17,8 +17,12 @@
     <!-- 상품 목록 UL -->
 
     <form action="/order/checkout" method="post" id="orderForm">
-      <div class="btnDiv">
-        <input type="checkbox" id="checkAll"/>
+      <div class="btnDiv" style="display: flex">
+        <input
+          type="checkbox"
+          id="checkAll"
+          style="width: 22px; margin-right: 5px"
+        />
         <button type="button" id="checkDelBtn">선택 상품 삭제</button>
         <button type="submit" id="orderBtn">선택 상품 구매</button>
       </div>

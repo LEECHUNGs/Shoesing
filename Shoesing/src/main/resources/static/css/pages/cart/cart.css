@@ -31,9 +31,11 @@
 .checkboxDiv {
   padding-top: 2%;
   height: 100%;
+  display: flex;
 }
 .checkbox {
-  width: 30px;
+  margin: 5px;
+  width: 22px;
 }
 
 /* a */
@@ -86,11 +88,20 @@
 /* 수량 추가, 감소 버튼 */
 .amountDiv > *:nth-child(1),
 .amountDiv > *:nth-child(3) {
+  color: white;
+  margin: 5px;
+  margin-left: 8px;
+  background-color: black;
   border: none;
-  font-size: 30px;
+  font-size: 20px;
   /* width: 20%; */
   text-align: center;
   line-height: 100%;
+  transition: 0.2s;
+}
+.amountDiv > *:nth-child(1):hover,
+.amountDiv > *:nth-child(3):hover {
+  background-color: rgb(40, 40, 40);
 }
 .amountDiv > *:nth-child(2) {
   font-size: 22px;
