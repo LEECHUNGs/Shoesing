@@ -24,10 +24,10 @@ const loginPageId = document.querySelector('#loginPageForm #loginPageId');
 if (loginId != null) {
   // 로그인 창의 이메일 입력 부분이 화면에 있을 때
   // 쿠키 중에 key 값이 saveId 인 value 를 얻어온다
-  const saveId = getCookie('saveId'); // undefined 혹은 email
+  const saveId2 = getCookie('saveId2'); // undefined 혹은 email
 
   if (saveId != undefined) {
-    loginId.setAttribute('value', saveId);
+    loginId.setAttribute('value', saveId2);
 
     document
       .querySelector("input[name='saveId']")
@@ -35,7 +35,7 @@ if (loginId != null) {
 
     // 로그인 페이지인 경우
     if (loginPageId != null) {
-      loginPageId.setAttribute('value', saveId);
+      loginPageId.setAttribute('value', saveId2);
 
       document
         .querySelector("input[name='savePageId']")

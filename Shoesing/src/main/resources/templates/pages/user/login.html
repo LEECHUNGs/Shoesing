@@ -81,7 +81,7 @@
                   <label class="saveId"
                     ><input
                       type="checkbox"
-                      name="savePageId"
+                      name="savePageId2"
                       class="checkIdCheck"
                     />아이디 저장</label
                   >
@@ -111,7 +111,11 @@
               aria-labelledby="nav-contact-tab"
             >
               <!-- 비회원 로그인 -->
-              <form action="/user/loginAnon" method="post" class="checkOrderForm">
+              <form
+                action="/user/loginAnon"
+                method="post"
+                class="checkOrderForm"
+              >
                 <div class="form-floating loginInput">
                   <input
                     type="text"
@@ -139,9 +143,7 @@
                 <div class="loginInput">
                   <b class="loginLink"
                     >아직 회원이 아니신가요?
-                    <a class="signupLink" href="/user/signup"
-                      >회원가입</a
-                    >
+                    <a class="signupLink" href="/user/signup">회원가입</a>
                   </b>
                 </div>
               </form>

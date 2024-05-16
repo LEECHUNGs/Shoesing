@@ -53,7 +53,8 @@ public class UserController {
 	 */
 	@PostMapping("login")
 	public String login(User inputUser, Model model, RedirectAttributes ra,
-			@RequestParam(value = "saveId", required = false) String saveId, HttpServletResponse resp,
+			@RequestParam(value = "saveId2", required = false) String saveId,
+			@RequestParam(value = "savePageId2", required = false) String savePageId, HttpServletResponse resp,
 			HttpServletRequest request) {
 
 		User loginUser = service.login(inputUser);
@@ -65,12 +66,13 @@ public class UserController {
 
 //				ra.addFlashAttribute("message", "성공!");
 				// 쿠키 설정
-				Cookie cookie = new Cookie("saveId", loginUser.getUserId());
+
+				Cookie cookie = new Cookie("saveId2", loginUser.getUserId());
 
 				cookie.setPath("/");
 
 				// 만료 기간
-				if (saveId != null) { // 아이디 저장 체크 시
+				if (saveId != null || savePageId != null) { // 아이디 저장 체크 시
 					cookie.setMaxAge(60 * 60 * 24 * 30); // 30일
 
 				} else { // 아이디 저장 미체크 시
