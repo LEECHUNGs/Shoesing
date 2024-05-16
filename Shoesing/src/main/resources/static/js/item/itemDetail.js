@@ -32,6 +32,10 @@ document.getElementById('cartBtn').addEventListener('click', () => {
   ).value;
   const cartItemCount = document.getElementById('itemCount');
 
+  if (cartItemCount.value <= 0) {
+    alert('수량은 0개 이하일 수 없습니다.');
+    return;
+  }
   const obj = {
     itemStockNo: itemStockNo,
     cartItemCount: cartItemCount.value,

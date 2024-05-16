@@ -12,7 +12,6 @@
 
   <th:block layout:fragment="main">
     <form action="/user/signup" method="POST" name="signupForm" id="signupForm">
-      
       <h3>회원 정보</h3>
 
       <!-- 아이디 입력 -->
@@ -141,29 +140,28 @@
 
       <br />
       <!-- 인증번호 입력 -->
-        <label for="emailCheck">
-          <span class="required">*</span> 인증번호
-        </label>
+      <label for="emailCheck"> <span class="required">*</span> 인증번호 </label>
 
-        <div class="signup-input-area">
-          <input
-            type="text"
-            name="authKey"
-            id="authKey"
-            placeholder="인증번호 입력"
-            maxlength="6"
-            autocomplete="off"
-          />
-          <button id="checkAuthKeyBtn" type="button">인증하기</button>
-        </div>
+      <div class="signup-input-area">
+        <input
+          type="text"
+          name="authKey"
+          id="authKey"
+          placeholder="인증번호 입력"
+          maxlength="6"
+          autocomplete="off"
+        />
+        <button id="checkAuthKeyBtn" type="button">인증하기</button>
+      </div>
 
-        <span class="signup-message" id="authKeyMessage"></span>
-     
+      <span class="signup-message" id="authKeyMessage"></span>
+
       <br />
       <!-- 주소 입력 -->
-      <label for="userAddress"><span class="required">주소</span></label>
       <div class="signup-input-area">
         <label for="userAddress">주소</label>
+        <br />
+        **주소를 모두 입력하거나 빈칸으로 둬 주세요!**
         <div class="signUp-input-area">
           <input
             type="text"
@@ -171,6 +169,7 @@
             placeholder="우편번호"
             maxlength="6"
             id="postcode"
+            readonly
           />
           <button type="button" id="searchAddress">검색</button>
         </div>
@@ -180,6 +179,7 @@
             name="userAddress"
             placeholder="도로명/지번 주소"
             id="address"
+            readonly
           />
         </div>
         <div class="signUp-input-area">

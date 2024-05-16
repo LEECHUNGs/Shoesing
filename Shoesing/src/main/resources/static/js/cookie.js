@@ -24,21 +24,21 @@ const loginPageId = document.querySelector('#loginPageForm #loginPageId');
 if (loginId != null) {
   // 로그인 창의 이메일 입력 부분이 화면에 있을 때
   // 쿠키 중에 key 값이 saveId 인 value 를 얻어온다
-  const saveId2 = getCookie('saveId2'); // undefined 혹은 email
+  const saveId = getCookie('saveId'); // undefined 혹은 email
 
-  if (saveId2 != undefined) {
-    loginId.setAttribute('value', saveId2);
+  if (saveId != undefined) {
+    loginId.setAttribute('value', saveId);
 
     document
-      .querySelector("input[name='saveId2']")
+      .querySelector("input[name='saveId']")
       .setAttribute('checked', true);
 
     // 로그인 페이지인 경우
     if (loginPageId != null) {
-      loginPageId.setAttribute('value', saveId2);
+      loginPageId.setAttribute('value', saveId);
 
       document
-        .querySelector("input[name='savePageId2']")
+        .querySelector("input[name='savePageId']")
         .setAttribute('checked', true);
     }
   }
