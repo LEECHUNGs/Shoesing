@@ -10,29 +10,27 @@ const checkObj = {
 
 // // 이용약관 전체 동의 눌렀을 때 체크
 // function selectAll(selectAll)  {
-//   const agreeAll 
+//   const agreeAll
 //        = document.getElementsByName('agree');
-  
+
 //   agreeAll.forEach((checkbox) => {
 //     checkbox.checked = selectAll.checked;
 //     checkObj.agreement = true;
 //   })
 // }
-// let agreeAll 
+// let agreeAll
 //        = document.getElementsByName('agree');
 // // //전체 동의 누르면 모든 값 체크 되게 하기
 // agreeAll.addEventListener('change', (e) => {
 //   // let agreeChk = document.querySelectorAll('input[name=agree]');
 //   for(let i = 0; i < agreeAll.length; i++){
-//     if(!agreeAll.checked){ 
+//     if(!agreeAll.checked){
 //       checkObj.agreement = false;
 //     }else {
 //       checkObj.agreement = true;
 //     }
 //   }
 // });
-
-
 
 //---------------------주소 다음 api ==> 수정 필요---------------------
 function execDaumPostCode() {
@@ -486,5 +484,24 @@ submitBtn.addEventListener('click', (e) => {
       return;
     }
   }
+
+  const addr0 = document.getElementById('postcode').value.trim().length == 0;
+  const addr1 = document.getElementById('address').value.trim().length == 0;
+  const addr2 =
+    document.getElementById('detailAddress').value.trim().length == 0;
+
+  //모두 true 인 경우만 true 저장
+  const result1 = addr0 && addr1 && addr2; //아무것도 입력안한 경우
+
+  //모두 false 인 경우만 true 저장
+  const result2 = !(addr0 || addr1 || addr2); //모두 다 입력한 경우
+
+  //모두 입력 또는 모두 미입력이 아니면
+  if (!(result1 || result2)) {
+    alert('주소를 모두 작성 또는 미작성 해주세요');
+    e.preventDefault();
+    return;
+  }
+
   signupForm.submit();
 });
