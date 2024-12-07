@@ -117,6 +117,7 @@
           id="postcode"
           th:value="${postcode}"
           class="form-control"
+          readonly
         />
         <button
           type="button"
@@ -135,6 +136,7 @@
           id="address"
           th:value="${address}"
           class="form-control"
+          readonly
         />
       </div>
       <div class="signUp-input-area">
@@ -563,6 +565,11 @@
     <script
       src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
     ></script>
+
+    <script th:inline="javascript">
+      const loginUser = /*[[${session.loginUser}]]*/ '로그인유저';
+    </script>
+
     <script
       type="text/javascript"
       th:src="@{/js/user/updateProfile.js}"

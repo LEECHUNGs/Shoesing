@@ -26,14 +26,12 @@ profileIcon.forEach((i) => {
   });
 });
 
-
 /// 회원 정보 수정 페이지
 //필수 항목 => 닉네임,이메일(이메일 변경했을 때 인증번호 필수)
-const checkObj ={
-  updateNickname : true,
-  updateEmail : true,
+const checkObj = {
+  updateNickname: true,
+  updateEmail: true,
 };
-
 
 // 이름 수정
 const updateName = document.querySelector('#updateName');
@@ -50,30 +48,34 @@ updateName.addEventListener('input', (e) => {
   return e.target.value;
 });
 
-
-// 닉네임 수정 
-const updateNickname = document.querySelector("#updateNickname");
-const updateNicknameMessage = document.querySelector("#updateNicknameMessage");
+// 닉네임 수정
+const updateNickname = document.querySelector('#updateNickname');
+const updateNicknameMessage = document.querySelector('#updateNicknameMessage');
 
 // 닉네임정규식
-updateNickname.addEventListener("input",(e)=>{
-const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
-    if(!regExp.test(updateNickname.value)){
-        updateNicknameMessage.innerText="유효하지 않는 닉네임입니다.";
-        checkObj.updateNickname=false;
-        return;
-    }
-    // 닉네임 중복 검사
-    updateNicknameMessage.innerText=""
-    const inputNickname = e.target.value;
-    fetch("/user/checkNickname",{
-      method : 'POST',
-      headers : {'Content-Type' : 'application/json'},
-      body : inputNickname,
-    })
-    .then(resp => resp.text())
-    .then(result => {
+updateNickname.addEventListener('input', (e) => {
+  const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
+  if (!regExp.test(updateNickname.value)) {
+    updateNicknameMessage.innerText = '유효하지 않는 닉네임입니다.';
+    checkObj.updateNickname = false;
+    return;
+  }
+  // 닉네임 중복 검사
+  updateNicknameMessage.innerText = '';
+  const inputNickname = e.target.value;
 
+  if (loginUser.userNickname == updateNickname) {
+    updateNicknameMessage.innerText = '사용가능한 닉네임 입니다';
+    return;
+  }
+
+  fetch('/user/checkNickname', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: inputNickname,
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
       if (result == 1) {
         updateNicknameMessage.innerText = '이미 사용중인 닉네임 입니다';
         checkObj.updateNickname = false;
@@ -84,24 +86,19 @@ const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
     });
 });
 
-
-
 // 전화번호 수정
-const updateTel = document.querySelector("#updateTel");
-const updateTelMessage = document.querySelector("#updateTelMessage");
+const updateTel = document.querySelector('#updateTel');
+const updateTelMessage = document.querySelector('#updateTelMessage');
 
 // 전화번호 정규식
-updateTel.addEventListener("input",(e)=>{
-    const regExp=/^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
-    if(!regExp.test(e.target.value)){
-        updateTelMessage.innerText="유효한 전화번호 형식으로 수정해주세요";
-        return;
-    }
-      updateTelMessage.innerText="";  
+updateTel.addEventListener('input', (e) => {
+  const regExp = /^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
+  if (!regExp.test(e.target.value)) {
+    updateTelMessage.innerText = '유효한 전화번호 형식으로 수정해주세요';
+    return;
+  }
+  updateTelMessage.innerText = '';
 });
-
-
-
 
 // 주소 수정
 function execDaumPostCode() {
@@ -131,7 +128,7 @@ function execDaumPostCode() {
   }).open();
 }
 
-// 주소 검색 버튼 클릭 시 
+// 주소 검색 버튼 클릭 시
 document
   .querySelector('#searchAddress')
   .addEventListener('click', execDaumPostCode);
@@ -139,8 +136,6 @@ document
 // 주소 유효성
 
 // // const userAddress = document.querySelectorAll(input[name:"userAddress"])
-
-
 
 // const addr0 = userAddress[0].value.trim().length == 0;
 // const addr1 = userAddress[1].value.trim().length == 0;
@@ -158,28 +153,25 @@ document
 //     e.preventDefault();
 // }
 
-
 // 이메일 수정
-const updateEmailBtn = document.querySelector("#updateEmailBtn");
-const emailDiv = document.querySelector("#emailDiv");
-const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn");
+const updateEmailBtn = document.querySelector('#updateEmailBtn');
+const emailDiv = document.querySelector('#emailDiv');
+const sendAuthKeyBtn = document.querySelector('#sendAuthKeyBtn');
 
 // 이메일 변경 버튼 눌렀을 때 인증번호 버튼 나타나게하기
-updateEmailBtn.addEventListener("click",e =>{
-
+updateEmailBtn.addEventListener('click', (e) => {
   console.log(updateEmailBtn);
-  emailDiv.setAttribute("style","pointer-events:auto"); 
- 
-  sendAuthKeyBtn.setAttribute("style","display:block");
-  updateEmailBtn.setAttribute("style","display : none");
-  ;
-})
+  emailDiv.setAttribute('style', 'pointer-events:auto');
 
-// 이메일 유효성 
-let updateEmail = document.querySelector("#updateEmail");
-const updateDomain = document.querySelector("#updateDomain");
-const domainList = document.querySelector("#domainList");
-const emailMessage = document.querySelector("#emailMessage");
+  sendAuthKeyBtn.setAttribute('style', 'display:block');
+  updateEmailBtn.setAttribute('style', 'display : none');
+});
+
+// 이메일 유효성
+let updateEmail = document.querySelector('#updateEmail');
+const updateDomain = document.querySelector('#updateDomain');
+const domainList = document.querySelector('#domainList');
+const emailMessage = document.querySelector('#emailMessage');
 
 // 이메일 아이디 쓰는 부분 검사
 
@@ -192,15 +184,15 @@ updateEmail.addEventListener('input', (e) => {
     return;
   }
   emailMessage.innerText = '이메일을 입력 성공';
-
-
 });
 
 // 이메일 도메인 쓰는 부분 바꿀때 나타나는 이벤트
 updateDomain.addEventListener('change', (e) => {
-  let updateEmail = document.querySelector("#updateEmail");
-  if (e.target.value.trim().length == 0 || updateEmail.value.trim().length == 0) {
-
+  let updateEmail = document.querySelector('#updateEmail');
+  if (
+    e.target.value.trim().length == 0 ||
+    updateEmail.value.trim().length == 0
+  ) {
     emailMessage.innerText = '이메일을 입력해주세요';
 
     return;
@@ -220,9 +212,11 @@ domainList.addEventListener('change', (e) => {
     updateDomain.readOnly = false;
   }
 
-  let updateEmail = document.querySelector("#updateEmail");
-  if (e.target.value.trim().length == 0 || updateEmail.value.trim().length == 0) {
-
+  let updateEmail = document.querySelector('#updateEmail');
+  if (
+    e.target.value.trim().length == 0 ||
+    updateEmail.value.trim().length == 0
+  ) {
     emailMessage.innerText = '이메일을 입력해주세요';
     return;
   }
@@ -232,11 +226,10 @@ domainList.addEventListener('change', (e) => {
   console.log(updateEmail);
 });
 
-// 이메일 인증번호 
-const authKey = document.querySelector("#authKey");
-const checkAuthKeyBtn = document.querySelector("#checkAuthKeyBtn");
-const authKeyMessage = document.querySelector("#authKeyMessage");
-
+// 이메일 인증번호
+const authKey = document.querySelector('#authKey');
+const checkAuthKeyBtn = document.querySelector('#checkAuthKeyBtn');
+const authKeyMessage = document.querySelector('#authKeyMessage');
 
 let authTimer;
 const initMin = 4;
@@ -251,9 +244,8 @@ sendAuthKeyBtn.addEventListener('click', () => {
   checkObj.updateEmail = false;
   authKeyMessage.innerText = '';
 
-  let updateEmail = document.querySelector("#updateEmail");
+  let updateEmail = document.querySelector('#updateEmail');
   const inputEmail = updateEmail.value + '@' + updateDomain.value;
- 
 
   if (updateEmail.value.length == 0 || updateDomain.value.length == 0) {
     alert('이메일 작성 후 클릭해 주세요');
@@ -281,8 +273,7 @@ sendAuthKeyBtn.addEventListener('click', () => {
         console.log('인증 번호 발송 실패');
         emailMessage.innerText = '인증번호 발송에 실패했습니다';
       }
-
-  });
+    });
 
   authKeyMessage.innerText = initTime;
   authKeyMessage.classList.remove('confirm', 'error');
@@ -312,15 +303,13 @@ function addZero(number) {
 
 const inputEmail = document.querySelector('#inputEmail');
 
-
 checkAuthKeyBtn.addEventListener('click', () => {
   if (min == 0 && sec == 0) {
     alert('인증번호 입력 제한시간을 초과하였습니다!');
     return;
   }
-  
-  const obj = {
 
+  const obj = {
     email: updateEmail.value + '@' + updateDomain.value,
     authKey: authKey.value,
   };
@@ -340,16 +329,16 @@ checkAuthKeyBtn.addEventListener('click', () => {
       authKeyMessage.innerText = '인증 되었습니다.';
 
       inputEmail.value = updateEmail.value + '@' + updateDomain.value;
-      checkObj.updateEmail =true;
+      checkObj.updateEmail = true;
     });
 });
 
-const updateProfileBtn = document.querySelector("#updateProfileBtn");
-updateProfileBtn.addEventListener("click", (e) => { 
+const updateProfileBtn = document.querySelector('#updateProfileBtn');
+updateProfileBtn.addEventListener('click', (e) => {
   inputEmail.value = updateEmail.value + '@' + updateDomain.value;
   console.log(updateEmail);
   // 닉네임이 입력되지 않았을때
-  if(!checkObj.updateNickname){
+  if (!checkObj.updateNickname) {
     alert('닉네임 에러');
     updateNickname.focus();
     checkObj.updateNickname = false;
@@ -357,10 +346,10 @@ updateProfileBtn.addEventListener("click", (e) => {
     return;
   }
   //이메일이 입력되지 않았을때
-  if(!checkObj.updateEmail){
+  if (!checkObj.updateEmail) {
     //인증번호 요청 버튼이 클릭되는 경우에
-    if(sendAuthKeyBtn.clicked){
-      alert('인증번호에러')
+    if (sendAuthKeyBtn.clicked) {
+      alert('인증번호에러');
       checkObj.updateEmail = false;
       e.preventDefault();
       return;
@@ -370,10 +359,29 @@ updateProfileBtn.addEventListener("click", (e) => {
     updateEmail.focus();
 
     return;
-  } 
-  updateProfileForm.submit();
-})
+  }
 
+  const addr0 = document.getElementById('postcode').value.trim().length == 0;
+  const addr1 = document.getElementById('address').value.trim().length == 0;
+  const addr2 =
+    document.getElementById('detailAddress').value.trim().length == 0;
+
+  //모두 true 인 경우만 true 저장
+  const result1 = addr0 && addr1 && addr2; //아무것도 입력안한 경우
+
+  //모두 false 인 경우만 true 저장
+  const result2 = !(addr0 || addr1 || addr2); //모두 다 입력한 경우
+
+  //모두 입력 또는 모두 미입력이 아니면
+  if (!(result1 || result2)) {
+    alert('주소를 모두 작성 또는 미작성 해주세요');
+    e.preventDefault();
+    return;
+  }
+
+  signupForm.submit();
+  updateProfileForm.submit();
+});
 
 //====================================================================
 //비밀번호 변경

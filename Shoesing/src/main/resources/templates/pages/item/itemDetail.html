@@ -40,6 +40,7 @@
             <p th:text="${item.itemBrand}" class="itemBrand">상품 브랜드</p>
             <div class="itemNameDiv">
               <div th:text="${item.itemName}" class="itemName">상품명</div>
+              <br />
               <div
                 th:text="|${#numbers.formatInteger(item.itemPrice, 3, 'COMMA')}₩|"
                 class="itemPrice"
